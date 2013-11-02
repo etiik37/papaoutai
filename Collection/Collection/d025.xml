@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<!DOCTYPE BALADE SYSTEM "balades.DTD">
+<?xml-stylesheet href="balades.xsl" type="text/xsl" ?>
+<BALADE>
+   <PRESENTATION>
+      <TITRE>la camargue</TITRE>
+   </PRESENTATION>
+
+   <RECIT>
+      <P>La Camargue, est l'espace marécageux situé entre les deux bras du Rhône et qui s'étend de la plaîne de la Crau, à l'Est et jusqu'à Aigues-Mortes, à L'ouest. Les 2/3 de cette zone appartient à la commune d' Arles.</P>
+
+      <P>Ce territoire, qui s'étend sur plus de 145.000 Ha, dont près de 86.500 ha sont réservés au Parc Naturel Régional, présente trois grands types de paysages :</P>
+
+      <P>
+         <LISTE>
+            <ITEM>la Camargue naturelle au sud, où les gardians continuent d'élever des tauraux ou des cheveaux en liberté au milieu des marais,</ITEM>
+
+            <ITEM>la Camargue agricole au nord avec ses rizières, ses champs de céréales et ses cultures maraichères,</ITEM>
+
+            <ITEM>les salines, au Sud-Est, dominées par leurs montagnes de sel.</ITEM>
+         </LISTE>
+      </P>
+
+      <SEC>
+         <SOUS-TITRE>Le Parc Naturel Régional de Camargue</SOUS-TITRE>
+
+         <P>Plus du tiers de la superficie est couvert d'eau. Il est possible de distinguer dans ce vaste territoire, trois ensembles géologiquement distincts :</P>
+
+         <P>- La Basse Camargue, au sud, représentée par une zone d'étangs salés et de sansouires [3] d'origine laguno-marine. Les terres souvent situées en dessous du niveau de la mer, sont réservées à l'exploitation salinière (11.000 ha aux Salins-de-Giraud) et s'étendent le long d'un cordon de plages de sable fin jusqu'au village des Saintes Maries de la Mer.</P>
+
+         <P>- La Moyenne Camargue, au centre, d'origine fluvio-lagunaire, aux terres plus salées et partagées en différentes activités, culture du riz (20.000 ha), du blé et du maïs et l'élevage.</P>
+
+         <P>- La Haute Camargue, au nord de l'étang de Vaccarès, constituée de terres alluviales des anciens bras du Rhône, et de marais d'eau douce. Essentiellement consacrée aux cultures céréalières et fruitières. Zone de forte urbanisation autour de la ville d'Arles.</P>
+
+         <P>Trois dangers principaux menacent ces trois ensembles géographiques : les risques de salinisation des terres exploitées et du fleuve, l'érosion du littoral de la mer et des étangs, l'accentuation de la pression touristique sur le bord de mer.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Circuit en Camargue</SOUS-TITRE>
+
+         <P>Pour rejoindre Arles au départ de :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>Marseille : 93 km (87 km sur autoroute) en 1h00</ITEM>
+
+               <ITEM>Avignon : 36 km en 40'</ITEM>
+
+               <ITEM>Nimes : 33 km (dont 26 km sur auroutes) en 26'</ITEM>
+
+               <ITEM>Lyon : 284 km (dont 276 km sur autoroute) en 2h35'</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Arles (55.000 hab) :</SOUS-TITRE>
+
+         <P>Considérée comme la porte Nord de la Camargue, Arles est une des villes les plus anciennes de France. Elle fut construite au VIème siècle avant J-C sur un promontoire dominant le Rhône. La présence de marais à l'Est (le nom d' Arles ou Arelate signifie "marais" en Celte), ainsi que les nombreuses crues du fleuve, ont longtemps limité son expansion.</P>
+
+         <P>Cet Oppidum (fortification) d'origine Celto-Ligure est avant tout un centre d'échanges commerciaux, puis sous la poussée d'une colonie Grecque, la ville s'organise.</P>
+
+         <P>Dès le IIème siècle avant J-C, la ville est colonisée par les Romains et Jules César y installe, en 46 avant J-C, les vétérans de ses légions.</P>
+
+         <P>A noter, la découverte exceptionnelle en 2007 dans le Rhône, d'un buste de Jules Cesar [1] datant de cette époque.</P>
+
+         <P>C’est le début de la "petite Rome des Gaules" et Arles deviendra un grand centre religieux des premiers temps de la Chrétienté.</P>
+
+         <P>Affaiblie, ruinée et meurtrie par des siècles d' invasions, des Ostrogoths aux Sarrasins, la ville renaît au XIIème siècle et la splendeur de ses monuments médiévaux témoigne de la vitalité et de la richesse de cette époque.</P>
+
+         <P>Arles, longtemps à l'écart des grands développements économiques, s'est ouvert aux cultures méditerranéennes dans tous les domaines de la création. Tout le long de l’année, la ville est animée par les fêtes traditionnelles, la féria de Paques et autres évènements taurins, les rencontres photographiques , le festival de musique du monde des "Suds, etc...</P>
+
+         <P>Les Rencontres d'Arles, crées en 1969 par le photographe arlésien Lucien Clergue et l'écrivain Michel Tournier, sont une référence internationale en matière de photographie. Ce festival réunit chaque année des milliers de professionnels et d'amateurs du monde entier. Un des sites d'exposition se trouve dans l'ancien parc des ateliers SNCF. La Fondation Luma, de la Suissesse Maja Hoffmann, héritière des laboratoires Roche et passionnée d'art, a annoncé lundi sa volonté de créer à Arles, un centre international de photographie dans le Parc des Ateliers, qui serait confié à l' architecte américain Frank Gehry.</P>
+
+         <P>A voir / à faire :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>Les arènes, édifiées au Ier siècle, pouvaient accueillir près de 20.000 spectateurs.</ITEM>
+
+               <ITEM>le Théatre Antique, de style Augustéen, construit à la fin du Ier siècle, pouvait accuillir 10.000 spectateurs.</ITEM>
+
+               <ITEM>les Thermes de Constantin (IVème siècle)</ITEM>
+
+               <ITEM>Le temple du Forum, dont il ne reste que deux colonnes et un bout de chapiteau intégré dans le mur d'un immeuble contemporain.</ITEM>
+
+               <ITEM>l' Obélisque d' Arles, découvert au XIVème siècle et provenant du Cirque Romain</ITEM>
+
+               <ITEM>l'Hôtel de ville et son Beffroi (1558)</ITEM>
+            </LISTE>
+         </P>
+
+         <P>A visiter :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>Musée Arlaten : L'hôtel particulier Laval-Catellane (1515) abrite le Musée d’ethnographie provençale créé par Frédéric Mistral. Il est possible, de la cour intérieure, d'admirer l'architecture de ce palais, ainsi que les vestiges antiques qui furent découverts.</ITEM>
+
+               <ITEM>Musée Réattu, du nom du peintre Jacques Réattu (1760-1833) qui acheta cet ancien grand prieuré de Saint Gilles, construit entre le XVème et le XVIIème siècle. Il Abrite des oeuvres de l'école Provençale du XVIIème et XVIIIème siècle, ainsi que des donations Pablo Picasso.</ITEM>
+
+               <ITEM>Musée de l'Arles Antique : Avec son concept de « Cité muséale », le Concepteur du musée (8000m2), l'Architecte Henri Ciriani, a voulu favoriser la libre circulation des visiteurs. Le musée regroupe la totalité des collections antiques de la Ville d'Arles.</ITEM>
+            </LISTE>
+         </P>
+
+         <P>A prévoir / spectacles du sud :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>L' Abrivado [2] des Bernacles, le 7 juillet, jeux taurins et guardians</ITEM>
+
+               <ITEM>Les Rencontres d' Arles du 8 juillet au 14 septembre</ITEM>
+
+               <ITEM>La Pegoulado le 4 juillet, toute la ville participe à ce passo carriero (défilé) en costume qui aboutit aux Arènes pour un grand final. Des textes en attestent la pratique dès 1830, mais la Pegoulado, spontanée ou non, est probablement bien antérieure.</ITEM>
+
+               <ITEM>Les Prémices du Riz , du 19 au 21 septembre : les Fêtes du Riz au moment des récoltes.</ITEM>
+
+               <ITEM>Arelate, les journées Romaines, du 24 au 31 août 2008</ITEM>
+
+               <ITEM>Les Suds à Arles, du 13 au 20 juillet 2008. Festival métissé des musiques du monde, dans le théatre antique.</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Autres fêtes sur le site de l'Office du Tourisme d' Arles</P>
+
+         <P>Quitter Arles par la N113, rejoindre la D570 puis la D36 jusqu'à Salin-de-Giraud.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Salin-de-Giraud (2.000 hab)</SOUS-TITRE>
+
+         <P>Ce village construit dans la seconde moitié du XIXème siècle doit son existence à un projet industriel conduit par Henri Merle en 1856, fondateur de l’entreprise Péchiney, afin de satisfaire les besoins croissants de l’industrie en chlore et en soude.</P>
+
+         <P>La compagnie des Salins du Midi produit plus de 800.000 tonnes de sel localement.</P>
+
+         <P>Salin-de-Giraud a pris son autonomie en 2007, la commune était rattachée à Arles.</P>
+
+         <P>A voir / à faire / à visiter :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>les trois phares construits au XIXème siècle, le phare de la Gacholle, le phare de Beauduc et le phare de Faraman</ITEM>
+
+               <ITEM>les Camelles de sel des Salins du Midi</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Quitter Salin-de-Giraud par la D36, prendre la D37 puis la D570, qui longe les berges de l'étang de Vaccarès, jusqu'aux Saintes-Maries-de-la-Mer .</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Saintes Maries de la Mer (2500 hab)</SOUS-TITRE>
+
+         <P>La ville, construite autour de son église fortifiée (XIème-XIIème siècle) et longtemps enserrée dans une enceinte, conserve encore aujourd'hui trace de ce passé historique.</P>
+
+         <P>C'est sur ces lieux, que selon une légende, Marie Jacobé, sœur de la Vierge, Marie Salomé (mère des Apôtres Jacques et Jean) et Marie-Madeleine accostèrent dans une barque sans voiles ni rames en provenance de Palestine...</P>
+
+         <P>A voir / à faire / à prévoir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>le musée Baroncelli , en hommage au Marquis Folco de Baroncelli, ancien gardian et défenseur des coutumes du patrimoine écologique , traditionnel et culturel de la Camargue. il mène une vie de gardian et milite en faveur de la tolérance. C’est à lui que l’on doit la reconnaissance du pèlerinage gitan par les autorités ecclésiastiques. Le musée abrite les témoignages des traditions camarguaises, ainsi que des collections consacrées à la zoologie de la Camargue.</ITEM>
+
+               <ITEM>L'église fortifiée, visible à 10 km depuis l’intérieur des terres. Il s’agit d’une véritable forteresse, formée d’une nef unique et droite, sans ornement et haute de 15 mètres. Le toit est entouré d’un chemin de ronde, avec créneaux et mâchicoulis et servit de tour de guet. Vous pouvez voir dans l’église un autel païen du IVème siècle avant J.-C.</ITEM>
+
+               <ITEM>les Pélerinages du 25 mai et de fin octobre (saintes Maries Jacobé et Salomé), très anciens, et celui célébré pour la patronne des Gitans, Sainte Sarah, la vierge noire et qui a lieu le 24 mai.</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Quitter les Saintes-Maries-de-la-Mer par la D85A en passant devant le Mas Cacharel, puis prendre la D570, puis la D36 qui traverse le Petit-Rhône et continuer sur la D58 jusqu'à Aigues-Mortes.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Aigues-Mortes (7000 hab)</SOUS-TITRE>
+
+         <P>D'après les historiens, le village remonterait au début du 1er millénaire.</P>
+
+         <P>Jusqu'au XIIIème siècle, elle fut sous le contrôle des moines de l'abbaye bénédictine de Psalmody fondée au Vème siècle par des moines de l'abbaye Saint-Victor de Marseille.</P>
+
+         <P>La première tour de guet, la tour Matafère, fut construite par Charlemagne, en l'an 790.</P>
+
+         <P>Le futur Roi Saint Louis, le roi Louis IX, vint s'installer en 1244 dans une demeure mise à disposition par les Templiers dans les environs de la ville. Il fallut plus de quatre ans d'efforts pour que la cité soit terminée. Et c'est seulement en l'an 1248 que le Roi et 70.000 hommes embarquèrent d'Aigues-Mortes dans plus de 700 batiments en direction de la Palestine pour la Septième Croisade.</P>
+
+         <P>A voir / à visiter / à prévoir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>La tour de Constance, érigée en 1242 par Saint Louis sur l’ancien emplacement de la tour Matafère. L'épaisseur des murs est de 6 mètres à la base, pour un diamètre de 22m et une hauteur de 33 m. Du haut de la tour vous aurez une vue panoramique sur toute la région. Au début du XVIIIème siècle, elle servit de prison pour les femmes des Protestants Camisards.</ITEM>
+
+               <ITEM>L'église Notre-Dame des Sablons Construite au milieu du XIIIème siècle, elle servit de temple de la raison, magasin à grain et de grenier à sel pendant la Révolution.</ITEM>
+
+               <ITEM>La chapelle des Pénitents Blancs (1622), appartenant à la confrérie des Pénitents Blancs fondée en 1585 par le Roi Henri III. Sous la révolution, la chapelle devint le siège du club des "sans Culottes"</ITEM>
+
+               <ITEM>La Chapelle des Pénitents Gris (1400), fut construite sur les fondations d'une ancienne chapelle des Cordeliers. La façade est du style Louis XIV.</ITEM>
+
+               <ITEM>Statue Saint Louis - La place Saint-Louis est le cœur touristique de la ville. Au centre, face à l'entrée principale de La porte de la Gardette, est érigée la statue de Saint Louis.</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Quitter Aigues-Mortes par la D979 en traversant le village de Saint-Laurent d'Aigouze et la Tour Carbonnière,</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Saint Laurent d'Aigouze (3150 hab) :</SOUS-TITRE>
+
+         <P>Ce petit village au riche passé historique, était le passage obligé pour rejoindre Aigues-Mortes.</P>
+
+         <P>A voir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>La Tour Carbonnière fut construite au XIIIème siècles en même temps que les remparts d'Aigues-Mortes. Les moines de Psalmody en devinrent les propriétaires et s'octroyèrent un droit de péage afin de l'entretenir.</ITEM>
+
+               <ITEM>le fort de Pecais, fut construit en 1598 pour assurer la protection des salines, mais également pour lutter contre les pirates.</ITEM>
+
+               <ITEM>le Château des Calvières (XVIIème et XIXème siècle)</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Continuer sur la D979 jusqu'à Aimargues,</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Aimargues (4200 hab)</SOUS-TITRE>
+
+         <P>Ce village remonterait à l'antiquité. Le Château de Teillan fut paraît il construit sur l'emplacement d'un ancien castrum romain portant le nom de "villa Telliamis".</P>
+
+         <P>A voir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>l'ancienne églisse paroissiale (XVIIème siècle) transformée en halles à la fin du XIXème siècle.</ITEM>
+            </LISTE>
+         </P>
+
+         <P>puis prendre la D6572, en direction de Vauvert et de Saint-Gilles.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Vauvert (11 000 hab)</SOUS-TITRE>
+
+         <P>Ce bourg essentiellement rural est situé au cœur même des vignobles des Costières de Nîmes. Déjà, au Moyen-Age, la commune, alors appelée Posquières, était réputée pour les nombreux pélerinages, de toutes confessions. La ville abrita un centre d'étude de la Torah et du Talmud (Yeshiva) le plus important de Provence.</P>
+
+         <P>A voir / à visiter / à prévoir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>le chateau de Montcalm</ITEM>
+
+               <ITEM>les Nuits du Jazz, tous les ans, le second week-end de juillet.</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Saint-Gilles (12300 hab) :</SOUS-TITRE>
+
+         <P>Deuxième porte de la Camargue, Saint-Gilles fut longtemps le trait d’union entre le Languedoc et la Provence , située à l'extrémité de la voie Regordane, ce chemin (devenu en 2007 le GR700) qui reliait l'Ile de France au Bas Languedoc en traversant les Cévennes à la fin du 1er millénaire.</P>
+
+         <P>A voir / à faire / à prévoir :</P>
+
+         <P>
+            <LISTE>
+               <ITEM>les magnifiques maisons des XIIème et XIIIème siècle et le musée de la maison Romane</ITEM>
+
+               <ITEM>l'abbatiale du XIIème siècle et sa façade pur art Roman</ITEM>
+
+               <ITEM>la Chapelle Sainte Colombes (XIIème siècle)</ITEM>
+
+               <ITEM>le Château d'Espeyran (27 siècles d'histoire)</ITEM>
+
+               <ITEM>l' Escalier à Vis datant du XIIème siècle.</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Synthèse circuit :</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>Arles - Salin-de-Giraud : 37 km</ITEM>
+
+               <ITEM>Salin-de-Giraud - Saintes-Maries-de-la-Mer : 60 km</ITEM>
+
+               <ITEM>Saintes-Maries-de-la-Mer - Aigues-Mortes : 33 km</ITEM>
+
+               <ITEM>Aigues-Mortes - Saint-Gilles - Arles : 45 km</ITEM>
+            </LISTE>
+         </P>
+
+         <P>soit un circuit de 175 km</P>
+      </SEC>
+   </RECIT>
+</BALADE>
+

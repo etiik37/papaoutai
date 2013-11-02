@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE BALADE SYSTEM "balades.DTD">
+<?xml-stylesheet href="balades.xsl" type="text/xsl" ?>
+<BALADE>
+   <PRESENTATION>
+      <TITRE>le grand bornand - Les randonnées</TITRE>
+
+      <DESCRIPTION>
+         <P>Aussi bien en saison d'hiver, qu'en saison d' été, les possibilités de loisirs offertes par la station sont immenses (voir sites Internet).</P>
+
+         <P>Les pistes de randonnée sont très nombreuses, au départ du Chinaillon, pas de difficultés majeures, si ce n'est la dénivellation importante (le Chinaillon est à 1300m).</P>
+      </DESCRIPTION>
+   </PRESENTATION>
+
+   <RECIT>
+      <SEC>
+         <SOUS-TITRE>pour une promenade de 2h15 :</SOUS-TITRE>
+
+         <P>prendre en plein village, le sentier découverte, qui monte tout schuss au dessus du Chinaillon, passe à proximité d'une grande ferme où vous avez la possibilité de vous approvisionner en tomme de chèvre et reblochon, un pur délice !</P>
+
+         <P>Puis continuer vers la Gaudinière (1550m), et redescendre plein sud, vers le vieux village du Chinaillon.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>pour une promenade de 3h et 550m de dénivelé :</SOUS-TITRE>
+
+         <P>au départ du hameau de la Côte : direction le col de Chatillon, qui domine la vallée du Bouchet, face au massif des Aravis, puis direction le sommet du Lachat à 2050m, grapillon un peu plus sec qui débouche sur un splendide belvédère.</P>
+
+         <P>Possibilité de redescente par le télé-sièges...</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Pour une promenade de 2h30 et 400 m de dénivelé :</SOUS-TITRE>
+
+         <P>au départ du col de la Colombière, direction le chalet de la colombière et ascension vers le lac de Peyre.</P>
+
+         <P>Compagnie de bouquetins garantie !!</P>
+
+         <P>pour les autres possibilités de promenades, se munir de la carte au 1/15.000ème du Grand Bornand, disponible au point presse de l'hotel.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>le coup de cœur : la ferme de Lormay dans la vallée du Bouchet.</SOUS-TITRE>
+
+         <P>Il faut pousser jusqu'au bout de cette petite route, après l'auberge nordique, pour découvrir la ferme de Lormay, repère d' Andrée et Albert Bonamy. Cette ancienne ferme d'habitation, construite en 1786, au milieu de la vallée, a été reconvertie en restaurant.</P>
+
+         <P>Tout est authentique, une quarantaine de couverts, en comptant la galerie et le balcon l'été, pour une cuisine exclusivement savoyarde.</P>
+
+         <P>La potée, la soupe au lard, les fricassées de caïon et autres atriaux (spécialité savoyarde) et ldes desserts réalisés par Andrée, tous simples mais succulents : fraises ou myrtilles en saison, tartes maison, chaussons, gâteaux au chocolat....</P>
+
+         <P>Le repas sera arrosé de vins de Savoie, mondeuse ou pinot noir pour les rouges, ou une roussette pour le plateau de fromages et la très bonne tomme !!</P>
+
+         <P>Une très bonne adresse, donc : prudent de réserver !</P>
+
+         <P>adresse :Ferme de Lormay Albert Bonamy Lormay 74450 Le Grand Bornand Tél. : 04 50 02 24 29</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>le col des Aravis :</SOUS-TITRE>
+
+         <P>Cette excursion est impérative au départ du Chinaillon, car la route est superbe et du col, vous avez la chance de découvrir le mont Blanc !!</P>
+
+         <PHOTO>à regarder : photo escapade le chinaillon</PHOTO>
+      </SEC>
+   </RECIT>
+</BALADE>
+

@@ -1,0 +1,34 @@
+h1 {
+text-align: center;
+}
+
+#meta{
+text-align:center;
+font-weight: bold;
+}
+
+#desc{
+text-align:left;
+font-style: italic;
+}
+
+.xpath{
+color:red;
+}
+
+.photo{
+text-align:center;
+font-style: italic;
+}
+
+p{
+text-align:justify;
+}
+
+h1{
+font-size: 30px;
+}
+
+h2{
+font-size: 18px;
+}

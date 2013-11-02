@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queries SYSTEM "queries.dtd">
+<queries>
+<query id="q01">
+<text>balade au Mont Blanc</text>
+<narrative> quelles sont les différentes balades/randonnées que l'on peut
+faire sur le Mont Blanc ?
+</narrative>
+</query>
+<query id="q02">
+<text>balade montagne amérique latine</text>
+<narrative>Quelles sont les différentes balades/randonnées en montagne que l'on peut faire en Amérique latine?
+</narrative>
+</query>
+<query id="q03">
+<text> monuments Afrique</text>
+<narrative>Quels sont les monuments en Afrique qui sont dignes
+d'intérêt. Il peut s'agir de palais, de tombeaux, ...
+</narrative>
+</query>
+<query id="q04">
+<text>lacs de France</text>
+<narrative> Informations concernant les lacs de France: où sont-ils situés,...
+</narrative>
+</query>
+<query id="q05">
+<text>liste des monuments religieux visités</text>
+<narrative>On voudrait la liste de tous les mounuments religieux (et éventuellement leur description) présents dans la collection
+</narrative>
+</query>
+<query id="q06">
+<text>village randonnée montagne asie</text>
+<narrative> on cherche des infos sur des villages situés près d'une montagne ou en pleine montagne dans lesquels on peut se promener, faire de la randonnée pédestre, en Asie.
+</narrative>
+</query>
+<query id="q07">
+<text> GR10 rando pyrénées</text>
+<narrative>On cherche par où passe le GR10, ce qu'il y a à visiter,...</narrative>
+</query>
+<query id="q08">
+<text>animaux pyrénées</text>
+<narrative>On aimerait connaître la liste de tous les animaux que l'on peut rencontrer dans les Pyrénées.
+</narrative>
+</query>
+<query id="q09">
+<text>paysage montagne</text>
+<narrative>On souhaite des descriptions de paysages de montagne (description/impressions sur la végétation, les villages, les étendues d'eau, le relief des montagnes).
+</narrative>
+</query>
+<query id="q10">
+<text>glaciers des alpes</text>
+<narrative>On cherche tous les renseignements possibles sur les glaciers dans les Alpes</narrative>
+</query>
+<query id="q11">
+<text>plongée sous marine</text>
+<narrative>On cherche tous les endroits en France et dans le monde où un touriste peut pratiquer de la plongée sous marine.</narrative>
+</query>
+</queries>

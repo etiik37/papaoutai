@@ -1,0 +1,5 @@
+<!ELEMENT queries (query)+>
+<!ELEMENT query (text, narrative)>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT narrative (#PCDATA)>
+<!ATTLIST query id ID #REQUIRED>

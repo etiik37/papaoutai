@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE BALADE SYSTEM "balades.DTD">
+<?xml-stylesheet href="balades.xsl" type="text/xsl" ?>
+<BALADE>
+   <PRESENTATION>
+      <TITRE>Ascension du Mont-Blanc</TITRE>
+
+      <DESCRIPTION>
+         <P>Récit de mon ascension du Mont Blanc par le refuge du Goûter (voie de St Gervais). C'est la voie la plus parcourue du Mont Blanc, elle est principalement utilisée pendant la période estivale d'ouverture du refuge du Goûter. La première ascension du Mont Blanc remonte au 8 août 1786 par Jacques Balmat et le docteur Michel Paccard. Cet exploit, pour l'époque, a marqué les débuts de l'alpinisme. Aujourd'hui, tout montagnard espère un jour conquérir le plus haut sommet de la chaîne des Alpes.</P>
+      </DESCRIPTION>
+   </PRESENTATION>
+
+   <RECIT>
+      <SEC>
+         <SOUS-TITRE>Le sommet :</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>Nom : Mont-Blanc</ITEM>
+
+               <ITEM>Altitude : 4808 mètres</ITEM>
+
+               <ITEM>Cartographie : IGN 3531 ET et IGN 3630 OT</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>L'itinéraire choisi :</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>Nom : Arête de bosses, dite voie normale</ITEM>
+
+               <ITEM>Type d'escalade : rocher, neige</ITEM>
+
+               <ITEM>Difficulté : PD+</ITEM>
+
+               <ITEM>Orientation : Ouest</ITEM>
+
+               <ITEM>Altitude de départ : 2372 mètres</ITEM>
+
+               <ITEM>Dénivelé positif : 2436 mètres</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Le parcours en 2 jours :</SOUS-TITRE>
+
+         <P>1er jour : Les Houches (1008 m) - Bellevue (1801 m) - Nid d'Aigle (2372 m) - Tête Rousse (3167 m) - Refuge du Goûter (3817 m)</P>
+
+         <P>Depuis Les Houches, prendre le télécabine jusqu'à Bellevue pour poursuivre avec le tramway du Mont-Blanc jusqu'au Nid d'Aigle. Puis suivre le sentier pour regagner le refuge de la Tête Rousse. De là, remonter les pentes de neige pour gagner la rive droite du "Grand Couloir". Traverser ce dernier (chutes de pierre fréquentes) et regagner les rochers rive gauche. Remonter alors cet éperon par une succession de ressauts et d'éboulis moins raides pour gagner le refuge du Goûter).</P>
+
+         <P>2eme jour : Refuge du Goûter (3817 m) - Aiguille du Goûter (3863 m) - Dôme du Goûter (4304 m) - Refuge du Vallot (4362 m) - Arrête des Bosses (4550 m) - Mont-Blanc (4808 m)</P>
+
+         <P>Depuis le refuge du Goûter, gravir la calotte glacière haute d'une vingtaine de mètres surplombant ce dernier pour rejoindre l'arête. Suivre cette arête pour rejoindre les pentes ouest du dôme du Goûter. Les gravir et couper dans les pentes sommitales du dôme, versant Grand Mulet, pour passer sous le sommet. Descendre environ une cinquantaine de mètre de dénivellation et traverser le col du Goûter. Un certain nombre de piquets en bois permettent de se repérer en cas de brouillard. Remonter sur 100 m les pentes ouest et rejoindre le refuge Vallot. Gravir ensuite les ressauts successifs de l'arête des bosses proprement dite. La première bosse est assez raide (35°) et parfois crevassée. La troisième bosse présente une arête pouvant être effilée. Tracer alors sur sont flanc gauche. Gravir ensuite deux murs et terminer l'ascension par une longue arête effilée menant au sommet. Retour aux Houches le même itinéraire.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>La Marche d'approche</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>La Marche d'approche - Ascension du Mont Blanc</ITEM>
+
+               <ITEM>Première jour - La Marche d'approche - 4h10 de marche</ITEM>
+
+               <ITEM>Les Houches - Bellevue - Nid d'Aigle - Refuge de Tête Rousse - Refuge du Goûter</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Voila maintenant deux jours que j'ai stoppé ma traversée des Alpes au camping des Houches (1008 mètres) afin de prendre un peu de repos avant de commencer l'ascension. Ce matin, je retrouve Sylvie, Rémi et Antonio, des amis avec qui je fais de l'escalade à Paris. Ils sont venus me rejoindre pour m'accompagner sur le toit des Alpes. Nous prenons le téléphérique jusqu'à Bellevue (1801 mètres), où de là, nous montons à bord du célèbre tramway du Mont-Blanc jusqu'au Nid d'Aigle (2372 mètres).</P>
+
+         <P>La première partie de la montée se fait bien et en plus le soleil est au rendez-vous. Je parle beaucoup, je profite d'avoir un peu de compagnie sur cette traversée solitaire. Arrivé à proximité du refuge de Tête Rousse (3167 mètres), nous traversons le long glacier de Tête Rousse. De l'autre coté, nous arrivons au fameux "Grand Couloir", réputé pour être le passage délicat de la marche d'approche. Mais je le trouve bien moins impressionnant et bien plus petit que ce que j'imaginais. Il faut juste penser à lever la tête pour vérifier qu'il n'y a pas de chute de pierres. Par contre la suite, et dernière partie de la journée, est beaucoup plus délicates à mon goût. La pente est raide, équipé de câble à certain endroit, le passage est étroit et nous croissons ceux qui redescendent. Aussi, il faut faire attention aux nombreuses chutes de pierres, que l'on ne voit pas forcément arriver vu l'inclinaison de la pente, tout cela sur les deux heures de montée qu'il reste. Je me ferrais prendre pour cible par deux pierres, une sur le sac à dos et une sur le bras…</P>
+
+         <P>Nous arrivons au refuge du Goûter (3817 mètres) en fin de matinée, une fois nos affaires installées à nos couchettes, nous adoptons le "rythme refuge". C'est-à-dire que nous cassons la croûte, nous discutons un peu, puis nous allons faire la sieste de quatorze à dix-sept heure, tout au moins, nous essayons… Puis rebelote, Rémi s'occupe de faire fondre la neige pour cuire les pâtes du soir, nous discutons un peu, avant de retourner nous coucher vers huit heure et demi avec un petit mal de tête pour trois d'entre nous. 21 heure… 22 heure… 23 heure…, je vois toutes les heures défiler et pourtant, je ne pense même pas au Mont-Blanc, mais je n'arrive pas à trouver le sommeil. A minuit, une envie pressante m'oblige à sortir de ma couchette… Les sanitaires étant à l'extérieur, et ayant trop la flemme d'enfiler ma combinaison, voilà que je me retrouve dehors en caleçon à 3817 mètres en pleine nuit. Je fais vite... Mais j'ai le temps de voir Chamonix en contre bas, toute illuminée dans le noir, et d'observer les étoiles dans ce ciel découvert, la journée de demain s'annonce belle.</P>
+
+         <P>Minuit et demi, je m'endors…</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>L'ascension</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>L'ascension du Mont Blanc par le refuge du Goûter</ITEM>
+
+               <ITEM>Deuxième jour - L'ascension - 8h05 de marche</ITEM>
+
+               <ITEM>Refuge du Goûter - Epaule du Dôme du Goûter - Col du Goûter - Abris Vallot - Mont-Blanc - Abris Vallot - Col du Goûter - Epaule du Dôme du Goûter - Refuge du Goûter - Refuge de Tête Rousse - Nid d'Aigle - Bellevue - Les Houches</ITEM>
+            </LISTE>
+         </P>
+
+         <P>Une heure quarante-cinq du matin, nous nous réveillons, la nuit a été très courte pour moi, et apparemment je ne suis pas le seul. Nous nous préparons, avalons quelques calories, crampons serres, frontales allumées, cordées formées, il est trois heure et nous partons.</P>
+
+         <P>Sylvie et Rémi forment la première cordée, Antonio et moi les suivons. Malgré les étoiles de cette nuit, le beau temps n'est pas au rendez vous. Le brouillard, la neige, le vent et le froid nous accompagnent pour cette ascension. Avec Antonio, nous avançons bien, nous doublons plusieurs cordées, ce qui demande des accélérations à chaque fois et des efforts supplémentaires, mais d'un autre coté, rester derrière ces cordées, nous ferrait marcher trop lentement et nous refroidirait… Il fait suffisamment froid comme ça, j'ai le vent qui me glace le visage, la neige reste collée sur nous et nous commençons à nous transformer en bonhomme de neige. Avec le brouillard, nous n'avons aucune visibilité, à peine dix mètres, il nous est difficile de nous repérer et d'avoir une idée de notre avancement.</P>
+
+         <P>Puis je sens que le sentier descend légèrement, je cris alors à Antonio que nous devons être au col du Goûter (4255 mètres) car je me souvient qu'il est un peu plus bas que l'épaule du Dôme du Goûter (4260 mètres). Je regarde ma montre, une heure quinze que nous marchons, le topo indiquait quarante cinq minutes de plus. Mais cette ascension rapide, avec l'altitude, m'épuise. Vers les 4400 mètres, je commence à avoir le souffle court, mon rythme de marche diminue, à 4500, je suis obligé de faire des pauses, à 4600, je suis sur les genoux et je crains de ne pas y arriver. Puis je comprends… Si je souffre autant, c'est que j'en bave pour deux. Dans mon sac, j'ai la photo de mon père, nous avions rêvé de ce sommet ensemble, il en est malheureusement autrement. Je me motive, je dois y arriver, je dois porter sa photo, je dois arriver au sommet pour lui.</P>
+
+         <P>A la lecture des 4700 mètres sur mon altitude, je reprends confiance, le sommet est proche plus que cent mètres. Je donne tout ce qui me reste… Et enfin 4808 mètres ! Nous sautons de joie ! Nous y sommes ! Nous ne voyons pas à dix mètres mais peu importe, nous sommes au sommet du Mont-Blanc. Nous prenons une série de photos avant d'amorcer la descente, quand quelques mètres plus tard, nous croisons une cordée essoufflée Pour les encourager, je leur cris "courage vous y êtes", le gars lève alors la tête, et s'esclame, "Oh Simon, Antonio !" C'est Rémi et Sylvie… Un peu plus et nous nous croisions sans nous reconnaître avec ce brouillard et cette neige figée à nos visages. Nous faisons alors demi-tour pour être tous les quatre ensembles au sommet. Après avoir passé au total quinze minutes au sommet, nous reprenons pour de bon cette fois la descente.</P>
+
+         <P>Pendant la descente le soleil fait son apparition, nous laissant ainsi enfin admirer le panorama. Mais le Mont-Blanc gardera la tête dans les nuages. La marche est encore longue jusqu'au refuge, il nous faut deux heures pour redescendre. Nous arrivons au refuge du Goûter pour huit heure et demi, juste à temps pour le petit déjeuné. Au final, il nous aura fallu cinq heures pour faire cette ascension, pour un petit quart d'heure sur le sommet.</P>
+
+         <P>Après un petit repos bien mérité, nous continuons la descente jusqu'au Nid d'Aigle pour récupérer le tramway.</P>
+      </SEC>
+   </RECIT>
+</BALADE>
+

@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!DOCTYPE BALADE SYSTEM "balades.DTD">
+<?xml-stylesheet href="balades.xsl" type="text/xsl" ?>
+<BALADE>
+   <PRESENTATION>
+      <TITRE>Marseille et la corniche</TITRE>
+
+      <DESCRIPTION>
+         <P>Marseille, à l'origine Massalia, serait la plus ancienne ville de France, fondée six siècles avant J.-C par la colonie Grecque de Phocée. C'est aussi une des plus belles, sa forme, une sorte d'amphithéatre naturel, délimité par les chaînes de l'Estaque, de l'Etoile et du Garlaban au Nord-Est et les Calanques de Marseilleveyre au Sud, et par la mer, à l'Ouest, la ville s'étire sur un territoire immense, plus grand que celui de Paris. C'est également la deuxième ville de France (1,6 million d'habitants).</P>
+
+         <P>Circuit découverte de Marseille à partir de textes texte de Philippe Larue extraits de son livre " ...Marseille, Esprit de Ville "</P>
+      </DESCRIPTION>
+   </PRESENTATION>
+
+   <RECIT>
+      <P>"Marseille est une ville d’arrivée. Et tous les moyens sont bons pour fondre sur elle comme un amant plein de hâte. L’avion survole les îles du Frioul et les calanques, dans un pailletis de soleil. Par train, il faut arriver au matin pour descendre le grand escalier qui domine la ville...".</P>
+
+      <P>L'archipel du Frioul est constitué de quatre îles (le château d'If, Pomègues et Ratonneau, et de l'îlot Tiboulen du Frioul. L'ensemble atteignant 200 ha constitue un patrimoine naturel exceptionnel qui est devenu le parc maritime des îles du Frioul.</P>
+
+      <P>"... Il permet un débarquement de star qui retrouve son enfance. Par mer, les ferries traînés par son attelage de mouettes offrent les quartiers accrochés au bord des vagues, comme un générique et glissera le long de la Grande Major, cette cathédrale aux allures de pièce montée avant de se nicher dans le port de commerce ventru..."</P>
+
+      <SEC>
+         <SOUS-TITRE>Cathédrale Nouvelle Major</SOUS-TITRE>
+
+         <P>Depuis le Vème siècle, plusieurs édifices se sont succèdés à cet emplacement, mais l’église, dans sa forme actuelle, date de 1852, période de fort développement pour la ville de Marseille.</P>
+
+         <P>"... Et toujours la Bonne-Mère qui veille sur ce joli fatras, sur cette cité bordélique et superbe. Notre-Dame-de-la-Garde est la seule à pouvoir régner sur Marseille la rebelle..."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Notre Dame de la Garde</SOUS-TITRE>
+
+         <P>A 154m de hauteur, c'est le point culminant de la ville. Une première chapelle est construite au début du XIIIème siècle, puis un fort, sous François 1er. Et il faut attendre 1864 pour la construction de la basilique.</P>
+
+         <P>"...La Vierge Marie comprend mieux que quiconque l’esprit de cette ville femelle. Il faut lui demander conseil avant de succomber au charme de Massalia. C’est le premier repère pour entamer une visite, que dis-je, une initiation...."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Les confins de Marseille</SOUS-TITRE>
+
+         <P>"... Sur ces rives, le visiteur se sent vite timide comme un amoureux qui doute. Alors il peut tergiverser et tourner autour du cœur de la ville. Qu’importe, le voyage peut commencer par les marges. Direction le grand Nord. Sous le viaduc de Corbières, voilà une plage de galets d’où l’on peut entendre siffler le train de la Côte Bleue...."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Ligne ferroviaire de la côte bleue</SOUS-TITRE>
+
+         <P>construite pour sécuriser la ligne ferroviaire Paris Marseille , cette ligne qui longe la côte de l'Estaque, a entrainé la construction de 18 viaducs et de 23 tunnels entre Miramas et la gare de Marseille.</P>
+
+         <P>"...Mais comme l’amoureux tergiverse toujours, le tête-à-tête peut reprendre à l’autre bout de la ville. Cap au sud là où la route bute sur les calanques. Callelongue, terminus.... Toujours l’éclat aveuglant des roches blanches et le bleu de Marseille...." "</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Callelongue</SOUS-TITRE>
+
+         <P>Située au bout de la Corniche après le village des Goudes. Il s'agit de la première des calanques du massif de Marseilleveyre.</P>
+
+         <P>"... Et puis repartir encore vers les collines de la Treille, à l’est, à l’intérieur des terres, marcher sur les traces du petit Marcel qui n’était pas encore Pagnol et qui s’émerveillait des éclaboussures de sauterelles et avait peur du " Grosibou ..."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>La Treille</SOUS-TITRE>
+
+         <P>Quartier de Marseille immortalisé par Marcel Pagnol qui a grandit dans ce petit village situé à l'extrémité du massif du Garaban. La "fontaine" de Jean de Florette est toujours là...</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Les repères.</SOUS-TITRE>
+
+         <P>"... Le rêve débute au pied du Stade Vélodrome. Comme un enfant qui n’a pas de billet, on écoute le cœur gros cette arène qui vibre même vide. Elle nous appelle.</P>
+
+         <P>Elle parle des légendes de la Coupe du Monde de 1998, de matchs où les Brésiliens Jaïrzinho et Paulo Cesar enflammaient les virages et même d’une incroyable rencontre de rugby France - Australie de l’automne 2001...."</P>
+
+         <P>"... Mais à Marseille, chacun doit se donner une quête, s’imaginer un Graal au cœur de cette ville.</P>
+
+         <P>Ce sera la Vieille-Charité après un parcours initiatique dans les ruelles du Panier, sur les hauteurs du Vieux-Port....."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Le Panier</SOUS-TITRE>
+
+         <P>C'est le quartier le plus ancien de Marseille, situé entre le Vieux-port et le Boulevard des Dames. Le nom aurait pour origine une auberge "le logis du panier" installée au XVIIème siècle.</P>
+
+         <P>"... La Vieille-Charité est un drôle de cloître pour des pénitents en transit. Et il suffit de passer la grille dans l’autre sens pour retrouver le quartier criard avec ses minuscules travées et les enfants qui jouent au foot sur la place avec deux tee-shirts roulés en boule pour but...."</P>
+
+         <P>La Vieille Charité, cet ancien lieu d'hébergement de vagabonds et de mendiants, mit près d'un siècle avant d'être complètement achevée en 1745.</P>
+
+         <P>"...La Vieille-Charité a une sœur d’infortune, un autre lieu d’enfermement où Marseille cachait sa face noire........ Il faut prendre la navette au Vieux-Port pour cingler pour ce bout de ville dans la rade, le Frioul. Plus encore que du Château d’If et de son Comte de Monte-Cristo champion de natation en sac, l’arpenteur en vadrouille...."</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Château d'If</SOUS-TITRE>
+
+         <P>Ancienne forteresse construite sous François Ier, en 1524 et qui devint une prison d'état au XVIIème siècle.</P>
+
+         <P>Elle fut rendue célèbre par Alexandre Dumas avec le Comte de Monte-Christo.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Le vieux port</SOUS-TITRE>
+
+         <P>C'est ici, dans l'ancienne calanque du Lacydon, que les phocéens débarquèrent en 600 avant J.-C.</P>
+
+         <P>Pendant plus de 2000 ans, toute l'activité maritime fut concentrée autour du port. Les marais attenants furent asséchés et transformés en chenevière (chanvre) pour le tissage de cordages pour bateaux. C'est de là qu'est tiré le nom de canebière.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>L'abbaye de Saint-Victor</SOUS-TITRE>
+
+         <P>Située au dessus du vieux port, cette abbaye est depuis le début du Vème siècle un des hauts lieu du catholicisme en France.</P>
+
+         <P>Fondée par Jean Cassien (Saint) en l'honneur de Saint Victor (soldat romain et martyr en l'an 303).</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Le Vallon des Auffes</SOUS-TITRE>
+
+         <P>Situé sous la Corniche, en venant du Vieux-Port, après la plage des Catalans, le Pont de la Fausse-Monnaie et Malmousque, ce petit port protégé et village de pêcheurs a su préserver son authenticité.</P>
+
+         <P>C'est l'endroit idéal pour déguster une bonne bouillabaisse.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>L'église Saint Vincent de Paul et la Canebière</SOUS-TITRE>
+
+         <P>Cette église construite au XIXème siècle sur l'emplacement de l'ancien couvent des Augustins Réformés.</P>
+
+         <P>Elle marque la fin de la plus célèbre des avenues de Marseille, la Canebière, qui connut son heure de gloire au siècle dernier.</P>
+
+         <P>Les travaux d'aménagements liés à l'arrivée du tramway en 2007 ont permis la remise en valeur de cette magnifique avenue qui rejoint le vieux-port.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>La Gare de Marseille</SOUS-TITRE>
+
+         <P>La gare Saint-Charles fut inaugurée en 1848 et s'ouvre en plain centre de Marseille par un escalier monumental classé monument historique. Le traffic annuel est estimé à plus de 15 millions de passagers. Un nouveau hall d'accueil a été inauguré en décembre 2007.</P>
+
+         <P>"Cette halle dessinée par l'architecte Jean-Marie Duthilleul (Arep) joue à la fois le rôle de hall d'accueil des voyageurs, d’espace de commerces et de services et de pôle de correspondance vers la gare routière attenante. Longue de 160 mètres et d'une superficie de 6.400 m2 (elle devient l'un des plus vastes édifices de Marseille), la halle est constituée d'une façade vitrée protégée par une colonnade de 64 piles en pierres taillées pouvant dépasser douze mètres de hauteur et distantes de 2,2 mètres chacune. A l'intérieur, elle est conçue comme une rue avec des services et des commerces, ponctuée de 24 pins reconstitués à partir d'éléments naturels".</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Eglise des Accoules - le Panier</SOUS-TITRE>
+
+         <P>Située dans le quartier du Panier, derrière la mairie du 2ème, elle fut édifiée au XIIème siècle, détruite sous la révolution et reconstruite dans le première moitié du XIXème siècle, sous la monarchie de Juillet.</P>
+      </SEC>
+   </RECIT>
+</BALADE>
+

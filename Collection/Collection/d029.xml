@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE BALADE SYSTEM "balades.DTD">
+<?xml-stylesheet href="balades.xsl" type="text/xsl" ?>
+<BALADE>
+   <PRESENTATION>
+      <TITRE>Beaune</TITRE>
+   </PRESENTATION>
+
+   <RECIT>
+      <SEC>
+         <SOUS-TITRE>Beaune</SOUS-TITRE>
+
+         <P>Beaune : 2000 ans d'histoire ! à l'origine un simple fortin romain, du nom de Belen, divinité solaire, Beaune fut la capitale des Ducs de Bourgogne et devint un centre reconnu du commerce des draps et surtout des vins.</P>
+
+         <P>Les célèbres Hospices de Beaune ont largement contribués à la reconnaissance de la ville.</P>
+
+         <P>C'est en 1443, que Nicolas Rolin, chancelier du Duc de Bourgogne Philippe le Bon, et son épouse Guigone de Salins, fondent l'Hotel-Dieu, afin de soigner les indigents de la région. Cette institution aujourd'hui encore très vivante, représente un patrimoine reconnu à l'échelle mondiale.</P>
+
+         <P>Aujourd'hui l'hotel-Dieu est un musée dont l'éthique est restée la même depuis son origine, soulager et guérir les personnes démunies.</P>
+
+         <P>La vente aux enchères de la production du domaine viticole des hospices, est un évènement annuel incontournable de la Bourgogne.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Savigny les Beaunes :</SOUS-TITRE>
+
+         <P>un des plus importants villages plantés en Côte d'Or, dont 140 ha de Savigny 1er crus rouge en pinot noir.</P>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>Pernand Vergelesse :</SOUS-TITRE>
+
+         <P>Un des plus beaux sites viticoles de Bourgogne, situé entre Savigny-les-Beaune et Aloxe-Corton, sur trois collines avec des expositions et des altitudes différentes.</P>
+
+         <P>Sa production est de 1/3 de blanc (chardonnay) et 2/3 rouge (pinot) dont 16 ha de grands crus et 56 ha de 1er crus.</P>
+
+         <P>le coup de coeur : la présence d'un jeune cuisinier, Laurent Peugeot, qui, après un apprentissage dans la région, à Beaune, Meursault et Chagny au restaurant Lameloise, est parti trois ans au Japon comme chef de cuisine dans des restaurants très réputés. Il ouvre en 2002 avec sa femme, Hiroko, le restaurant "le Charlemagne" à Pernand Vergelesse et vous fait découvrir aujourd'hui une cuisine inventive mélant le raffinement japonais tout en étant proche des produits régionaux.</P>
+
+         <P>il est cité par le Condé Nast Traveler comme un des meilleurs nouveaux restaurants dans le monde !!</P>
+
+         <P>site Internet adresse : Le Charlemagne Route des Vergelesses 21240 Pernand Vergelesses Tél. 03 80 21 51 45 Fax : 03 80 21 58 52</P>
+
+         <P>http://www.lecharlemagne.fr/index.htm</P>
+
+         <PHOTO>à découvrir : photo escapade Beaune et aloxe-corton</PHOTO>
+      </SEC>
+
+      <SEC>
+         <SOUS-TITRE>autres liens</SOUS-TITRE>
+
+         <P>
+            <LISTE>
+               <ITEM>festival de Beaune</ITEM>
+
+               <ITEM>ventes des vins des hospices de Beaune</ITEM>
+
+               <ITEM>palais des congrès de Beaune</ITEM>
+
+               <ITEM>site officiel des hospices de Beaune</ITEM>
+
+               <ITEM>ventes des vins de Beaune</ITEM>
+
+               <ITEM>office de tourisme de Beaune</ITEM>
+
+               <ITEM>site de Savigny-les-Beaune</ITEM>
+
+               <ITEM>guide condé nast traveler</ITEM>
+
+               <ITEM>site sur la Bourgogne</ITEM>
+
+               <ITEM>anciennes photos de la villa Louise</ITEM>
+            </LISTE>
+         </P>
+      </SEC>
+   </RECIT>
+</BALADE>
+
