@@ -3,7 +3,7 @@ CREATE TABLE Terme ( 	id INT AUTO_INCREMENT PRIMARY KEY,
 
 CREATE TABLE Types ( 	id INT AUTO_INCREMENT PRIMARY KEY, 
 														xpath VARCHAR(255),
-														type VARCHAR(255));
+														type VARCHAR(255) NOT NULL);
 
 CREATE TABLE Documents (id INT AUTO_INCREMENT PRIMARY KEY, 
 												num_doc INT NOT NULL, 
