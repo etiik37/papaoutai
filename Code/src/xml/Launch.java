@@ -17,10 +17,10 @@ import org.xml.sax.SAXException;
 public class Launch {
 	public static List<String> pattern  ;
 	public static void main(String[] args){
-
-		ParseXML pxml = new ParseXML("/home/etiik/Bureau/Projet/papaoutai/Collection/Collection/d017.xml");
 		pattern = new ArrayList<String>();
+
 		readFile();
+		ParseXML pxml = new ParseXML("/home/etiik/Bureau/Projet/papaoutai/Collection/Collection/d017.xml");
 		try {
 			DocumentDB doc= pxml.parsePresentation();
 			pxml.parseRecit();

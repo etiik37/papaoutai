@@ -30,7 +30,7 @@ public class ParseXML {
 	int sectionNum=1;
 	int paragrapheNum = 1;
 	int descriptionNum = 1;
-	Map<String,List<String>> listTerm ;
+	HashMap<String,List<String>> listTerm ;
 
 	public ParseXML(String docXmlFileName) {
 		File xmlFile = new File(docXmlFileName);
@@ -41,7 +41,6 @@ public class ParseXML {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -64,20 +63,14 @@ public class ParseXML {
 					NodeList nodeP = eElement.getElementsByTagName("P");
 					for (int i=0;i<nodeP.getLength();i++){
 						String test = eElement.getElementsByTagName("P").item(i).getTextContent();
-						test = test.toLowerCase();
-						test  = test.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");						
-						test  = test.replaceAll("  "," ");	
-						test  = test.replaceAll("[a-z][']","");
-						String[] listMot = test.split(" ");
-						for (String str : listMot){
-							if (!Launch.pattern.contains(str.trim()) || str.equals("")){
-								if (listTerm.containsKey(str.trim())){
-									listTerm.get(str.trim()).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
-								} else {
-									listTerm.put(str.trim(),new ArrayList<String>());
-									listTerm.get(str.trim()).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
-								}
+						for (String str : uniformiserString(test)){
+							if (listTerm.containsKey(str)){
+								listTerm.get(str).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
+							} else {
+								listTerm.put(str,new ArrayList<String>());
+								listTerm.get(str).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
 							}
+
 						}
 						paragrapheNum++;
 					}					
@@ -88,15 +81,7 @@ public class ParseXML {
 		paragrapheNum = 1 ;
 		return docdb;
 	}
-
-	public void printMap(){
-		for(Map.Entry<String, List<String>> entry : listTerm.entrySet()){
-			System.out.println(entry.getKey() + " : "+entry.getValue().size());
-			for (String str : entry.getValue()){
-				System.out.println(str);
-			}
-		}
-	}
+	
 
 	// TODO SOUSTITRE
 	public void parseRecit(){
@@ -117,20 +102,14 @@ public class ParseXML {
 								NodeList nListP = eElementSec.getElementsByTagName("P");
 								for (int tempP = 0; tempP < nListP.getLength(); tempP++) {
 									String test = eElementSec.getElementsByTagName("P").item(tempP).getTextContent();
-									test = test.toLowerCase();
-									test  = test.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");		
-									test  = test.replaceAll("  "," ");	
-									test  = test.replaceAll("[a-z][']","");
-									String[] listMot = test.split(" ");
-									for (String str : listMot){
-										if (!Launch.pattern.contains(str.trim()) || str.equals("")){
-											if (listTerm.containsKey(str.trim())){
-												listTerm.get(str.trim()).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
-											} else {
-												listTerm.put(str.trim(),new ArrayList<String>());
-												listTerm.get(str.trim()).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
-											}
+									for (String str : uniformiserString(test)){
+										if (listTerm.containsKey(str)){
+											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
+										} else {
+											listTerm.put(str,new ArrayList<String>());
+											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
 										}
+
 									}
 									paragrapheNum++;
 								}
@@ -143,22 +122,16 @@ public class ParseXML {
 									if (nNodPhoto.getNodeType() == Node.ELEMENT_NODE) {     
 										Element eElementPhoto = (Element) nNodPhoto;
 										String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
-										test = test.toLowerCase();
-										test  = test.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");
-										test  = test.replaceAll("  "," ");	
-										test  = test.replaceAll("[a-z][']","");
-										String[] listMot = test.split(" ");
-										for (String str : listMot){
-											if (!Launch.pattern.contains(str.trim()) || str.equals("")){
-												if (listTerm.containsKey(str.trim())){
-													listTerm.get(str.trim()).add("PHOTO");
-												} else {
-													listTerm.put(str.trim(),new ArrayList<String>());
-													listTerm.get(str.trim()).add("PHOTO");
-												}
+										for (String str : uniformiserString(test)){
+											if (listTerm.containsKey(str)){
+												listTerm.get(str).add("PHOTO");
+											} else {
+												listTerm.put(str,new ArrayList<String>());
+												listTerm.get(str).add("PHOTO");
 											}
-
 										}
+
+
 									}
 								}
 							}
@@ -176,27 +149,19 @@ public class ParseXML {
 							Element eElementP = (Element) nNodP;
 							if(eElementP.getParentNode().getNodeName().equals("RECIT")){
 								String test = eElement.getElementsByTagName("P").item(tempP).getTextContent();
-								test = test.toLowerCase();
-								test  = test.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");	
-								test  = test.replaceAll("  "," ");	
-								test  = test.replaceAll("[a-z][']","");
-								String[] listMot = test.split(" ");
-								for (String str : listMot){
-									if (!Launch.pattern.contains(str.trim()) || str.equals("")){
-										if (listTerm.containsKey(str.trim())){
-											listTerm.get(str.trim()).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
-										} else {
-											listTerm.put(str.trim(),new ArrayList<String>());
-											listTerm.get(str.trim()).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
-										}
+								for (String str : uniformiserString(test)){
+									if (listTerm.containsKey(str)){
+										listTerm.get(str).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
+									} else {
+										listTerm.put(str,new ArrayList<String>());
+										listTerm.get(str).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
 									}
+
 								}
 
 							}
 							paragrapheNum++;
 						}
-
-
 					}
 					paragrapheNum = 1 ;
 				}
@@ -209,20 +174,14 @@ public class ParseXML {
 							Element eElementPhoto = (Element) nNodPhoto;
 							if(eElementPhoto.getParentNode().getNodeName().equals("RECIT")){
 								String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
-								test = test.toLowerCase();
-								test  = test.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");
-								test  = test.replaceAll("  "," ");	
-								test  = test.replaceAll("[a-z][']","");
-								String[] listMot = test.split(" ");
-								for (String str : listMot){
-									if (!Launch.pattern.contains(str.trim()) || str.equals("")){
-										if (listTerm.containsKey(str)){
-											listTerm.get(str).add("PHOTO");
-										} else {
-											listTerm.put(str,new ArrayList<String>());
-											listTerm.get(str).add("PHOTO");
-										}
+								for (String str : uniformiserString(test)){
+									if (listTerm.containsKey(str)){
+										listTerm.get(str).add("PHOTO");
+									} else {
+										listTerm.put(str,new ArrayList<String>());
+										listTerm.get(str).add("PHOTO");
 									}
+
 								}
 							}
 						}
@@ -230,6 +189,29 @@ public class ParseXML {
 				}
 			}
 		}
+	}
+
+	public void printMap(){
+		for(Map.Entry<String, List<String>> entry : listTerm.entrySet()){
+			System.out.println(entry.getKey() + " : "+entry.getValue().size());
+			for (String str : entry.getValue()){
+				System.out.println(str);
+			}
+		}
+	}
+	
+	public ArrayList<String> uniformiserString(String chaine){
+		String result = chaine.toLowerCase();
+		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");
+		result = result.replaceAll("  "," ");
+		result = result.replaceAll("[a-z][']|[a-z][a-z][']","");
+		ArrayList<String> tabResult = new ArrayList<>();
+		for (String str : result.split(" ")){
+			if (!Launch.pattern.contains(str.trim()) && !str.trim().equals("")){
+				tabResult.add(str.trim());
+			}
+		}
+		return tabResult ;
 	}
 }
 
