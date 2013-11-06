@@ -21,7 +21,6 @@ import model.*;
 
 public class ParseXML {
 
-	String docXmlFileName;
 	String tmpValue;
 	Document doc ;
 	int baladeNum = 1 ;
@@ -32,18 +31,23 @@ public class ParseXML {
 	int descriptionNum = 1;
 	HashMap<String,List<String>> listTerm ;
 
-	public ParseXML(String docXmlFileName) {
-		File xmlFile = new File(docXmlFileName);
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	public ParseXML() {
 		listTerm = new HashMap<String,List<String>>();
+	}
+	
+	public void parse(String docXmlFileName){
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		File xmlFile = new File(docXmlFileName);
 		DocumentBuilder dBuilder;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
+			parsePresentation();
+			parseRecit();
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
@@ -70,7 +74,6 @@ public class ParseXML {
 								listTerm.put(str,new ArrayList<String>());
 								listTerm.get(str).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
 							}
-
 						}
 						paragrapheNum++;
 					}					
@@ -81,16 +84,15 @@ public class ParseXML {
 		paragrapheNum = 1 ;
 		return docdb;
 	}
-	
 
-	// TODO SOUSTITRE
+
 	public void parseRecit(){
 		NodeList nList = doc.getElementsByTagName("RECIT");
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node nNode = nList.item(temp);     
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {     
 				Element eElement = (Element) nNode;
-				// Si c'est une section, on va les parcourrir une par une
+				// Si c'est une section, on va les parcourir une par une
 				if (eElement.getElementsByTagName("SEC").getLength() !=0){
 					NodeList nListSec = eElement.getElementsByTagName("SEC");
 					for (int tempSec = 0; tempSec < nListSec.getLength(); tempSec++) {
@@ -109,7 +111,6 @@ public class ParseXML {
 											listTerm.put(str,new ArrayList<String>());
 											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
 										}
-
 									}
 									paragrapheNum++;
 								}
@@ -124,16 +125,30 @@ public class ParseXML {
 										String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
 										for (String str : uniformiserString(test)){
 											if (listTerm.containsKey(str)){
-												listTerm.get(str).add("PHOTO");
+												listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO");
 											} else {
 												listTerm.put(str,new ArrayList<String>());
-												listTerm.get(str).add("PHOTO");
+												listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO");
 											}
 										}
-
-
 									}
 								}
+							}
+							if (eElementSec.getElementsByTagName("SOUS-TITRE").getLength() !=0){
+								NodeList nListP = eElementSec.getElementsByTagName("SOUS-TITRE");
+								for (int tempP = 0; tempP < nListP.getLength(); tempP++) {
+									String test = eElementSec.getElementsByTagName("SOUS-TITRE").item(tempP).getTextContent();
+									for (String str : uniformiserString(test)){
+										if (listTerm.containsKey(str)){
+											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]");
+										} else {
+											listTerm.put(str,new ArrayList<String>());
+											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]");
+										}
+									}
+									paragrapheNum++;
+								}
+								paragrapheNum = 1 ;
 							}
 						}
 						sectionNum++;
@@ -199,7 +214,7 @@ public class ParseXML {
 			}
 		}
 	}
-	
+
 	public ArrayList<String> uniformiserString(String chaine){
 		String result = chaine.toLowerCase();
 		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");
@@ -212,6 +227,13 @@ public class ParseXML {
 			}
 		}
 		return tabResult ;
+	}
+	
+	public int getMapSize(){
+		return listTerm.size();
+	}
+	public HashMap<String,List<String>> getMap(){
+		return listTerm;
 	}
 }
 
