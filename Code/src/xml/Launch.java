@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +22,12 @@ import model.Termes;
 
 import org.xml.sax.SAXException;
 
+import bdd.BaseInit;
+
 public class Launch {
 	public static List<String> pattern  ;
 	public static HashMap<String,Integer> map ;
-	public static void main(String[] args){
+	public static void main(String[] args) throws SQLException{
 		map = new HashMap<>();
 		long deb = System.currentTimeMillis();
 		pattern = new ArrayList<String>();
@@ -50,7 +55,14 @@ public class Launch {
 		}
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "+(fin-deb) + " ms;\t Mots stockés : " + map.size());
-		printMap();
+		//printMap();
+		BaseInit bi = new BaseInit();
+		Connection co = bi.getConnection();
+		Statement stat = co.createStatement();
+		for(Map.Entry<String, Integer> entry : map.entrySet()){
+			stat.executeQuery("INSERT INTO Terme (terme) VALUES ("+entry.getKey()+");");
+			System.out.println(entry.getKey() + " : "+entry.getValue());			
+		}	
 	}
 
 	public static void readFile(){
