@@ -9,4 +9,18 @@ public class Termes {
 		this.xPath = xPath;
 		this.position = position;
 	}
+	public String getxPath() {
+		return xPath;
+	}
+	public void setxPath(String xPath) {
+		this.xPath = xPath;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	
+	
 }

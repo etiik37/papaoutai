@@ -15,13 +15,15 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.ParserConfigurationException;
 
 import model.DocumentDB;
+import model.Termes;
 
 import org.xml.sax.SAXException;
 
 public class Launch {
 	public static List<String> pattern  ;
+	public static HashMap<String,Integer> map ;
 	public static void main(String[] args){
-		HashMap<String,Integer> map = new HashMap<>();
+		map = new HashMap<>();
 		long deb = System.currentTimeMillis();
 		pattern = new ArrayList<String>();
 		readFile();
@@ -35,26 +37,20 @@ public class Launch {
 		}
 		for (String str : listFichier){
 			pxml.parse(str);
-			HashMap<String,List<String>> mapTemp = pxml.getMap();
-			for(Map.Entry<String, List<String>> entry : mapTemp.entrySet()){
-				if (entry.getKey().length()<8){
-					if (map.containsKey(entry.getKey())){
-						map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
-					} else {
-						map.put(entry.getKey(),entry.getValue().size());
-					}
+			HashMap<String,List<Termes>> mapTemp = pxml.getMap();
+			//TODO Refactor diz shit with a true lemmatizer, not a substring ..
+			for(Map.Entry<String, List<Termes>> entry : mapTemp.entrySet()){
+				if (map.containsKey(entry.getKey())){
+					map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
 				} else {
-					if (map.containsKey(entry.getKey().substring(0,6))){
-						map.put(entry.getKey().substring(0,6),map.get(entry.getKey().substring(0,6))+entry.getValue().size());
-					} else {
-						map.put(entry.getKey().substring(0,6),entry.getValue().size());
-					}
+					map.put(entry.getKey(),entry.getValue().size());
 				}
 			}
-			//pxml.printMap();
+
 		}
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "+(fin-deb) + " ms;\t Mots stockés : " + map.size());
+		printMap();
 	}
 
 	public static void readFile(){
@@ -73,6 +69,12 @@ public class Launch {
 		}		
 		catch (Exception e){
 			System.out.println(e.toString());
+		}
+	}
+
+	public static void printMap(){
+		for(Map.Entry<String, Integer> entry : map.entrySet()){
+			System.out.println(entry.getKey() + " : "+entry.getValue());			
 		}
 	}
 }

@@ -29,10 +29,10 @@ public class ParseXML {
 	int sectionNum=1;
 	int paragrapheNum = 1;
 	int descriptionNum = 1;
-	HashMap<String,List<String>> listTerm ;
+	HashMap<String,List<Termes>> listTerm ;
 
 	public ParseXML() {
-		listTerm = new HashMap<String,List<String>>();
+		listTerm = new HashMap<String,List<Termes>>();
 	}
 	
 	public void parse(String docXmlFileName){
@@ -69,10 +69,10 @@ public class ParseXML {
 						String test = eElement.getElementsByTagName("P").item(i).getTextContent();
 						for (String str : uniformiserString(test)){
 							if (listTerm.containsKey(str)){
-								listTerm.get(str).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
+								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",0));
 							} else {
-								listTerm.put(str,new ArrayList<String>());
-								listTerm.get(str).add("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]");
+								listTerm.put(str,new ArrayList<Termes>());
+								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",0));
 							}
 						}
 						paragrapheNum++;
@@ -106,10 +106,10 @@ public class ParseXML {
 									String test = eElementSec.getElementsByTagName("P").item(tempP).getTextContent();
 									for (String str : uniformiserString(test)){
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",0));
 										} else {
-											listTerm.put(str,new ArrayList<String>());
-											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]");
+											listTerm.put(str,new ArrayList<Termes>());
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",0));
 										}
 									}
 									paragrapheNum++;
@@ -125,10 +125,10 @@ public class ParseXML {
 										String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
 										for (String str : uniformiserString(test)){
 											if (listTerm.containsKey(str)){
-												listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO");
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",0));
 											} else {
-												listTerm.put(str,new ArrayList<String>());
-												listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO");
+												listTerm.put(str,new ArrayList<Termes>());
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",0));
 											}
 										}
 									}
@@ -140,10 +140,10 @@ public class ParseXML {
 									String test = eElementSec.getElementsByTagName("SOUS-TITRE").item(tempP).getTextContent();
 									for (String str : uniformiserString(test)){
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]");
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",0));
 										} else {
-											listTerm.put(str,new ArrayList<String>());
-											listTerm.get(str).add("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]");
+											listTerm.put(str,new ArrayList<Termes>());
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",0));
 										}
 									}
 									paragrapheNum++;
@@ -166,10 +166,10 @@ public class ParseXML {
 								String test = eElement.getElementsByTagName("P").item(tempP).getTextContent();
 								for (String str : uniformiserString(test)){
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",0));
 									} else {
-										listTerm.put(str,new ArrayList<String>());
-										listTerm.get(str).add("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]");
+										listTerm.put(str,new ArrayList<Termes>());
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",0));
 									}
 
 								}
@@ -191,10 +191,10 @@ public class ParseXML {
 								String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
 								for (String str : uniformiserString(test)){
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add("PHOTO");
+										listTerm.get(str).add(new Termes("PHOTO",0));
 									} else {
-										listTerm.put(str,new ArrayList<String>());
-										listTerm.get(str).add("PHOTO");
+										listTerm.put(str,new ArrayList<Termes>());
+										listTerm.get(str).add(new Termes("PHOTO",0));
 									}
 
 								}
@@ -207,17 +207,17 @@ public class ParseXML {
 	}
 
 	public void printMap(){
-		for(Map.Entry<String, List<String>> entry : listTerm.entrySet()){
+		for(Map.Entry<String, List<Termes>> entry : listTerm.entrySet()){
 			System.out.println(entry.getKey() + " : "+entry.getValue().size());
-			for (String str : entry.getValue()){
-				System.out.println(str);
+			for (Termes str : entry.getValue()){
+				System.out.println(str.getxPath()+ " : "+str.getPosition());
 			}
 		}
 	}
 
 	public ArrayList<String> uniformiserString(String chaine){
 		String result = chaine.toLowerCase();
-		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)","");
+		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"","");
 		result = result.replaceAll("  "," ");
 		result = result.replaceAll("[a-z][']|[a-z][a-z][']","");
 		ArrayList<String> tabResult = new ArrayList<>();
@@ -232,7 +232,7 @@ public class ParseXML {
 	public int getMapSize(){
 		return listTerm.size();
 	}
-	public HashMap<String,List<String>> getMap(){
+	public HashMap<String,List<Termes>> getMap(){
 		return listTerm;
 	}
 }
