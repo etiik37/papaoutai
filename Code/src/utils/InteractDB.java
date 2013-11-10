@@ -1,6 +1,7 @@
 package utils;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InteractDB {
@@ -66,4 +67,64 @@ public class InteractDB {
 		return stmt.executeUpdate();
 	}
 
+	public static ResultSet getTerm(int id) throws SQLException{
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT term FROM Term WHERE id="+id, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery();
+		
+	}
+	
+	public static ResultSet getTermIDs(String term) throws SQLException{
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT id FROM Term WHERE term='"+term+"'", java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery();
+		
+	}
+	
+	public static ResultSet getDocByNum(int numDoc) throws SQLException{
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Documents WHERE num_doc="+numDoc, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery();
+		
+	}
+	
+	public static Integer getFreqTermType(int idTerm, int idType) throws SQLException{
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT frequence FROM ContenirTerme WHERE idTerm="+idTerm+" AND idType="+idType, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery().getInt("frequence");
+		
+	}
+	
+	public static Integer getIDContenirTerm(int idTerm, int idType) throws SQLException{
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT id FROM ContenirTerme WHERE idTerm="+idTerm+" AND idType="+idType, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery().getInt("id");
+		
+	}
+	
+	public static Boolean containsTypeInDoc(int idType, int idDoc) throws SQLException {
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT id FROM ContenirTypes WHERE idType="+idType+" AND idDoc="+idDoc, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery().first();
+	}
+	
+	public static Integer getPositionTerm(int idContenir) throws SQLException {
+		if (connection == null) {
+			return null;
+		}
+		java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT position FROM Situer WHERE idContenir="+idContenir, java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY ) ;
+		return stmt.executeQuery().getInt("position");
+	}
 }
