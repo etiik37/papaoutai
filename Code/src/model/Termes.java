@@ -3,26 +3,24 @@ package model;
 import java.util.List;
 
 public class Termes {
-	private String value ;
-	private List<String> xPath ;
-	
-	public Termes(String value) {
-		this.value = value ;
+	private String xPath ;
+	private int position ;
+	public Termes(String xPath,int position) {
+		this.xPath = xPath;
+		this.position = position;
 	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public List<String> getxPath() {
+	public String getxPath() {
 		return xPath;
 	}
-	
-	public void addPath(String xpath){
-		this.xPath.add(xpath);
+	public void setxPath(String xPath) {
+		this.xPath = xPath;
 	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	
+	
 }
