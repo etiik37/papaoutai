@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 
 public class DocumentDB {
 	private String author ="";

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,23 +46,29 @@ public class Launch {
 			HashMap<String,List<Termes>> mapTemp = pxml.getMap();
 			//TODO Refactor diz shit with a true lemmatizer, not a substring ..
 			for(Map.Entry<String, List<Termes>> entry : mapTemp.entrySet()){
-				if (map.containsKey(entry.getKey())){
-					map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
+				if (entry.getKey().length()<=7){
+					if (map.containsKey(entry.getKey())){
+						map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
+					} else {
+						map.put(entry.getKey(),entry.getValue().size());
+					}
 				} else {
-					map.put(entry.getKey(),entry.getValue().size());
+					String tmp = entry.getKey().substring(0,7);
+					if (map.containsKey(entry.getKey())){
+						map.put(tmp,map.get(entry.getKey())+entry.getValue().size());
+					} else {
+						map.put(tmp,entry.getValue().size());
+					}
+
 				}
 			}
 
 		}
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "+(fin-deb) + " ms;\t Mots stockés : " + map.size());
-		//printMap();
-		BaseInit bi = new BaseInit();
-		Connection co = bi.getConnection();
-		Statement stat = co.createStatement();
+		printMap();
 		for(Map.Entry<String, Integer> entry : map.entrySet()){
-			stat.executeQuery("INSERT INTO Terme (terme) VALUES ("+entry.getKey()+");");
-			System.out.println(entry.getKey() + " : "+entry.getValue());			
+
 		}	
 	}
 
@@ -71,8 +78,9 @@ public class Launch {
 		//lecture du fichier texte	
 		try{
 			InputStream ips=new FileInputStream(fichier); 
-			InputStreamReader ipsr=new InputStreamReader(ips);
-			BufferedReader br=new BufferedReader(ipsr);
+			//nputStreamReader ipsr=new InputStreamReader(ips);
+	        Reader utfReader = new InputStreamReader(ips,"UTF-8");
+			BufferedReader br=new BufferedReader(utfReader);
 			String ligne;
 			while ((ligne=br.readLine())!=null){
 				pattern.add(ligne);
