@@ -3,27 +3,16 @@ package xml;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.ParserConfigurationException;
-
-import model.DocumentDB;
 import model.Termes;
-
-import org.xml.sax.SAXException;
-
-import bdd.BaseInit;
 
 public class Launch {
 	public static List<String> pattern  ;
