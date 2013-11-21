@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import utils.*;
 
 import model.Termes;
 
@@ -21,6 +22,7 @@ public class Launch {
 		map = new HashMap<>();
 		long deb = System.currentTimeMillis();
 		pattern = new ArrayList<String>();
+		InteractDB.connect("localhost", 3306, "papaoutai","root", "root");
 		readFile();
 		ParseXML pxml = new ParseXML();
 		File[] listFile = new File("/home/etiik/Bureau/Projet/papaoutai/Collection/Collection/").listFiles();
@@ -40,13 +42,15 @@ public class Launch {
 						map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
 					} else {
 						map.put(entry.getKey(),entry.getValue().size());
+						InteractDB.addTerm(entry.getKey());
 					}
 				} else {
 					String tmp = entry.getKey().substring(0,7);
-					if (map.containsKey(entry.getKey())){
-						map.put(tmp,map.get(entry.getKey())+entry.getValue().size());
+					if (map.containsKey(tmp)){
+						map.put(tmp,map.get(tmp)+entry.getValue().size());
 					} else {
 						map.put(tmp,entry.getValue().size());
+						InteractDB.addTerm(tmp);
 					}
 
 				}
@@ -54,11 +58,7 @@ public class Launch {
 
 		}
 		long fin = System.currentTimeMillis();
-		System.out.println("Executed in : "+(fin-deb) + " ms;\t Mots stockés : " + map.size());
-		printMap();
-		for(Map.Entry<String, Integer> entry : map.entrySet()){
-
-		}	
+		System.out.println("Executed in : "+((float)(fin-deb)/(1000*60)) + " min;\t Mots stockés : " + map.size());	
 	}
 
 	public static void readFile(){
@@ -68,7 +68,7 @@ public class Launch {
 		try{
 			InputStream ips=new FileInputStream(fichier); 
 			//nputStreamReader ipsr=new InputStreamReader(ips);
-	        Reader utfReader = new InputStreamReader(ips,"UTF-8");
+			Reader utfReader = new InputStreamReader(ips,"UTF-8");
 			BufferedReader br=new BufferedReader(utfReader);
 			String ligne;
 			while ((ligne=br.readLine())!=null){

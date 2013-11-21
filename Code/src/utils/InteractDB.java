@@ -39,7 +39,7 @@ public class InteractDB {
 	 * @throws SQLException
 	 */
 	public static int addTerm(String term) throws SQLException {
-		return doUpdate("INSERT INTO Terme (terme) " + "VALUES("+term+")");
+		return doUpdate("INSERT INTO Terme (terme) " + "VALUES(\""+term+"\")");
 	}
 	
 	/**

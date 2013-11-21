@@ -223,7 +223,7 @@ public class ParseXML {
 	public ArrayList<String> uniformiserString(String chaine){
 		String result = chaine.toLowerCase();
 		result = result.trim();
-		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"|\\\\|…","");
+		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"|\\\\|…|«|»","");
 		result = result.replaceAll("-"," ");
 		result = result.replaceAll("  "," ");
 		result = result.replaceAll("[a-z]+['’]"," ");
