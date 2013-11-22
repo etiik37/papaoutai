@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+     "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+    
+<hibernate-configuration>
+  <session-factory>
+    <!--  Paramètres de connexion à la base de données -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost/papaoutai</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
+
+    <!-- Comportement pour la conservation des tables -->
+    <property name="hbm2ddl.auto">validate</property>
+
+    <!-- Fichiers à mapper -->
+    <mapping class="fr.mistra.pgejpav2.jpa.Event" />
+    <mapping class="fr.mistra.pgejpav2.jpa.Address" />
+    <mapping class="fr.mistra.pgejpav2.jpa.User" />
+    <mapping class="fr.mistra.pgejpav2.jpa.Item" />
+    <mapping class="fr.mistra.pgejpav2.jpa.Guest" />
+  
+
+  </session-factory>
+</hibernate-configuration>

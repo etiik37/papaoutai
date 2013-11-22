@@ -27,7 +27,7 @@ public class Launch {
 		readFileStopList();
 	}
 	
-	public static void main(String[] args) throws SQLException{
+	public static void main(String[] args){
 		init();
 		long deb = System.currentTimeMillis();
 		parseAllDoc();		
@@ -106,16 +106,18 @@ public class Launch {
 	
 	public static void handleUser(){
 		do {
+			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
 			ArrayList<String> requestList = parseRequest(requestTyped);
+			System.out.println("Liste des meilleurs resultat probable");
 		} while (true);
 	}
 	
 	
 	public static String getRequest(){
 		String request = "";
-		Scanner sc = new Scanner(System.in);
-		request = sc.nextLine();		
+		Scanner scanner = new Scanner(System.in);
+		request = scanner.nextLine();
 		return request;
 	}
 	

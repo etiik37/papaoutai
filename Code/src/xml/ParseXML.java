@@ -42,7 +42,7 @@ public class ParseXML {
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
-			parsePresentation();
+			//parsePresentation();
 			parseRecit();
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class ParseXML {
 		
 	}
 
-	public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
+	/*public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
 		NodeList nList = doc.getElementsByTagName("PRESENTATION");
 		DocumentDB docdb = new DocumentDB();
 		for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -84,7 +84,7 @@ public class ParseXML {
 		}  	
 		paragrapheNum = 1 ;
 		return docdb;
-	}
+	}*/
 
 
 	public void parseRecit(){
