@@ -16,11 +16,12 @@
     <property name="hbm2ddl.auto">validate</property>
 
     <!-- Fichiers à mapper -->
-    <mapping class="fr.mistra.pgejpav2.jpa.Event" />
-    <mapping class="fr.mistra.pgejpav2.jpa.Address" />
-    <mapping class="fr.mistra.pgejpav2.jpa.User" />
-    <mapping class="fr.mistra.pgejpav2.jpa.Item" />
-    <mapping class="fr.mistra.pgejpav2.jpa.Guest" />
+    <mapping class="model.ContenirTermeDB" />
+    <mapping class="model.ContenirTypesDB" />
+    <mapping class="model.DocumentDB" />
+    <mapping class="model.SituerDB" />
+    <mapping class="model.TermesDB" />
+    <mapping class="model.TypesDB" />
   
 
   </session-factory>
