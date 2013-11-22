@@ -22,7 +22,7 @@ public class Launch {
 		map = new HashMap<>();
 		long deb = System.currentTimeMillis();
 		pattern = new ArrayList<String>();
-		InteractDB.connect("localhost", 3306, "papaoutai","root", "root");
+		//InteractDB.connect("localhost", 3306, "papaoutai","root", "root");
 		readFile();
 		ParseXML pxml = new ParseXML();
 		File[] listFile = new File("/home/etiik/Bureau/Projet/papaoutai/Collection/Collection/").listFiles();
@@ -42,7 +42,7 @@ public class Launch {
 						map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
 					} else {
 						map.put(entry.getKey(),entry.getValue().size());
-						InteractDB.addTerm(entry.getKey());
+						//InteractDB.addTerm(entry.getKey());
 					}
 				} else {
 					String tmp = entry.getKey().substring(0,7);
@@ -50,7 +50,7 @@ public class Launch {
 						map.put(tmp,map.get(tmp)+entry.getValue().size());
 					} else {
 						map.put(tmp,entry.getValue().size());
-						InteractDB.addTerm(tmp);
+						//InteractDB.addTerm(tmp);
 					}
 
 				}

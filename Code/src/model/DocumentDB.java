@@ -1,49 +1,67 @@
 package model;
 
+//JPA Imports
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Documents")
 public class DocumentDB {
-	private String author ="";
-	private String datePub ="" ;
-	private String title ="";
-	
-	public DocumentDB(){
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "auteur", nullable = false)
+	private String auteur = "";
+
+	@Column(name = "num_doc", nullable = false)
+	private int num_doc;
+
+	@Column(name = "datePublication")
+	private String datePublication;
+
+	public DocumentDB() {
 
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getAuteur() {
+		return auteur;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAuteur(String auteur) {
+		this.auteur = auteur;
 	}
 
-	public String getDatePub() {
-		return datePub;
+	public int getNum_doc() {
+		return num_doc;
 	}
 
-	public void setDatePub(String datePub) {
-		this.datePub = datePub;
-	}
-	
-	public String getTitle() {
-		return title;
+	public void setNum_doc(int num_doc) {
+		this.num_doc = num_doc;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public String getDatePublication() {
+		return datePublication;
 	}
 
-	
+	public void setDatePublication(String datePublication) {
+		this.datePublication = datePublication;
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	@Override
-	public String toString(){
-		StringBuilder str = new StringBuilder();
-		str.append("Title is : ").append(this.title).append("\n");
-		if (!("".equals(author))){
-			str.append("Author is : ").append(this.author).append("\n");
-		}
-		return str.toString();
+	public String toString() {
+		return "DocumentDB [id=" + id + ", auteur=" + auteur + ", num_doc="
+				+ num_doc + ", datePublication=" + datePublication + "]";
 	}
-	
-	
+
 }
