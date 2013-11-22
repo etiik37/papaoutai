@@ -67,7 +67,7 @@ public class ParseXML {
 					NodeList nodeP = eElement.getElementsByTagName("P");
 					for (int i=0;i<nodeP.getLength();i++){
 						String test = eElement.getElementsByTagName("P").item(i).getTextContent();
-						ArrayList<String> listUniformiser = uniformiserString(test);
+						ArrayList<String> listUniformiser = Launch.uniformiserString(test);
 						for (String str : listUniformiser){
 							if (listTerm.containsKey(str)){
 								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",0));
@@ -105,13 +105,14 @@ public class ParseXML {
 								NodeList nListP = eElementSec.getElementsByTagName("P");
 								for (int tempP = 0; tempP < nListP.getLength(); tempP++) {
 									String test = eElementSec.getElementsByTagName("P").item(tempP).getTextContent();
-									ArrayList<String> listUniformiser = uniformiserString(test);
-									for (String str : listUniformiser){
+									ArrayList<String> listUniformiser = Launch.uniformiserString(test);
+									for (int i =0;i<listUniformiser.size();i++){
+										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",0));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",0));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i));
 										}
 									}
 									paragrapheNum++;
@@ -124,13 +125,14 @@ public class ParseXML {
 									Node nNodPhoto = nListPhoto.item(tempPhoto);    
 									if (nNodPhoto.getNodeType() == Node.ELEMENT_NODE) {     
 										String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
-										ArrayList<String> listUniformiser = uniformiserString(test);
-										for (String str : listUniformiser){
+										ArrayList<String> listUniformiser = Launch.uniformiserString(test);
+										for (int i =0;i<listUniformiser.size();i++){
+											String str = listUniformiser.get(i);
 											if (listTerm.containsKey(str)){
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",0));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i));
 											} else {
 												listTerm.put(str,new ArrayList<Termes>());
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",0));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i));
 											}
 										}
 									}
@@ -140,13 +142,14 @@ public class ParseXML {
 								NodeList nListP = eElementSec.getElementsByTagName("SOUS-TITRE");
 								for (int tempP = 0; tempP < nListP.getLength(); tempP++) {
 									String test = eElementSec.getElementsByTagName("SOUS-TITRE").item(tempP).getTextContent();
-									ArrayList<String> listUniformiser = uniformiserString(test);
-									for (String str : listUniformiser){
+									ArrayList<String> listUniformiser = Launch.uniformiserString(test);
+									for (int i =0;i<listUniformiser.size();i++){
+										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",0));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",0));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i));
 										}
 									}
 									paragrapheNum++;
@@ -167,13 +170,14 @@ public class ParseXML {
 							Element eElementP = (Element) nNodP;
 							if(eElementP.getParentNode().getNodeName().equals("RECIT")){
 								String test = eElement.getElementsByTagName("P").item(tempP).getTextContent();
-								ArrayList<String> listUniformiser = uniformiserString(test);
-								for (String str : listUniformiser){
+								ArrayList<String> listUniformiser = Launch.uniformiserString(test);
+								for (int i =0;i<listUniformiser.size();i++){
+									String str = listUniformiser.get(i);
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",0));
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i));
 									} else {
 										listTerm.put(str,new ArrayList<Termes>());
-										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",0));
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i));
 									}
 
 								}
@@ -193,13 +197,14 @@ public class ParseXML {
 							Element eElementPhoto = (Element) nNodPhoto;
 							if(eElementPhoto.getParentNode().getNodeName().equals("RECIT")){
 								String test = eElement.getElementsByTagName("PHOTO").item(tempPhoto).getTextContent();
-								ArrayList<String> listUniformiser = uniformiserString(test);
-								for (String str : listUniformiser){
+								ArrayList<String> listUniformiser = Launch.uniformiserString(test);
+								for (int i =0;i<listUniformiser.size();i++){
+									String str = listUniformiser.get(i);
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add(new Termes("PHOTO",0));
+										listTerm.get(str).add(new Termes("PHOTO",i));
 									} else {
 										listTerm.put(str,new ArrayList<Termes>());
-										listTerm.get(str).add(new Termes("PHOTO",0));
+										listTerm.get(str).add(new Termes("PHOTO",i));
 									}
 
 								}
@@ -218,22 +223,6 @@ public class ParseXML {
 				System.out.println(str.getxPath()+ " : "+str.getPosition());
 			}
 		}
-	}
-
-	public ArrayList<String> uniformiserString(String chaine){
-		String result = chaine.toLowerCase();
-		result = result.trim();
-		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"|\\\\|…|«|»","");
-		result = result.replaceAll("-"," ");
-		result = result.replaceAll("  "," ");
-		result = result.replaceAll("[a-z]+['’]"," ");
-		ArrayList<String> tabResult = new ArrayList<>();
-		for (String str : result.split(" ")){
-			if (!Launch.pattern.contains(str.trim()) && !str.trim().equals("")){
-				tabResult.add(str.trim());
-			}
-		}
-		return tabResult ;
 	}
 	
 	public int getMapSize(){
