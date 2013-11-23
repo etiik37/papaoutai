@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.mysema.query.annotations.QueryInit;
@@ -28,13 +29,13 @@ public class ContenirTypesDB {
 	@Column(name = "idTypes", nullable = false)
 	private int idTypes;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumns({ @JoinColumn(name = "idDoc", referencedColumnName = "id", insertable = true, updatable = false), })
+	@JoinColumn(name = "idDoc", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@QueryInit("*")
 	private DocumentDB documents;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumns({ @JoinColumn(name = "idTypes", referencedColumnName = "id", insertable = true, updatable = false), })
+	@JoinColumn(name = "idTypes", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@QueryInit("*")
 	private TypesDB types;
 

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.mysema.query.annotations.QueryInit;
@@ -29,8 +30,8 @@ public class SituerDB {
 	@Column(name = "idContenir", nullable = false)
 	private int idContenir;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinColumns({ @JoinColumn(name = "idContenir", referencedColumnName = "id", insertable = true, updatable = false), })
+	@JoinColumn(name = "idContenir", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@QueryInit("*")
 	ContenirTermeDB conternirTerme;
 
