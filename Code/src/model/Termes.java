@@ -4,9 +4,11 @@ package model;
 public class Termes {
 	private String xPath ;
 	private int position ;
-	public Termes(String xPath,int position) {
+	private int docName ;
+	public Termes(String xPath,int position,int docName) {
 		this.xPath = xPath;
 		this.position = position;
+		this.docName = docName;
 	}
 	public String getxPath() {
 		return xPath;
@@ -20,6 +22,13 @@ public class Termes {
 	public void setPosition(int position) {
 		this.position = position;
 	}
+	public int getDocName() {
+		return docName;
+	}
+	public void setDocName(int docName) {
+		this.docName = docName;
+	}
+	
 	
 	
 }

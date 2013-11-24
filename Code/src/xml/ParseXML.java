@@ -30,19 +30,23 @@ public class ParseXML {
 	int paragrapheNum = 1;
 	int descriptionNum = 1;
 	HashMap<String,List<Termes>> listTerm ;
+	int docName ;
+	DocumentDB docDB;
 
 	public ParseXML() {
 	}
 	
-	public void parse(String docXmlFileName){
+	public void parse(String docXmlFileName,int num){
+		this.docName = num ;
 		listTerm = new HashMap<String,List<Termes>>();
+		docDB = new DocumentDB();
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		File xmlFile = new File(docXmlFileName);
 		DocumentBuilder dBuilder;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
-			//parsePresentation();
+			docDB = parsePresentation();
 			parseRecit();
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
@@ -50,41 +54,42 @@ public class ParseXML {
 		
 	}
 
-	/*public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
+	public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
 		NodeList nList = doc.getElementsByTagName("PRESENTATION");
 		DocumentDB docdb = new DocumentDB();
+		docdb.setNum_doc(docName);
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node nNode = nList.item(temp);     
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {     
 				Element eElement = (Element) nNode;     
 				if (eElement.getElementsByTagName("DATE").getLength() !=0){					
-					docdb.setDatePub(eElement.getElementsByTagName("DATE").item(0).getTextContent());
+					docdb.setDatePublication(eElement.getElementsByTagName("DATE").item(0).getTextContent());
 				}	
 				if (eElement.getElementsByTagName("AUTEUR").getLength() !=0){
-					docdb.setAuthor(eElement.getElementsByTagName("AUTEUR").item(0).getTextContent());
+					docdb.setAuteur(eElement.getElementsByTagName("AUTEUR").item(0).getTextContent());
 				}
 				if (eElement.getElementsByTagName("P").getLength()!=0){
 					NodeList nodeP = eElement.getElementsByTagName("P");
 					for (int i=0;i<nodeP.getLength();i++){
 						String test = eElement.getElementsByTagName("P").item(i).getTextContent();
 						ArrayList<String> listUniformiser = Launch.uniformiserString(test);
-						for (String str : listUniformiser){
+						for (int i1 =0;i1<listUniformiser.size();i1++){
+							String str = listUniformiser.get(i1);
 							if (listTerm.containsKey(str)){
-								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",0));
+								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",i1,docName));
 							} else {
 								listTerm.put(str,new ArrayList<Termes>());
-								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",0));
+								listTerm.get(str).add(new Termes("/BALADE[1]/PRESENTATION[1]/DESCRIPTION[1]/P["+paragrapheNum+"]",i1,docName));
 							}
 						}
 						paragrapheNum++;
 					}					
 				}				
-				docdb.setTitle(eElement.getElementsByTagName("TITRE").item(0).getTextContent());
 			}
 		}  	
 		paragrapheNum = 1 ;
 		return docdb;
-	}*/
+	}
 
 
 	public void parseRecit(){
@@ -109,10 +114,10 @@ public class ParseXML {
 									for (int i =0;i<listUniformiser.size();i++){
 										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
 										}
 									}
 									paragrapheNum++;
@@ -129,10 +134,10 @@ public class ParseXML {
 										for (int i =0;i<listUniformiser.size();i++){
 											String str = listUniformiser.get(i);
 											if (listTerm.containsKey(str)){
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i,docName));
 											} else {
 												listTerm.put(str,new ArrayList<Termes>());
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i,docName));
 											}
 										}
 									}
@@ -146,10 +151,10 @@ public class ParseXML {
 									for (int i =0;i<listUniformiser.size();i++){
 										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i,docName));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i,docName));
 										}
 									}
 									paragrapheNum++;
@@ -174,10 +179,10 @@ public class ParseXML {
 								for (int i =0;i<listUniformiser.size();i++){
 									String str = listUniformiser.get(i);
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i));
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i,docName));
 									} else {
 										listTerm.put(str,new ArrayList<Termes>());
-										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i));
+										listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/P["+paragrapheNum+"]",i,docName));
 									}
 
 								}
@@ -201,10 +206,10 @@ public class ParseXML {
 								for (int i =0;i<listUniformiser.size();i++){
 									String str = listUniformiser.get(i);
 									if (listTerm.containsKey(str)){
-										listTerm.get(str).add(new Termes("PHOTO",i));
+										listTerm.get(str).add(new Termes("PHOTO",i,docName));
 									} else {
 										listTerm.put(str,new ArrayList<Termes>());
-										listTerm.get(str).add(new Termes("PHOTO",i));
+										listTerm.get(str).add(new Termes("PHOTO",i,docName));
 									}
 
 								}
@@ -231,6 +236,10 @@ public class ParseXML {
 	
 	public HashMap<String,List<Termes>> getMap(){
 		return listTerm;
+	}
+	
+	public DocumentDB getDocDB(){
+		return docDB;
 	}
 }
 

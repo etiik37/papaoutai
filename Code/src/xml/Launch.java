@@ -14,16 +14,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import utils.*;
+import model.ContenirTermeDB;
+import model.ContenirTypesDB;
+import model.DocumentDB;
 import model.Termes;
+import model.TermesDB;
+import model.TypesDB;
 
 public class Launch {
 	public static List<String> pattern  ;
-	public static HashMap<String,Integer> map ;
+	public static HashMap<String,List<Termes>> map ;
+	public static List<DocumentDB> listDocDB ;
 	
 	public static void init(){
 		map = new HashMap<>();
 		pattern = new ArrayList<String>();
+		listDocDB = new ArrayList<>();
 		readFileStopList();
 	}
 	
@@ -31,6 +41,7 @@ public class Launch {
 		init();
 		long deb = System.currentTimeMillis();
 		parseAllDoc();		
+		addInDB();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "+((float)(fin-deb)/(60*1000)) + " min");
 		handleUser();
@@ -51,28 +62,27 @@ public class Launch {
 			}
 		}
 		for (String str : listFichier){
-			pxml.parse(str);
 			String numFichier = str.replaceAll("[^\\d]{3}","");
 			numFichier = numFichier.replaceAll("/d","");
 			numFichier = numFichier.replaceAll("l","");
 			int numDoc = Integer.parseInt(numFichier);
+			pxml.parse(str,numDoc);
 			HashMap<String,List<Termes>> mapTemp = pxml.getMap();
+			listDocDB.add(pxml.getDocDB());
 			//TODO Refactor diz shit with a true lemmatizer, not a substring ..
 			for(Map.Entry<String, List<Termes>> entry : mapTemp.entrySet()){
 				if (entry.getKey().length()<=7){
 					if (map.containsKey(entry.getKey())){
-						map.put(entry.getKey(),map.get(entry.getKey())+entry.getValue().size());
+						map.get(entry.getKey()).addAll(entry.getValue());
 					} else {
-						map.put(entry.getKey(),entry.getValue().size());
-						//InteractDB.addTerm(entry.getKey());
+						map.put(entry.getKey(),entry.getValue());
 					}
 				} else {
 					String tmp = entry.getKey().substring(0,7);
 					if (map.containsKey(tmp)){
-						map.put(tmp,map.get(tmp)+entry.getValue().size());
+						map.get(tmp).addAll(entry.getValue());
 					} else {
-						map.put(tmp,entry.getValue().size());
-						//InteractDB.addTerm(tmp);
+						map.put(tmp,entry.getValue());
 					}
 
 				}
@@ -99,9 +109,7 @@ public class Launch {
 	}
 
 	public static void printMap(){
-		for(Map.Entry<String, Integer> entry : map.entrySet()){
-			System.out.println(entry.getKey() + " : "+entry.getValue());			
-		}
+
 	}	
 	
 	public static void handleUser(){
@@ -139,6 +147,55 @@ public class Launch {
 			}
 		}
 		return tabResult ;
+	}
+	
+	
+	public static void addInDB(){
+		Session s = HibernateUtils.getSession();
+		Transaction t = s.beginTransaction();
+		for (DocumentDB docdb : listDocDB){
+			s.save(docdb);
+		}
+		for (Map.Entry<String, List<Termes>> entry : map.entrySet()){
+			TermesDB terme = new TermesDB();
+			terme.setTerme(entry.getKey());
+			s.save(terme);
+			for (Termes termes : entry.getValue()){
+				TypesDB typedb = new TypesDB();
+				typedb.setType("");
+				typedb.setXpath(termes.getxPath());
+				s.save(typedb);
+				ContenirTypesDB ctdb = new ContenirTypesDB();
+				ctdb.setIdDoc(getDocDB(termes.getDocName()).getId());
+				ctdb.setIdTypes(typedb.getId());
+				s.save(ctdb);
+				ContenirTermeDB cterme = new ContenirTermeDB();
+				cterme.setIdTerme(terme.getId());
+				cterme.setIdTypes(typedb.getId());
+				cterme.setFrequence(getFreqTerme(entry.getValue(),termes.getDocName(),termes.getxPath()));
+				s.save(cterme);
+			}
+		}
+		t.commit();
+		s.close();
+	}
+	
+	public static DocumentDB getDocDB(int num){
+		for (DocumentDB docdb : listDocDB){
+			if (docdb.getNum_doc()==num)
+				return docdb ;
+		}
+		return null ;
+	}
+	
+	public static int getFreqTerme(List<Termes> termes,int numDoc,String xpath){
+		int count = 0;
+		for (Termes t : termes){
+			if ((t.getDocName() == numDoc) && (xpath.equals(t.getxPath()))){
+				count++;
+			}
+		}
+		return count ;
 	}
 	
 }
