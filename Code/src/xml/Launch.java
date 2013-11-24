@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -40,8 +41,8 @@ public class Launch {
 	public static void main(String[] args){
 		init();
 		long deb = System.currentTimeMillis();
-		parseAllDoc();		
-		addInDB();
+		//parseAllDoc();		
+		//addInDB();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "+((float)(fin-deb)/(60*1000)) + " min");
 		handleUser();
@@ -117,8 +118,24 @@ public class Launch {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
 			ArrayList<String> requestList = parseRequest(requestTyped);
+			for (String str : requestList){
+				getListFile(str);
+			}
 			System.out.println("Liste des meilleurs resultat probable");
 		} while (true);
+	}
+	
+	public static void getListFile(String word){
+		Session s = HibernateUtils.getSession();
+		//Transaction t = s.beginTransaction();
+		int idTerme ;
+		Query q = s.createQuery("FROM TermesDB WHERE terme = :terme");
+		q.setParameter("terme",word);
+		List<TermesDB> listTerme = q.list();
+		for (TermesDB tdb : listTerme){
+			
+		}
+		s.close();
 	}
 	
 	
