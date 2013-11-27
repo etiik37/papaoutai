@@ -21,7 +21,7 @@ public class TypesDB {
 
 	@Column(name = "type", nullable = false)
 	private String type;
-
+	
 	public String getXpath() {
 		return xpath;
 	}
