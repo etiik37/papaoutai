@@ -1,6 +1,5 @@
 package model;
 
-//JPA Imports
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,31 +13,32 @@ import javax.persistence.Table;
 import com.mysema.query.annotations.QueryInit;
 
 @Entity
-@Table(name = "ContenirTerme")
-public class ContenirTermeDB {
+@Table(name = "IndexInverse")
+public class IndexInverseDB {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-
+	
 	@Column(name = "idTerme", nullable = false)
 	private int idTerme;
-
-	@Column(name = "idTypes", nullable = false)
-	private int idTypes;
-
-	@Column(name = "frequence", nullable = false)
-	private int frequence;
-
+	
+	@Column(name = "idDoc", nullable = false)
+	private int idDoc;
+	
+	@JoinColumn(name = "idDoc", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@QueryInit("*")
+	private DocumentDB documents;
+	
 	@JoinColumn(name = "idTerme", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@QueryInit("*")
 	private TermesDB terme;
 
-	@JoinColumn(name = "idTypes", referencedColumnName = "id", insertable = false, updatable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@QueryInit("*")
-	private TypesDB types;
+	public int getId() {
+		return id;
+	}
 
 	public int getIdTerme() {
 		return idTerme;
@@ -48,20 +48,20 @@ public class ContenirTermeDB {
 		this.idTerme = idTerme;
 	}
 
-	public int getIdTypes() {
-		return idTypes;
+	public int getIdDoc() {
+		return idDoc;
 	}
 
-	public void setIdTypes(int idTypes) {
-		this.idTypes = idTypes;
+	public void setIdDoc(int idDoc) {
+		this.idDoc = idDoc;
 	}
 
-	public int getFrequence() {
-		return frequence;
+	public DocumentDB getDocuments() {
+		return documents;
 	}
 
-	public void setFrequence(int frequence) {
-		this.frequence = frequence;
+	public void setDocuments(DocumentDB documents) {
+		this.documents = documents;
 	}
 
 	public TermesDB getTerme() {
@@ -71,16 +71,6 @@ public class ContenirTermeDB {
 	public void setTerme(TermesDB terme) {
 		this.terme = terme;
 	}
-
-	public TypesDB getTypes() {
-		return types;
-	}
-
-	public void setTypes(TypesDB types) {
-		this.types = types;
-	}
-
-	public int getId() {
-		return id;
-	}
+	
+	
 }

@@ -22,6 +22,9 @@ public class DocumentDB {
 
 	@Column(name = "num_doc", nullable = false)
 	private int num_doc;
+	
+	@Column(name = "nb_mot", nullable = false)
+	private int nb_mot;
 
 	@Column(name = "datePublication")
 	private String datePublication;
@@ -63,5 +66,19 @@ public class DocumentDB {
 		return "DocumentDB [id=" + id + ", auteur=" + auteur + ", num_doc="
 				+ num_doc + ", datePublication=" + datePublication + "]";
 	}
+
+	public int getNb_mot() {
+		return nb_mot;
+	}
+
+	public void setNb_mot(int nb_mot) {
+		this.nb_mot = nb_mot;
+	}
+	
+	public void incrNb_mot(){
+		this.nb_mot++;
+	}
+	
+	
 
 }

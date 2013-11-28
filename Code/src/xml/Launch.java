@@ -23,31 +23,36 @@ import utils.*;
 import model.ContenirTermeDB;
 import model.ContenirTypesDB;
 import model.DocumentDB;
+import model.IndexInverseDB;
 import model.Termes;
 import model.TermesDB;
 import model.TypesDB;
+
+import org.tartarus.snowball.SnowballStemmer;
+import org.tartarus.snowball.ext.frenchStemmer;
 
 public class Launch {
 	public static List<String> pattern;
 	public static HashMap<String, List<Termes>> map;
 	public static List<DocumentDB> listDocDB;
-
+	private static SnowballStemmer stemmer;
 	public static void init() {
 		map = new HashMap<>();
 		pattern = new ArrayList<String>();
 		listDocDB = new ArrayList<>();
+		stemmer = (SnowballStemmer) new frenchStemmer();
 		readFileStopList();
 	}
 
 	public static void main(String[] args) {
 		init();
 		long deb = System.currentTimeMillis();
-		//parseAllDoc();
-		//addInDB();
+		parseAllDoc();
+		addInDB();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
 				+ ((float) (fin - deb) / (60 * 1000)) + " min");
-		handleUser();
+		//handleUser();
 	}
 
 	public static void parseAllDoc() {
@@ -189,8 +194,8 @@ public class Launch {
 		result = result.replaceAll("[a-z]+['’]", " ");
 		ArrayList<String> tabResult = new ArrayList<>();
 		for (String str : result.split(" ")) {
-			if (!pattern.contains(str.trim()) && !str.trim().equals("")) {
-				tabResult.add(stripAccents(str.trim()));
+			if (!pattern.contains(stemmWord(str.trim())) && !stemmWord(str.trim()).equals("")) {
+				tabResult.add(stripAccents(stemmWord(str.trim())));
 			}
 		}
 		return tabResult;
@@ -206,6 +211,7 @@ public class Launch {
 			TermesDB terme = new TermesDB();
 			terme.setTerme(entry.getKey());
 			s.save(terme);
+			ArrayList<Integer> listAdd = new ArrayList<>();
 			for (Termes termes : entry.getValue()) {
 				TypesDB typedb = new TypesDB();
 				typedb.setType("");
@@ -213,6 +219,8 @@ public class Launch {
 				s.save(typedb);
 				ContenirTypesDB ctdb = new ContenirTypesDB();
 				ctdb.setIdDoc(getDocDB(termes.getDocName()).getId());
+				getDocDB(termes.getDocName()).incrNb_mot();
+				s.merge(getDocDB(termes.getDocName()));
 				ctdb.setIdTypes(typedb.getId());
 				s.save(ctdb);
 				ContenirTermeDB cterme = new ContenirTermeDB();
@@ -221,6 +229,13 @@ public class Launch {
 				cterme.setFrequence(getFreqTerme(entry.getValue(),
 						termes.getDocName(), termes.getxPath(), entry.getKey()));
 				s.save(cterme);
+				if (!listAdd.contains(termes.getDocName())){
+					IndexInverseDB iidb = new IndexInverseDB();
+					listAdd.add(termes.getDocName());
+					iidb.setIdTerme(terme.getId());
+					iidb.setIdDoc(getDocDB(termes.getDocName()).getId());
+					s.save(iidb);
+				}
 			}
 		}
 		t.commit();
@@ -305,4 +320,11 @@ public class Launch {
                                     list.set(j, x);
                             }
     }
+
+	public static String stemmWord(String word){
+		stemmer.setCurrent(word);
+        stemmer.stem();
+        String stemmed = stemmer.getCurrent();
+        return stemmed ;
+	}
 }

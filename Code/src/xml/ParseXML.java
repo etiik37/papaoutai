@@ -58,6 +58,7 @@ public class ParseXML {
 		NodeList nList = doc.getElementsByTagName("PRESENTATION");
 		DocumentDB docdb = new DocumentDB();
 		docdb.setNum_doc(docName);
+		docdb.setNb_mot(0);
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node nNode = nList.item(temp);     
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {     
