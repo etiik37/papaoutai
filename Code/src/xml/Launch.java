@@ -49,8 +49,8 @@ public class Launch {
 		init();
 		long deb = System.currentTimeMillis();
 		parseAllDoc();
-		//addInDBInit();
-		createIndexTfIdf();
+		addInDBInit();
+		//createIndexTfIdf();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
 				+ ((float) (fin - deb) / (60 * 1000)) + " min");
@@ -216,7 +216,7 @@ public class Launch {
 			s.save(terme);
 			ArrayList<Integer> listAdd = new ArrayList<>();
 			for (Termes termes : entry.getValue()) {
-				TypesDB typedb = getTypeDB(termes.getDocName(),termes.getxPath(),listXPath);
+				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName()).getNum_doc(),termes.getxPath(),listXPath);
 				if (typedb == null){
 					typedb = new TypesDB();
 					typedb.setXpath(termes.getxPath());
