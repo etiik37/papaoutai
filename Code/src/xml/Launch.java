@@ -48,14 +48,16 @@ public class Launch {
 	public static void main(String[] args) {
 		init();
 		long deb = System.currentTimeMillis();
-		/*parseAllDoc();
+		/* STEP 1 - Must have the hibernate config in create mode
+		 * parseAllDoc();
 		System.out.println("------------");
 		System.out.println("PARSE DONE");
 		System.out.println("------------");
-		addInDBInit();
+		addInDBInit(); */
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
-				+ ((float) (fin - deb) / (60 * 1000)) + " min");*/
+				+ ((float) (fin - deb) / (60 * 1000)) + " min");
+		//STEP 2 - Must put the hibernate config in validate
 		System.out.println("------------");
 		System.out.println("QUERIES");
 		System.out.println("------------");
@@ -261,23 +263,6 @@ public class Launch {
 			}
 			tfidf.setValue((tfidf.getValue()/(double)nbMot)*Math.log((double)listXPath.size()/(double)nbOccur));
 			s.merge(tfidf);
-		}
-		t.commit();
-		s.close();
-	}
-
-	public static void createIndexTfIdf(){
-		Session s = HibernateUtils.getSession();
-		Transaction t = s.beginTransaction();
-		Query q2 = s.createQuery("FROM DocumentDB");
-		int x = q2.list().size();
-		Query q = s.createQuery("FROM TfIdfDB");
-		List<TfIdfDB> listTfIdf = q.list();
-		for (TfIdfDB tDb : listTfIdf){
-			Query q1 = s.createQuery("FROM IndexInverseDB WHERE idTerme= :idTerme");
-			q1.setParameter("idTerme",tDb.getIdTerme());
-			tDb.setValue((tDb.getValue()/(double)tDb.getTypes().getNb_mot())*Math.log((double)q1.list().size()/(double)x));
-			s.merge(tDb);
 		}
 		t.commit();
 		s.close();
