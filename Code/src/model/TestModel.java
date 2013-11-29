@@ -28,7 +28,7 @@ public class TestModel {
 		s.save(terme2);
 		
 		TypesDB type = new TypesDB();
-		type.setType("test type");
+		//type.setType("test type");
 		type.setXpath("/path/cool");
 		
 		s.save(type);

@@ -26,6 +26,7 @@ import model.DocumentDB;
 import model.IndexInverseDB;
 import model.Termes;
 import model.TermesDB;
+import model.TfIdfDB;
 import model.TypesDB;
 
 import org.tartarus.snowball.SnowballStemmer;
@@ -48,7 +49,8 @@ public class Launch {
 		init();
 		long deb = System.currentTimeMillis();
 		parseAllDoc();
-		addInDB();
+		//addInDBInit();
+		createIndexTfIdf();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
 				+ ((float) (fin - deb) / (60 * 1000)) + " min");
@@ -201,9 +203,10 @@ public class Launch {
 		return tabResult;
 	}
 
-	public static void addInDB() {
+	public static void addInDBInit() {
 		Session s = HibernateUtils.getSession();
 		Transaction t = s.beginTransaction();
+		ArrayList<TypesDB> listXPath = new ArrayList<>();
 		for (DocumentDB docdb : listDocDB) {
 			s.save(docdb);
 		}
@@ -213,16 +216,20 @@ public class Launch {
 			s.save(terme);
 			ArrayList<Integer> listAdd = new ArrayList<>();
 			for (Termes termes : entry.getValue()) {
-				TypesDB typedb = new TypesDB();
-				typedb.setType("");
-				typedb.setXpath(termes.getxPath());
-				s.save(typedb);
-				ContenirTypesDB ctdb = new ContenirTypesDB();
-				ctdb.setIdDoc(getDocDB(termes.getDocName()).getId());
+				TypesDB typedb = getTypeDB(termes.getDocName(),termes.getxPath(),listXPath);
+				if (typedb == null){
+					typedb = new TypesDB();
+					typedb.setXpath(termes.getxPath());
+					typedb.setNb_mot(1);
+					typedb.setIdDoc(getDocDB(termes.getDocName()).getId());
+					listXPath.add(typedb);
+					s.save(typedb);
+				} else {
+					typedb.incrNbMot();
+					s.merge(typedb);
+				}
 				getDocDB(termes.getDocName()).incrNb_mot();
 				s.merge(getDocDB(termes.getDocName()));
-				ctdb.setIdTypes(typedb.getId());
-				s.save(ctdb);
 				ContenirTermeDB cterme = new ContenirTermeDB();
 				cterme.setIdTerme(terme.getId());
 				cterme.setIdTypes(typedb.getId());
@@ -242,10 +249,45 @@ public class Launch {
 		s.close();
 	}
 
+	public static void createIndexTfIdf(){
+		Session s = HibernateUtils.getSession();
+		Transaction t = s.beginTransaction();
+		Query q = s.createQuery("FROM TermesDB");
+		List<TermesDB> listTerme = q.list();
+		Query q3 = s.createQuery("FROM DocumentDB");
+		List<DocumentDB> listdoc = q3.list();
+		for (TermesDB terme : listTerme){
+			Query q2 = s.createQuery("FROM IndexInverseDB WHERE idTerme = :idterme");
+			q2.setParameter("idterme", terme.getId());
+			List<IndexInverseDB> listIndex = q2.list();
+			Query q1 = s.createQuery("FROM ContenirTermeDB WHERE idTerme = :idterme");
+			q1.setParameter("idterme", terme.getId());
+			List<ContenirTermeDB> listContenirTerme = q1.list();
+			for (ContenirTermeDB ctdb : listContenirTerme){
+				TfIdfDB tdidf = new TfIdfDB();
+				tdidf.setIdTerme(terme.getId());
+				tdidf.setIdTypes(ctdb.getIdTypes());
+				tdidf.setValue(((double)ctdb.getFrequence()/ctdb.getTypes().getNb_mot())*Math.log((float)listdoc.size()/(float)listIndex.size()));
+				s.save(tdidf);
+			}
+		}
+		t.commit();
+		s.close();
+	}
+
 	public static DocumentDB getDocDB(int num) {
 		for (DocumentDB docdb : listDocDB) {
 			if (docdb.getNum_doc() == num)
 				return docdb;
+		}
+		return null;
+	}
+	
+	public static TypesDB getTypeDB(int numDoc,String xPath,List<TypesDB> listTypes) {
+		for (TypesDB typedb : listTypes) {
+			if ((typedb.getIdDoc() == numDoc) && typedb.getXpath().equals(xPath)){
+				return typedb;
+			}
 		}
 		return null;
 	}
@@ -261,7 +303,6 @@ public class Launch {
 				dedouble.add(t);
 			}
 		}
-		//map.put(key, dedouble);
 		return count;
 	}
 

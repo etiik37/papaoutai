@@ -3,10 +3,15 @@ package model;
 //JPA Imports
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.mysema.query.annotations.QueryInit;
 
 @Entity
 @Table(name = "Type")
@@ -18,9 +23,18 @@ public class TypesDB {
 
 	@Column(name = "xpath")
 	private String xpath;
+	
+	@Column(name = "nb_mot", nullable = false)
+	private int nb_mot;
 
-	@Column(name = "type", nullable = false)
-	private String type;
+	@Column(name = "idDoc", nullable = false)
+	private int idDoc;
+	
+	@JoinColumn(name = "idDoc", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@QueryInit("*")
+	private DocumentDB documents;
+	
 	
 	public String getXpath() {
 		return xpath;
@@ -30,15 +44,36 @@ public class TypesDB {
 		this.xpath = xpath;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public int getId() {
 		return id;
+	}
+
+	public int getNb_mot() {
+		return nb_mot;
+	}
+
+	public void setNb_mot(int nb_mot) {
+		this.nb_mot = nb_mot;
+	}
+	
+	public void incrNbMot(){
+		this.nb_mot++;
+	}
+
+	public int getIdDoc() {
+		return idDoc;
+	}
+
+	public void setIdDoc(int idDoc) {
+		this.idDoc = idDoc;
+	}
+
+	public DocumentDB getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(DocumentDB documents) {
+		this.documents = documents;
 	}
 }
