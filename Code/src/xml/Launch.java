@@ -48,15 +48,18 @@ public class Launch {
 	public static void main(String[] args) {
 		init();
 		long deb = System.currentTimeMillis();
-		parseAllDoc();
+		/*parseAllDoc();
 		System.out.println("------------");
 		System.out.println("PARSE DONE");
 		System.out.println("------------");
 		addInDBInit();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
-				+ ((float) (fin - deb) / (60 * 1000)) + " min");
-		//handleUser();
+				+ ((float) (fin - deb) / (60 * 1000)) + " min");*/
+		System.out.println("------------");
+		System.out.println("QUERIES");
+		System.out.println("------------");
+		handleUser();
 	}
 
 	public static void parseAllDoc() {
@@ -128,51 +131,27 @@ public class Launch {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
 			ArrayList<String> requestList = parseRequest(requestTyped);
-			Map<String, ArrayList<Termes>> mapContenir = new HashMap<>();
-			ArrayList<ArrayList<Termes>> test = new ArrayList<>();
+			ArrayList<List<TfIdfDB>> test = new ArrayList<>();
 			for (String str : requestList) {
 				test.add(getListFile(str));
 				System.out.println(str);
-				mapContenir.put(str, getListFile(str));
 			}
-			System.out.println(test.size());
 			System.out.println("Liste des meilleurs resultat probable");
 			getPertinence(10,test);
 		} while (true);
 	}
 
-	public static ArrayList<Termes> getListFile(String word) {
+	public static List<TfIdfDB> getListFile(String word) {
 		Session s = HibernateUtils.getSession();
-		ArrayList<Termes> resultTerme = new ArrayList<>();
+		List<TfIdfDB> resultTerme = new ArrayList<>();
 		Query q = s.createQuery("FROM TermesDB WHERE terme = :terme");
 		q.setParameter("terme", word);
 		List<TermesDB> listTerme = q.list();
 		for (TermesDB tdb : listTerme) {
 			Query q1 = s
-					.createQuery("FROM ContenirTermeDB ct WHERE ct.idTerme = :idterme");
+					.createQuery("FROM TfIdfDB tidb WHERE tidb.idTerme = :idterme");
 			q1.setParameter("idterme", tdb.getId());
-			List<ContenirTermeDB> listContenirTerme = q1.list();
-			for (ContenirTermeDB ctdb : listContenirTerme) {
-				Query q2 = s
-						.createQuery("FROM ContenirTypesDB ct WHERE ct.idTypes = :idtypes");
-				q2.setParameter("idtypes", ctdb.getIdTypes());
-				List<ContenirTypesDB> listType = q2.list();
-				for (ContenirTypesDB ctydb : listType) {
-					Termes temp = new Termes(ctydb.getTypes().getXpath(), ctydb
-							.getDocuments().getNum_doc(), ctdb.getFrequence(),
-							word);
-					boolean exist = false;
-					for (Termes t : resultTerme) {
-						if (t.equals(temp)) {
-							exist = true;
-							break ;
-						}
-					}
-					if (!exist) {
-						resultTerme.add(temp);
-					}
-				}
-			}
+			resultTerme = q1.list();
 		}
 		s.close();
 		return resultTerme;
@@ -369,41 +348,51 @@ public class Launch {
 				"\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	public static void getPertinence(int nbRow, ArrayList<ArrayList<Termes>> list){
-		ArrayList<Termes> listPertinence = new ArrayList<>();
-		for (ArrayList<Termes> al : list){
-			for (Termes t : al){
+	public static void getPertinence(int nbRow, ArrayList<List<TfIdfDB>> list){
+		ArrayList<TfIdfDB> listPertinence = new ArrayList<>();
+		for (List<TfIdfDB> al : list){
+			for (TfIdfDB t : al){
 				boolean exist = false ;
 				int pos =0 ;
 				for (int i = 0;i<listPertinence.size();i++){
-					if (listPertinence.get(i).equals(t)){
+					if (listPertinence.get(i).getIdTypes() == t.getIdTypes()){
 						exist = true ;
 						pos = i ;
 						break ;
 					}
 				}
 				if (!exist){
-					listPertinence.add(Termes.Termes(t.getxPath(),t.getDocName(),t.getFrequence()));
+					TfIdfDB temp = new TfIdfDB();
+					temp.setIdTerme(t.getIdTerme());
+					temp.setIdTypes(t.getIdTypes());
+					temp.setValue(t.getValue());
+					listPertinence.add(temp);
 				} else {
-					listPertinence.get(pos).setFrequence(listPertinence.get(pos).getFrequence()+t.getFrequence());
+					TfIdfDB temp = listPertinence.get(pos);
+					System.out.println(temp.getValue());
+					temp.setValue(temp.getValue()+t.getValue());
+					System.out.println(listPertinence.get(pos).getValue());
 				}
 			}
 		}
 		tribulles(listPertinence);
 		System.out.println(listPertinence.size());
+		Session s = HibernateUtils.getSession();
 		for (int i=0;i<nbRow;i++){
-			System.out.println(listPertinence.get(i).toString());
+			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
+			q.setParameter("idType", listPertinence.get(i).getIdTypes());
+			System.out.println(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc()+"\t"+((TypesDB)q.uniqueResult()).getXpath());
 		}
 
 	}
 
-	public static void tribulles(ArrayList<Termes> list)
+	public static void tribulles(ArrayList<TfIdfDB> list)
 	{
 		for (int i=0 ;i<=(list.size()-2);i++)
 			for (int j=(list.size()-1);i < j;j--)
-				if (list.get(j).getFrequence() > list.get(j-1).getFrequence())
+				if (list.get(j).getValue() > list.get(j-1).getValue())
 				{
-					Termes x=list.get(j-1);
+					TfIdfDB x=list.get(j-1);
 					list.set(j-1,list.get(j));
 					list.set(j, x);
 				}
