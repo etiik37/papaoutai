@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.mysema.query.annotations.QueryInit;
+import com.mysema.query.sql.types.Type;
 
 @Entity
 @Table(name = "IndexInverse")
@@ -23,13 +24,13 @@ public class IndexInverseDB {
 	@Column(name = "idTerme", nullable = false)
 	private int idTerme;
 	
-	@Column(name = "idDoc", nullable = false)
-	private int idDoc;
+	@Column(name = "idType", nullable = false)
+	private int idType;
 	
-	@JoinColumn(name = "idDoc", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "idType", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@QueryInit("*")
-	private DocumentDB documents;
+	private TypesDB types;
 	
 	@JoinColumn(name = "idTerme", referencedColumnName = "id", insertable = false, updatable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -48,20 +49,20 @@ public class IndexInverseDB {
 		this.idTerme = idTerme;
 	}
 
-	public int getIdDoc() {
-		return idDoc;
+	public int getIdType() {
+		return idType;
 	}
 
-	public void setIdDoc(int idDoc) {
-		this.idDoc = idDoc;
+	public void setIdType(int idType) {
+		this.idType = idType;
 	}
 
-	public DocumentDB getDocuments() {
-		return documents;
+	public TypesDB getDocuments() {
+		return types;
 	}
 
-	public void setDocuments(DocumentDB documents) {
-		this.documents = documents;
+	public void setTypes(TypesDB types) {
+		this.types = types ;
 	}
 
 	public TermesDB getTerme() {

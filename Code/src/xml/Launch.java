@@ -49,8 +49,10 @@ public class Launch {
 		init();
 		long deb = System.currentTimeMillis();
 		parseAllDoc();
+		System.out.println("------------");
+		System.out.println("PARSE DONE");
+		System.out.println("------------");
 		addInDBInit();
-		//createIndexTfIdf();
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
 				+ ((float) (fin - deb) / (60 * 1000)) + " min");
@@ -207,6 +209,8 @@ public class Launch {
 		Session s = HibernateUtils.getSession();
 		Transaction t = s.beginTransaction();
 		ArrayList<TypesDB> listXPath = new ArrayList<>();
+		ArrayList<TfIdfDB> listTfIdf = new ArrayList<>();
+		ArrayList<IndexInverseDB> listAdd = new ArrayList<>();
 		for (DocumentDB docdb : listDocDB) {
 			s.save(docdb);
 		}
@@ -214,9 +218,10 @@ public class Launch {
 			TermesDB terme = new TermesDB();
 			terme.setTerme(entry.getKey());
 			s.save(terme);
-			ArrayList<Integer> listAdd = new ArrayList<>();
+			ArrayList<ContenirTermeDB> listContenirTerme = new ArrayList<>();
 			for (Termes termes : entry.getValue()) {
-				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName()).getNum_doc(),termes.getxPath(),listXPath);
+				boolean exist = false ;
+				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName()).getId(),termes.getxPath(),listXPath);
 				if (typedb == null){
 					typedb = new TypesDB();
 					typedb.setXpath(termes.getxPath());
@@ -230,20 +235,53 @@ public class Launch {
 				}
 				getDocDB(termes.getDocName()).incrNb_mot();
 				s.merge(getDocDB(termes.getDocName()));
-				ContenirTermeDB cterme = new ContenirTermeDB();
-				cterme.setIdTerme(terme.getId());
-				cterme.setIdTypes(typedb.getId());
-				cterme.setFrequence(getFreqTerme(entry.getValue(),
-						termes.getDocName(), termes.getxPath(), entry.getKey()));
-				s.save(cterme);
-				if (!listAdd.contains(termes.getDocName())){
-					IndexInverseDB iidb = new IndexInverseDB();
-					listAdd.add(termes.getDocName());
+				ContenirTermeDB cterme = getContenirTermeDB(typedb.getId(), listContenirTerme);
+				if (cterme==null){
+					cterme = new ContenirTermeDB();
+					cterme.setIdTerme(terme.getId());
+					cterme.setIdTypes(typedb.getId());
+					cterme.setFrequence(getFreqTerme(entry.getValue(),
+							termes.getDocName(), termes.getxPath(), entry.getKey()));
+					s.save(cterme);
+					listContenirTerme.add(cterme);
+					exist = true ;
+				} 	
+				IndexInverseDB iidb = getIndexInverseDB(typedb.getId(),terme.getId(),listAdd);
+				if (iidb == null){
+					iidb = new IndexInverseDB();
 					iidb.setIdTerme(terme.getId());
-					iidb.setIdDoc(getDocDB(termes.getDocName()).getId());
+					iidb.setIdType(typedb.getId());
+					listAdd.add(iidb);
 					s.save(iidb);
 				}
+				if (exist){
+					TfIdfDB tfidf = new TfIdfDB();
+					tfidf.setIdTerme(terme.getId());
+					tfidf.setIdTypes(typedb.getId());
+					tfidf.setValue((double)cterme.getFrequence());
+					listTfIdf.add(tfidf);
+					s.save(tfidf);
+				}
+
 			}
+		}
+		for (TfIdfDB tfidf : listTfIdf){
+			int nbOccur = 0 ;
+			for (IndexInverseDB iidb : listAdd){
+				if (iidb.getIdTerme() == tfidf.getIdTerme()){
+					nbOccur++;
+				}
+			}
+			int nbMot =0 ;
+			for (TypesDB tbd : listXPath){
+				if (tbd.getId() == tfidf.getIdTypes()){
+					nbMot = tbd.getNb_mot();
+					break;
+				}
+					
+			}
+			tfidf.setValue((tfidf.getValue()/(double)nbMot)*Math.log((double)listXPath.size()/(double)nbOccur));
+			s.merge(tfidf);
 		}
 		t.commit();
 		s.close();
@@ -252,24 +290,15 @@ public class Launch {
 	public static void createIndexTfIdf(){
 		Session s = HibernateUtils.getSession();
 		Transaction t = s.beginTransaction();
-		Query q = s.createQuery("FROM TermesDB");
-		List<TermesDB> listTerme = q.list();
-		Query q3 = s.createQuery("FROM DocumentDB");
-		List<DocumentDB> listdoc = q3.list();
-		for (TermesDB terme : listTerme){
-			Query q2 = s.createQuery("FROM IndexInverseDB WHERE idTerme = :idterme");
-			q2.setParameter("idterme", terme.getId());
-			List<IndexInverseDB> listIndex = q2.list();
-			Query q1 = s.createQuery("FROM ContenirTermeDB WHERE idTerme = :idterme");
-			q1.setParameter("idterme", terme.getId());
-			List<ContenirTermeDB> listContenirTerme = q1.list();
-			for (ContenirTermeDB ctdb : listContenirTerme){
-				TfIdfDB tdidf = new TfIdfDB();
-				tdidf.setIdTerme(terme.getId());
-				tdidf.setIdTypes(ctdb.getIdTypes());
-				tdidf.setValue(((double)ctdb.getFrequence()/ctdb.getTypes().getNb_mot())*Math.log((float)listdoc.size()/(float)listIndex.size()));
-				s.save(tdidf);
-			}
+		Query q2 = s.createQuery("FROM DocumentDB");
+		int x = q2.list().size();
+		Query q = s.createQuery("FROM TfIdfDB");
+		List<TfIdfDB> listTfIdf = q.list();
+		for (TfIdfDB tDb : listTfIdf){
+			Query q1 = s.createQuery("FROM IndexInverseDB WHERE idTerme= :idTerme");
+			q1.setParameter("idTerme",tDb.getIdTerme());
+			tDb.setValue((tDb.getValue()/(double)tDb.getTypes().getNb_mot())*Math.log((double)q1.list().size()/(double)x));
+			s.merge(tDb);
 		}
 		t.commit();
 		s.close();
@@ -282,11 +311,29 @@ public class Launch {
 		}
 		return null;
 	}
-	
+
 	public static TypesDB getTypeDB(int numDoc,String xPath,List<TypesDB> listTypes) {
 		for (TypesDB typedb : listTypes) {
 			if ((typedb.getIdDoc() == numDoc) && typedb.getXpath().equals(xPath)){
 				return typedb;
+			}
+		}
+		return null;
+	}
+
+	public static ContenirTermeDB getContenirTermeDB(int idType,List<ContenirTermeDB> listCtdb) {
+		for (ContenirTermeDB ctdb : listCtdb) {
+			if (ctdb.getIdTypes() == idType){
+				return ctdb;
+			}
+		}
+		return null;
+	}
+	
+	public static IndexInverseDB getIndexInverseDB(int idType,int idTerme,List<IndexInverseDB> listIidb) {
+		for (IndexInverseDB iidb : listIidb) {
+			if (iidb.getIdType() == idType && iidb.getIdTerme()==idTerme){
+				return iidb;
 			}
 		}
 		return null;
@@ -347,25 +394,25 @@ public class Launch {
 		for (int i=0;i<nbRow;i++){
 			System.out.println(listPertinence.get(i).toString());
 		}
-		
+
 	}
-	
+
 	public static void tribulles(ArrayList<Termes> list)
-    {
-            for (int i=0 ;i<=(list.size()-2);i++)
-                    for (int j=(list.size()-1);i < j;j--)
-                            if (list.get(j).getFrequence() > list.get(j-1).getFrequence())
-                            {
-                                    Termes x=list.get(j-1);
-                                    list.set(j-1,list.get(j));
-                                    list.set(j, x);
-                            }
-    }
+	{
+		for (int i=0 ;i<=(list.size()-2);i++)
+			for (int j=(list.size()-1);i < j;j--)
+				if (list.get(j).getFrequence() > list.get(j-1).getFrequence())
+				{
+					Termes x=list.get(j-1);
+					list.set(j-1,list.get(j));
+					list.set(j, x);
+				}
+	}
 
 	public static String stemmWord(String word){
 		stemmer.setCurrent(word);
-        stemmer.stem();
-        String stemmed = stemmer.getCurrent();
-        return stemmed ;
+		stemmer.stem();
+		String stemmed = stemmer.getCurrent();
+		return stemmed ;
 	}
 }
