@@ -47,8 +47,8 @@ public class Launch {
 
 	public static void main(String[] args) {
 		init();
-		long deb = System.currentTimeMillis();
-		/* STEP 1 - Must have the hibernate config in create mode
+		/*long deb = System.currentTimeMillis();
+		//* STEP 1 - Must have the hibernate config in create mode
 		parseAllDoc();
 		System.out.println("------------");
 		System.out.println("PARSE DONE");
@@ -56,7 +56,7 @@ public class Launch {
 		addInDBInit(); 
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
-				+ ((float) (fin - deb) / (60 * 1000)) + " min");*/
+				+ ((float) (fin - deb) / (60 * 1000)) + " min");
 		//STEP 2 - Must put the hibernate config in validate
 		/*System.out.println("------------");
 		System.out.println("QUERIES");
@@ -146,7 +146,19 @@ public class Launch {
 			getPertinence(10,test);
 		} while (true);
 	}
-
+	public static List<DocumentDB> getListDocument(String word){
+		Session s = HibernateUtils.getSession();
+		List<DocumentDB> resultDoc = new ArrayList<>();
+		Query q = s.createQuery("FROM DocumentDB");
+		List<DocumentDB> listDoc = q.list();
+		for (DocumentDB ddb : listDoc){
+			if (ddb.getTitre().contains(word)){
+				resultDoc.add(ddb);
+			}
+		}
+		return resultDoc ;
+	}
+	
 	public static List<TfIdfDB> getListFile(String word) {
 		Session s = HibernateUtils.getSession();
 		List<TfIdfDB> resultTerme = new ArrayList<>();
@@ -158,6 +170,12 @@ public class Launch {
 					.createQuery("FROM TfIdfDB tidb WHERE tidb.idTerme = :idterme");
 			q1.setParameter("idterme", tdb.getId());
 			resultTerme = q1.list();
+		}
+		List<DocumentDB> listDoc = getListDocument(word);
+		for (TfIdfDB t : resultTerme){
+			if(listDoc.contains(t.getTypes().getDocuments())){
+				t.setValue(t.getValue()*10.0);
+			}
 		}
 		s.close();
 		return resultTerme;

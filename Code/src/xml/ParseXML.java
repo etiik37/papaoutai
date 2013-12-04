@@ -87,7 +87,12 @@ public class ParseXML {
 					}					
 				}
 				if (eElement.getElementsByTagName("TITRE").getLength() !=0){
-					docdb.setTitre(eElement.getElementsByTagName("TITRE").item(0).getTextContent());
+					ArrayList<String> listUniformiser = Launch.uniformiserString(eElement.getElementsByTagName("TITRE").item(0).getTextContent());
+					StringBuilder fin = new StringBuilder();
+					for (int i1 =0;i1<listUniformiser.size();i1++){
+						fin.append(listUniformiser.get(i1)).append(" ");
+					}
+					docdb.setTitre(fin.toString().trim());
 				}
 			}
 		}  	
