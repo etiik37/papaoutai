@@ -85,7 +85,10 @@ public class ParseXML {
 						}
 						paragrapheNum++;
 					}					
-				}				
+				}
+				if (eElement.getElementsByTagName("TITRE").getLength() !=0){
+					docdb.setTitre(eElement.getElementsByTagName("TITRE").item(0).getTextContent());
+				}
 			}
 		}  	
 		paragrapheNum = 1 ;
@@ -115,10 +118,10 @@ public class ParseXML {
 									for (int i =0;i<listUniformiser.size();i++){
 										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]/P["+paragrapheNum+"]",i,docName));
 										}
 									}
 									paragrapheNum++;
@@ -135,10 +138,10 @@ public class ParseXML {
 										for (int i =0;i<listUniformiser.size();i++){
 											String str = listUniformiser.get(i);
 											if (listTerm.containsKey(str)){
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i,docName));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]/PHOTO",i,docName));
 											} else {
 												listTerm.put(str,new ArrayList<Termes>());
-												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]/PHOTO",i,docName));
+												listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]/PHOTO",i,docName));
 											}
 										}
 									}
@@ -152,10 +155,10 @@ public class ParseXML {
 									for (int i =0;i<listUniformiser.size();i++){
 										String str = listUniformiser.get(i);
 										if (listTerm.containsKey(str)){
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i,docName));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]",i,docName));
 										} else {
 											listTerm.put(str,new ArrayList<Termes>());
-											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SECTION["+sectionNum+"]",i,docName));
+											listTerm.get(str).add(new Termes("/BALADE[1]/RECIT[1]/SEC["+sectionNum+"]",i,docName));
 										}
 									}
 									paragrapheNum++;

@@ -49,19 +49,23 @@ public class Launch {
 		init();
 		long deb = System.currentTimeMillis();
 		/* STEP 1 - Must have the hibernate config in create mode
-		 * parseAllDoc();
+		parseAllDoc();
 		System.out.println("------------");
 		System.out.println("PARSE DONE");
 		System.out.println("------------");
-		addInDBInit(); */
+		addInDBInit(); 
 		long fin = System.currentTimeMillis();
 		System.out.println("Executed in : "
-				+ ((float) (fin - deb) / (60 * 1000)) + " min");
+				+ ((float) (fin - deb) / (60 * 1000)) + " min");*/
 		//STEP 2 - Must put the hibernate config in validate
-		System.out.println("------------");
+		/*System.out.println("------------");
 		System.out.println("QUERIES");
 		System.out.println("------------");
-		handleUser();
+		for (String str : TestQueries.getRequest()){
+			System.out.println(str);
+		}
+		//handleUser();*/
+		TestQueries.getComparaisonByRequest();
 	}
 
 	public static void parseAllDoc() {
@@ -317,23 +321,12 @@ public class Launch {
 		return count;
 	}
 
-	public static Map<String, List<Termes>> dedouble() {
-		Map<String, List<Termes>> newMap = new HashMap<>();
-		for (Map.Entry<String, List<Termes>> entry : map.entrySet()) {
-			ArrayList<Termes> dedouble = new ArrayList<>();
-			for (Termes t : entry.getValue()) {
-
-			}
-		}
-		return newMap;
-	}
-
 	public static String stripAccents(String input) {
 		return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll(
 				"\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	public static void getPertinence(int nbRow, ArrayList<List<TfIdfDB>> list){
+	public static ArrayList<String> getPertinence(int nbRow, ArrayList<List<TfIdfDB>> list){
 		ArrayList<TfIdfDB> listPertinence = new ArrayList<>();
 		for (List<TfIdfDB> al : list){
 			for (TfIdfDB t : al){
@@ -354,21 +347,30 @@ public class Launch {
 					listPertinence.add(temp);
 				} else {
 					TfIdfDB temp = listPertinence.get(pos);
-					System.out.println(temp.getValue());
 					temp.setValue(temp.getValue()+t.getValue());
-					System.out.println(listPertinence.get(pos).getValue());
 				}
 			}
 		}
 		tribulles(listPertinence);
-		System.out.println(listPertinence.size());
 		Session s = HibernateUtils.getSession();
+		ArrayList<String> listResult = new ArrayList<>();
 		for (int i=0;i<nbRow;i++){
 			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
 			q.setParameter("idType", listPertinence.get(i).getIdTypes());
-			System.out.println(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc()+"\t"+((TypesDB)q.uniqueResult()).getXpath());
+			listResult.add(getRealNameFile(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc())+"\t"+((TypesDB)q.uniqueResult()).getXpath()+ "\t1");
 		}
-
+		return listResult;
+	}
+	
+	public static String getRealNameFile(int i){
+		if (i<10){
+			return "Collection/d00"+i+".xml";
+		} else if (i >=10 && i<100){
+			return "Collection/d0"+i+".xml";
+		} else if (i> 100){
+			return "Collection/d"+i+".xml";
+		}
+		return null ;
 	}
 
 	public static void tribulles(ArrayList<TfIdfDB> list)

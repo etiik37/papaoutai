@@ -19,6 +19,9 @@ public class DocumentDB {
 
 	@Column(name = "auteur", nullable = false)
 	private String auteur = "";
+	
+	@Column(name = "titre", nullable = false)
+	private String titre = "";
 
 	@Column(name = "num_doc", nullable = false)
 	private int num_doc;
@@ -78,6 +81,15 @@ public class DocumentDB {
 	public void incrNb_mot(){
 		this.nb_mot++;
 	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+	
 	
 	
 
