@@ -13,7 +13,9 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import model.TfIdfDB;
+import model.TypesDB;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -67,7 +69,7 @@ public class TestQueries {
 		return listRequest;
 	}
 	
-	public static void getComparaisonUnique(ArrayList<String> listResultToCompare,int nbRow,int numRequest){
+	public static float getComparaisonUnique(ArrayList<String> listResultToCompare,int nbRow,int numRequest){
 		ArrayList<String> listQrel = readFileQrel(numRequest);
 		int nbOk = 0;
 		for (String str : listResultToCompare){
@@ -75,26 +77,34 @@ public class TestQueries {
 				nbOk++;
 			}
 		}
-		System.out.println("------- On "+ nbRow +" --------");
-		System.out.println("Percentage : "+(float)nbOk/(float)nbRow);
-		System.out.println("----------------------------");
+		//System.out.println("------- On "+ nbRow +" --------");
+		//System.out.println("Percentage : "+(float)nbOk/(float)nbRow);
+		//System.out.println("----------------------------");
+		return (float)nbOk/(float)nbRow ;
 	}
 	
 	public static void getComparaisonByRequest(){
 		ArrayList<String> listRequest = getRequest();
+		float a5 = 0f;
+		float a10 = 0f;
+		float a25 = 0f;
 		for (int i=1;i<listRequest.size()+1;i++){
 			ArrayList<String> requestList = Launch.parseRequest(listRequest.get(i-1));
-			ArrayList<List<TfIdfDB>> test = new ArrayList<>();
+			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
 				test.add(Launch.getListFile(str));
 			}
-			System.out.println("---------------------------");
+			//System.out.println("---------------------------");
 			System.out.println("-------- Requete : "+ i +" -----------");
-			getComparaisonUnique(Launch.getPertinence(5,test),5,i);
-			getComparaisonUnique(Launch.getPertinence(10,test),10,i);
-			getComparaisonUnique(Launch.getPertinence(25,test),25,i);
-			System.out.println("---------------------------");
+			a5+=getComparaisonUnique(Launch.getPertinence(5,test),5,i);
+			a10+=getComparaisonUnique(Launch.getPertinence(10,test),10,i);
+			a25+=getComparaisonUnique(Launch.getPertinence(25,test),25,i);
+			//System.out.println("---------------------------");
 		}
+		System.out.println("------- GLOBAL --------");
+		System.out.println("Percentage 5 : "+a5/listRequest.size());
+		System.out.println("Percentage 10 : "+a10/listRequest.size());
+		System.out.println("Percentage 25 : "+a25/listRequest.size());
 	}
 	
 }

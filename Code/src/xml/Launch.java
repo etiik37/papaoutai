@@ -137,7 +137,7 @@ public class Launch {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
 			ArrayList<String> requestList = parseRequest(requestTyped);
-			ArrayList<List<TfIdfDB>> test = new ArrayList<>();
+			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
 				test.add(getListFile(str));
 				System.out.println(str);
@@ -158,10 +158,11 @@ public class Launch {
 		}
 		return resultDoc ;
 	}
-	
-	public static List<TfIdfDB> getListFile(String word) {
+
+	public static List<TypesDB> getListFile(String word) {
 		Session s = HibernateUtils.getSession();
 		List<TfIdfDB> resultTerme = new ArrayList<>();
+		List<TypesDB> resultTermeType = new ArrayList<>();
 		Query q = s.createQuery("FROM TermesDB WHERE terme = :terme");
 		q.setParameter("terme", word);
 		List<TermesDB> listTerme = q.list();
@@ -173,12 +174,30 @@ public class Launch {
 		}
 		List<DocumentDB> listDoc = getListDocument(word);
 		for (TfIdfDB t : resultTerme){
-			if(listDoc.contains(t.getTypes().getDocuments())){
-				t.setValue(t.getValue()*10.0);
+			if (!resultTermeType.contains(t.getTypes())){
+				TypesDB temp = t.getTypes();
+				temp.setPertinenceNow(t.getValue());
+				resultTermeType.add(temp);
+			} 
+		}
+		if (listDoc.size() != 0){
+			for (DocumentDB ddb : listDoc){
+				Query q1 = s
+						.createQuery("FROM TypesDB WHERE idDoc = :idDoc");
+				q1.setParameter("idDoc", ddb.getId());
+				List<TypesDB> listFromDoc = q1.list();
+				for (TypesDB ttt : listFromDoc){
+					if (!resultTermeType.contains(ttt)){
+						ttt.setPertinenceNow(0.2f);
+						resultTermeType.add(ttt);
+					} else {
+						ttt.setPertinenceNow(ttt.getPertinenceNow()*100);
+					}
+				}
 			}
 		}
 		s.close();
-		return resultTerme;
+		return resultTermeType;
 	}
 
 	public static String getRequest() {
@@ -281,7 +300,7 @@ public class Launch {
 					nbMot = tbd.getNb_mot();
 					break;
 				}
-					
+
 			}
 			tfidf.setValue((tfidf.getValue()/(double)nbMot)*Math.log((double)listXPath.size()/(double)nbOccur));
 			s.merge(tfidf);
@@ -315,7 +334,7 @@ public class Launch {
 		}
 		return null;
 	}
-	
+
 	public static IndexInverseDB getIndexInverseDB(int idType,int idTerme,List<IndexInverseDB> listIidb) {
 		for (IndexInverseDB iidb : listIidb) {
 			if (iidb.getIdType() == idType && iidb.getIdTerme()==idTerme){
@@ -344,28 +363,29 @@ public class Launch {
 				"\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	public static ArrayList<String> getPertinence(int nbRow, ArrayList<List<TfIdfDB>> list){
-		ArrayList<TfIdfDB> listPertinence = new ArrayList<>();
-		for (List<TfIdfDB> al : list){
-			for (TfIdfDB t : al){
+	public static ArrayList<String> getPertinence(int nbRow, ArrayList<List<TypesDB>> list){
+		ArrayList<TypesDB> listPertinence = new ArrayList<>();
+		for (List<TypesDB> al : list){
+			for (TypesDB t : al){
 				boolean exist = false ;
 				int pos =0 ;
 				for (int i = 0;i<listPertinence.size();i++){
-					if (listPertinence.get(i).getIdTypes() == t.getIdTypes()){
+					if (listPertinence.get(i).getId() == t.getId()){
 						exist = true ;
 						pos = i ;
 						break ;
 					}
 				}
 				if (!exist){
-					TfIdfDB temp = new TfIdfDB();
-					temp.setIdTerme(t.getIdTerme());
-					temp.setIdTypes(t.getIdTypes());
-					temp.setValue(t.getValue());
+					TypesDB temp = new TypesDB();
+					temp.setId(t.getId());
+					temp.setPertinenceNow(t.getPertinenceNow());
+					temp.setXpath(t.getXpath());
+					temp.setDocuments(t.getDocuments());
 					listPertinence.add(temp);
 				} else {
-					TfIdfDB temp = listPertinence.get(pos);
-					temp.setValue(temp.getValue()+t.getValue());
+					TypesDB temp = listPertinence.get(pos);
+					temp.setPertinenceNow((temp.getPertinenceNow()+t.getPertinenceNow())*10f);					
 				}
 			}
 		}
@@ -374,12 +394,12 @@ public class Launch {
 		ArrayList<String> listResult = new ArrayList<>();
 		for (int i=0;i<nbRow;i++){
 			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
-			q.setParameter("idType", listPertinence.get(i).getIdTypes());
-			listResult.add(getRealNameFile(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc())+"\t"+((TypesDB)q.uniqueResult()).getXpath()+ "\t1");
+			q.setParameter("idType", listPertinence.get(i).getId());
+			listResult.add(getRealNameFile(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc())+"\t"+listPertinence.get(i).getXpath()+ "\t1");
 		}
 		return listResult;
 	}
-	
+
 	public static String getRealNameFile(int i){
 		if (i<10){
 			return "Collection/d00"+i+".xml";
@@ -391,13 +411,13 @@ public class Launch {
 		return null ;
 	}
 
-	public static void tribulles(ArrayList<TfIdfDB> list)
+	public static void tribulles(ArrayList<TypesDB> list)
 	{
 		for (int i=0 ;i<=(list.size()-2);i++)
 			for (int j=(list.size()-1);i < j;j--)
-				if (list.get(j).getValue() > list.get(j-1).getValue())
+				if (list.get(j).getPertinenceNow() > list.get(j-1).getPertinenceNow())
 				{
-					TfIdfDB x=list.get(j-1);
+					TypesDB x=list.get(j-1);
 					list.set(j-1,list.get(j));
 					list.set(j, x);
 				}

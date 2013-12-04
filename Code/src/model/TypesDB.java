@@ -35,6 +35,7 @@ public class TypesDB {
 	@QueryInit("*")
 	private DocumentDB documents;
 	
+	private double pertinenceNow ;
 	
 	public String getXpath() {
 		return xpath;
@@ -76,4 +77,18 @@ public class TypesDB {
 	public void setDocuments(DocumentDB documents) {
 		this.documents = documents;
 	}
+
+	public double getPertinenceNow() {
+		return pertinenceNow;
+	}
+
+	public void setPertinenceNow(double pertinenceNow) {
+		this.pertinenceNow = pertinenceNow;
+	}
+	
+	public void setId(int id){
+		this.id = id ;
+	}
+	
+	
 }
