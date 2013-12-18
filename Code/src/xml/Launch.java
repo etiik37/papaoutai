@@ -37,6 +37,7 @@ public class Launch {
 	public static HashMap<String, List<Termes>> map;
 	public static List<DocumentDB> listDocDB;
 	private static SnowballStemmer stemmer;
+	
 	public static void init() {
 		map = new HashMap<>();
 		pattern = new ArrayList<String>();
@@ -176,7 +177,7 @@ public class Launch {
 		for (TfIdfDB t : resultTerme){
 			if (!resultTermeType.contains(t.getTypes())){
 				TypesDB temp = t.getTypes();
-				temp.setPertinenceNow(t.getValue());
+				temp.setPertinenceNow(t.getValue()*1000f);
 				resultTermeType.add(temp);
 			} 
 		}
@@ -188,10 +189,10 @@ public class Launch {
 				List<TypesDB> listFromDoc = q1.list();
 				for (TypesDB ttt : listFromDoc){
 					if (!resultTermeType.contains(ttt)){
-						ttt.setPertinenceNow(0.2f);
+						ttt.setPertinenceNow(20f);
 						resultTermeType.add(ttt);
 					} else {
-						ttt.setPertinenceNow(ttt.getPertinenceNow()*100);
+						ttt.setPertinenceNow(ttt.getPertinenceNow()+20f);
 					}
 				}
 			}

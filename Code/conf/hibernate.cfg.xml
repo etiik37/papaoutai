@@ -10,7 +10,7 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost/papaoutai</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">adminadmin</property>
+    <property name="hibernate.connection.password">root</property>
 
     <!-- Comportement pour la conservation des tables -->
     <property name="hbm2ddl.auto">validate</property>
@@ -22,6 +22,9 @@
     <mapping class="model.SituerDB" />
     <mapping class="model.TermesDB" />
     <mapping class="model.TypesDB" />
+    <mapping class="model.TfIdfDB" />
+    <mapping class="model.IndexInverseDB" />
+    
   
 
   </session-factory>

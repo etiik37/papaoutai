@@ -1,0 +1,689 @@
+Question 1 :
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT COUNT(?y) WHERE
+{
+	?m :maisonContientPiece ?y
+}
+LIMIT 10
+
+
+Question 2
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT COUNT(?y) WHERE
+{
+	?m :pieceContientPersonne ?y.
+}
+LIMIT 10
+
+Question 3
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?y WHERE
+{
+	?y :estVivant false 	
+}
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="y"/>
+  </head>
+  <results>
+    <result>
+      <binding name="y">
+        <uri>http://www.lamaisondumeurtre.fr/instances#PattChance</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+Question 4
+
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+    ?piece :pieceContientPersonne ?suspect.
+	?suspect :estVivant true
+  	
+}
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#ArmandChabalet</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#LucieNuzyte</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#AubinGladeche</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#VanessaLami</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#GladisTileri</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#EmmaNiolia</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#GuyTarsaich</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#PaulOchon</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SophieStulle</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+Question 5:
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?piece WHERE
+{
+  	?m :maisonContientPiece ?piece.
+    ?piece :pieceContientPersonne ?suspect.
+	?suspect :estVivant false  	
+}
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="piece"/>
+  </head>
+  <results>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Chambre</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 6
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK
+{
+  	?m :maisonContientPiece ?piece.
+		?suspect :estVivant true.
+    ?piece :pieceContientPersonne ?suspect.
+    ?mort :estVivant false.
+  	?piece :pieceContientPersonne ?mort
+  	
+}
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+  </head>
+  <boolean>false</boolean>
+</sparql>
+
+
+Question 7 :
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?piece ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+	  ?suspect :estVivant true.
+    ?piece :pieceContientPersonne ?suspect  	
+}
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="piece"/>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Salon</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#ArmandChabalet</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Salon</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#LucieNuzyte</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Bureau</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#AubinGladeche</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Bureau</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#VanessaLami</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleDeBain</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#GladisTileri</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Toilette</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#EmmaNiolia</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleAManger</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#GuyTarsaich</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleAManger</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#PaulOchon</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Hall</uri>
+      </binding>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SophieStulle</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+Question 8
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?piece COUNT(?suspect) WHERE
+{
+  	?m :maisonContientPiece ?piece.
+	?suspect :estVivant true.
+    ?piece :pieceContientPersonne ?suspect 	
+} GROUP BY ?piece
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="piece"/>
+    <variable name=".1"/>
+  </head>
+  <results>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Salon</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Hall</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">1</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Toilette</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">1</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleDeBain</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">1</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleAManger</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Bureau</uri>
+      </binding>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 9
+
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+
+SELECT ?piece ?NbSuspect WHERE {
+  	{
+      SELECT ?piece (COUNT(?suspect) as ?NbSuspect) WHERE
+    	{
+        ?m :maisonContientPiece ?piece.
+        ?suspect :estVivant true.
+        ?piece :pieceContientPersonne ?suspect 	
+    	} GROUP BY ?piece
+	} FILTER (?NbSuspect >= 2)
+}
+   
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="piece"/>
+    <variable name="NbSuspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Salon</uri>
+      </binding>
+      <binding name="NbSuspect">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SalleAManger</uri>
+      </binding>
+      <binding name="NbSuspect">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="piece">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Bureau</uri>
+      </binding>
+      <binding name="NbSuspect">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+Question 10
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT count(?piece) WHERE {
+  ?m :maisonContientPiece ?piece.
+  NOT EXISTS{ ?piece :pieceContientPersonne ?p }
+}
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name=".1"/>
+  </head>
+  <results>
+    <result>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">2</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 11
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+    ?piece :pieceContientPersonne ?suspect.
+	?suspect :estVivant true.
+  	FILTER (strends(str(?suspect),'e'))
+  	
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#LucieNuzyte</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#AubinGladeche</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SophieStulle</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+Question 12:
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+   	?piece :pieceContientPersonne ?suspect.
+	?suspect :estVivant true.
+  	FILTER (strends(str(?suspect),'e')).
+  
+  	?pieceMort :pieceContientPersonne ?mort.
+  	?mort :estVivant false.
+  	
+    ?piece :aPourPieceVoisine ?pieceMort.
+  	?piece :pieceContientPersonne ?suspect
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#AubinGladeche</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 13
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+   	?piece :pieceContientPersonne ?suspect.
+	  ?suspect :estVivant true.
+  	FILTER (strends(str(?suspect),'e')).
+  
+  	NOT EXISTS{ ?pieceMort :pieceContientPersonne ?mort.
+  	?mort :estVivant false.
+  	
+    ?piece :aPourPieceVoisine ?pieceMort.
+  	?piece :pieceContientPersonne ?suspect
+    }
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#LucieNuzyte</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SophieStulle</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 14
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT COUNT(?objet) WHERE
+{
+  	?m :maisonContientPiece ?piece.
+   	?piece :pieceContientObjet ?objet
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name=".1"/>
+  </head>
+  <results>
+    <result>
+      <binding name=".1">
+        <literal datatype="http://www.w3.org/2001/XMLSchema#integer">10</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+
+
+Question 15
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?objet WHERE
+{
+  	?m :maisonContientPiece ?piece.
+   	?piece :pieceContientObjet ?objet.
+  	?mort :estVivant false.
+  	?piece :pieceContientPersonne ?mort
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="objet"/>
+  </head>
+  <results>
+    <result>
+      <binding name="objet">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Oreiller</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="objet">
+        <uri>http://www.lamaisondumeurtre.fr/instances#Poignard</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 16 :
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?objet WHERE
+{
+  	?m :maisonContientPiece ?piece.
+   	?piece :pieceContientObjet ?objet.
+  	NOT EXISTS {
+      ?piece :pieceContientPersonne ?p.
+    } 
+          
+} 
+
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="objet"/>
+  </head>
+  <results>
+    <result>
+      <binding name="objet">
+        <uri>http://www.lamaisondumeurtre.fr/instances#PicAGlace</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
+
+Question 17 :
+PREFIX : <http://www.lamaisondumeurtre.fr#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+SELECT ?suspect WHERE
+{
+  	?m :maisonContientPiece ?piece.
+  	?piece :pieceContientPersonne ?suspect.
+	?suspect :estVivant true.
+  	FILTER (strends(str(?suspect),'e')).
+   	     
+  	NOT EXISTS{ ?pieceMort :pieceContientPersonne ?mort.
+  		?mort :estVivant false.  	
+    	?piece :aPourPieceVoisine ?pieceMort.
+  		?piece :pieceContientPersonne ?suspect
+    }
+        
+   	
+  	NOT EXISTS {
+      ?piece :pieceContientObjet ?obj.
+    } 
+    
+          
+} 
+<?xml version="1.0"?><sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="suspect"/>
+  </head>
+  <results>
+    <result>
+      <binding name="suspect">
+        <uri>http://www.lamaisondumeurtre.fr/instances#SophieStulle</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
