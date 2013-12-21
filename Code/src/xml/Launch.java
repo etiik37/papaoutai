@@ -19,6 +19,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import sparkle.SparkleRandonnee;
 import utils.*;
 import model.ContenirTermeDB;
 import model.ContenirTypesDB;
@@ -37,6 +38,7 @@ public class Launch {
 	public static HashMap<String, List<Termes>> map;
 	public static List<DocumentDB> listDocDB;
 	private static SnowballStemmer stemmer;
+	private static SparkleRandonnee sparql;
 	
 	public static void init() {
 		map = new HashMap<>();
@@ -44,6 +46,7 @@ public class Launch {
 		listDocDB = new ArrayList<>();
 		stemmer = (SnowballStemmer) new frenchStemmer();
 		readFileStopList();
+		sparql = new SparkleRandonnee();
 	}
 
 	public static void main(String[] args) {
@@ -64,9 +67,9 @@ public class Launch {
 		System.out.println("------------");
 		for (String str : TestQueries.getRequest()){
 			System.out.println(str);
-		}
-		//handleUser();*/
-		TestQueries.getComparaisonByRequest();
+		}*/
+		handleUser();
+		//TestQueries.getComparaisonByRequest();
 	}
 
 	public static void parseAllDoc() {
@@ -137,14 +140,23 @@ public class Launch {
 		do {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
+			ArrayList<String> requestListBis = new ArrayList<>();
+			for (String st : requestTyped.split(" ")){
+				requestListBis.add(st);
+				requestListBis.addAll(sparql.getEntiteDesigne(st));
+			}
+			requestTyped = "" ;
+			for (String st : requestListBis){
+				requestTyped+=st+" ";
+			}
 			ArrayList<String> requestList = parseRequest(requestTyped);
 			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
-				test.add(getListFile(str));
+				//test.add(getListFile(str));
 				System.out.println(str);
 			}
-			System.out.println("Liste des meilleurs resultat probable");
-			getPertinence(10,test);
+			//System.out.println("Liste des meilleurs resultat probable");
+			//getPertinence(10,test);
 		} while (true);
 	}
 	public static List<DocumentDB> getListDocument(String word){
