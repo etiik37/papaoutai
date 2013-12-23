@@ -1,5 +1,5 @@
 
-package org.tartarus.snowball;
+package utils.lib.libstemmer_java.java.org.tartarus.snowball;
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class SnowballStemmer extends SnowballProgram {

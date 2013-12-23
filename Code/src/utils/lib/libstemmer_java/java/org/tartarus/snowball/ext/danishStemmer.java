@@ -1,6 +1,6 @@
 // This file was generated automatically by the Snowball to Java compiler
 
-package org.tartarus.snowball.ext;
+package utils.lib.libstemmer_java.java.org.tartarus.snowball.ext;
 
 import org.tartarus.snowball.Among;
 

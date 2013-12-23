@@ -54,7 +54,7 @@ public class ParseXML {
 		
 	}
 
-	public DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
+	private DocumentDB parsePresentation() throws ParserConfigurationException, SAXException, IOException {		
 		NodeList nList = doc.getElementsByTagName("PRESENTATION");
 		DocumentDB docdb = new DocumentDB();
 		docdb.setNum_doc(docName);
@@ -93,7 +93,7 @@ public class ParseXML {
 	}
 
 
-	public void parseRecit(){
+	private void parseRecit(){
 		NodeList nList = doc.getElementsByTagName("RECIT");
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node nNode = nList.item(temp);     
@@ -222,7 +222,7 @@ public class ParseXML {
 		}
 	}
 
-	public void printMap(){
+	private void printMap(){
 		for(Map.Entry<String, List<Termes>> entry : listTerm.entrySet()){
 			System.out.println(entry.getKey() + " : "+entry.getValue().size());
 			for (Termes str : entry.getValue()){
@@ -231,7 +231,7 @@ public class ParseXML {
 		}
 	}
 	
-	public int getMapSize(){
+	private int getMapSize(){
 		return listTerm.size();
 	}
 	

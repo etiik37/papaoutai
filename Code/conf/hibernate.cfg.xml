@@ -13,7 +13,7 @@
     <property name="hibernate.connection.password">adminadmin</property>
 
     <!-- Comportement pour la conservation des tables -->
-    <property name="hbm2ddl.auto">validate</property>
+    <property name="hbm2ddl.auto">create</property>
 
     <!-- Fichiers à mapper -->
     <mapping class="model.ContenirTermeDB" />
@@ -22,7 +22,8 @@
     <mapping class="model.SituerDB" />
     <mapping class="model.TermesDB" />
     <mapping class="model.TypesDB" />
-  
+  	<mapping class="model.IndexInverseDB" />
+    <mapping class="model.TfIdfDB" />
 
   </session-factory>
 </hibernate-configuration>

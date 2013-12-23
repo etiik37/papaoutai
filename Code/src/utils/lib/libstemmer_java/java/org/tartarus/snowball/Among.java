@@ -1,4 +1,4 @@
-package org.tartarus.snowball;
+package utils.lib.libstemmer_java.java.org.tartarus.snowball;
 
 import java.lang.reflect.Method;
 

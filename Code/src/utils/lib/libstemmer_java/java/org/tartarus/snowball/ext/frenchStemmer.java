@@ -1,6 +1,6 @@
 // This file was generated automatically by the Snowball to Java compiler
 
-package org.tartarus.snowball.ext;
+package utils.lib.libstemmer_java.java.org.tartarus.snowball.ext;
 
 import org.tartarus.snowball.Among;
 
@@ -997,7 +997,7 @@ private static final long serialVersionUID = 1L;
                             // <-, line 155
                             slice_from("ant");
                             return false;
-                            break;
+                            //break;
                         case 14:
                             // (, line 156
                             // call RV, line 156
@@ -1010,7 +1010,7 @@ private static final long serialVersionUID = 1L;
                             // <-, line 156
                             slice_from("ent");
                             return false;
-                            break;
+                            //break;
                         case 15:
                             // (, line 158
                             // test, line 158
@@ -1031,7 +1031,7 @@ private static final long serialVersionUID = 1L;
                             // delete, line 158
                             slice_del();
                             return false;
-                            break;
+                            //break;
                     }
                     return true;
                 }
