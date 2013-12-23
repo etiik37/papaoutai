@@ -17,7 +17,7 @@ public class DocumentDB {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "auteur", nullable = false)
+	@Column(name = "auteur", nullable = true)
 	private String auteur = "";
 
 	@Column(name = "num_doc", nullable = false)
