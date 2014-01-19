@@ -23,8 +23,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import sparkle.SparkleRandonnee;
+
 public class TestQueries {
 	
+	private static SparkleRandonnee sparql;
+
 	public static ArrayList<String> readFileQrel(int id) {
 		String fichier = "../qrels/qrels/qrel"+(id<10 ? "0"+id : id)+".txt";
 		ArrayList<String> listResult = new ArrayList<>();
@@ -77,29 +81,62 @@ public class TestQueries {
 				nbOk++;
 			}
 		}
-		//System.out.println("------- On "+ nbRow +" --------");
-		//System.out.println("Percentage : "+(float)nbOk/(float)nbRow);
-		//System.out.println("----------------------------");
+		System.out.println("------- On "+ nbRow +" --------  " + "Percentage : "+(float)nbOk/(float)nbRow);
+        System.out.println("----------------------------");
 		return (float)nbOk/(float)nbRow ;
 	}
 	
 	public static void getComparaisonByRequest(){
 		ArrayList<String> listRequest = getRequest();
+		sparql = new SparkleRandonnee();
 		float a5 = 0f;
 		float a10 = 0f;
 		float a25 = 0f;
 		for (int i=1;i<listRequest.size()+1;i++){
-			ArrayList<String> requestList = Launch.parseRequest(listRequest.get(i-1));
-			ArrayList<List<TypesDB>> test = new ArrayList<>();
-			for (String str : requestList) {
-				test.add(Launch.getListFile(str));
+			/**
+			 * Ajout ici de la merde de sparkle
+			*/
+			ArrayList<String> requestListBis = new ArrayList<>();
+			for (String st : listRequest.get(i-1).split(" ")){
+				requestListBis.addAll(sparql.getEntiteDesigne(st));
+			}	
+			
+			ArrayList<String> requestListTer = new ArrayList<>();
+			for (String st : listRequest.get(i-1).split(" ")){
+				requestListTer.addAll(sparql.getSpecialisationWord(st));
 			}
-			//System.out.println("---------------------------");
+			
+			String requestTyped = "" ;
+			for (String st : listRequest.get(i-1).split(" ")){
+				requestTyped+=st+" ";
+			}
+			ArrayList<String> requestList = Launch.parseRequest(requestTyped);			
+			ArrayList<List<TypesDB>> test = new ArrayList<>();
+			
+			for (String str : requestList) {
+				test.add(Launch.getListFile(str,1));
+			}
+			
+			requestTyped = "" ;
+			for (String st : requestListTer){
+				requestTyped+=st+" ";
+			}
+			requestList = Launch.parseRequest(requestTyped);
+			for (String str : requestList) {
+				//test.add(Launch.getListFile(str,2));
+			}
+			requestTyped = "" ;
+			for (String st : requestListBis){
+				requestTyped+=st+" ";
+			}
+			requestList = Launch.parseRequest(requestTyped);
+			for (String str : requestList) {
+				test.add(Launch.getListFile(str,3));
+			}
 			System.out.println("-------- Requete : "+ i +" -----------");
 			a5+=getComparaisonUnique(Launch.getPertinence(5,test),5,i);
 			a10+=getComparaisonUnique(Launch.getPertinence(10,test),10,i);
 			a25+=getComparaisonUnique(Launch.getPertinence(25,test),25,i);
-			//System.out.println("---------------------------");
 		}
 		System.out.println("------- GLOBAL --------");
 		System.out.println("Percentage 5 : "+a5/listRequest.size());

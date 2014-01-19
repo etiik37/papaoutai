@@ -68,8 +68,8 @@ public class Launch {
 		for (String str : TestQueries.getRequest()){
 			System.out.println(str);
 		}*/
-		handleUser();
-		//TestQueries.getComparaisonByRequest();
+		//handleUser();
+		TestQueries.getComparaisonByRequest();
 	}
 
 	public static void parseAllDoc() {
@@ -152,11 +152,14 @@ public class Launch {
 			ArrayList<String> requestList = parseRequest(requestTyped);
 			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
-				//test.add(getListFile(str));
+				test.add(getListFile(str,1));
 				System.out.println(str);
 			}
-			//System.out.println("Liste des meilleurs resultat probable");
-			//getPertinence(10,test);
+			System.out.println("Liste des meilleurs resultat probable");
+			List<String> list = getPertinence(10,test);
+			for (String str : list){
+				System.out.println(str);
+			}
 		} while (true);
 	}
 	public static List<DocumentDB> getListDocument(String word){
@@ -172,7 +175,7 @@ public class Launch {
 		return resultDoc ;
 	}
 
-	public static List<TypesDB> getListFile(String word) {
+	public static List<TypesDB> getListFile(String word,int listFrom) {
 		Session s = HibernateUtils.getSession();
 		List<TfIdfDB> resultTerme = new ArrayList<>();
 		List<TypesDB> resultTermeType = new ArrayList<>();
@@ -185,11 +188,18 @@ public class Launch {
 			q1.setParameter("idterme", tdb.getId());
 			resultTerme = q1.list();
 		}
-		List<DocumentDB> listDoc = getListDocument(word);
+		List<DocumentDB> listDoc = new ArrayList<>();
+		//if (listFrom == 1)
+			listDoc =getListDocument(word);
 		for (TfIdfDB t : resultTerme){
 			if (!resultTermeType.contains(t.getTypes())){
 				TypesDB temp = t.getTypes();
-				temp.setPertinenceNow(t.getValue()*1000f);
+				if (listFrom == 1)
+					temp.setPertinenceNow(t.getValue()*1000f);
+				if (listFrom == 2)
+					temp.setPertinenceNow(t.getValue()*800f);
+				if (listFrom == 3)
+					temp.setPertinenceNow(t.getValue()*1000f);
 				resultTermeType.add(temp);
 			} 
 		}
@@ -201,10 +211,20 @@ public class Launch {
 				List<TypesDB> listFromDoc = q1.list();
 				for (TypesDB ttt : listFromDoc){
 					if (!resultTermeType.contains(ttt)){
-						ttt.setPertinenceNow(20f);
+						if (listFrom == 1)
+							ttt.setPertinenceNow(50f);
+						if (listFrom == 2)
+							ttt.setPertinenceNow(20f);
+						if (listFrom == 3)
+							ttt.setPertinenceNow(50f);
 						resultTermeType.add(ttt);
 					} else {
-						ttt.setPertinenceNow(ttt.getPertinenceNow()+20f);
+						if (listFrom == 1)
+							ttt.setPertinenceNow(ttt.getPertinenceNow()+40f);
+						if (listFrom == 2)
+							ttt.setPertinenceNow(ttt.getPertinenceNow()+20f);
+						if (listFrom == 3)
+							ttt.setPertinenceNow(ttt.getPertinenceNow()+40f);
 					}
 				}
 			}

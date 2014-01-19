@@ -16,24 +16,21 @@ public class SparkleRandonnee {
 	}
 
 
-	private void getSynonyme(String word){
-		String query = 
-				"WHERE { ?subject rdfs:subClassOf ?object }"
-				+ "SELECT ?piece (COUNT(?personne) AS ?nbPers) WHERE\n"
-				+ "{\n"
-				+ "    ?personne :personneDansPiece ?piece.\n"
-				+ "}\n"
-				+ "GROUP BY ?piece\n";
+	public List<String> getSpecialisationWord(String word){
+		List<String> listSpecialisation = new ArrayList<>();
+		String query = "PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX owl:  <http://www.w3.org/2002/07/owl#>\n"+
+				"PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"+
+				"SELECT ?label \n WHERE { \n?subject  rdf:type ?o . \n"+
+				"?o rdfs:label \""+ word +"\"@fr .\n"
+				+ "  ?sc rdfs:subClassOf ?o ."
+				+ "?subject rdfs:label ?label} \n \n GROUP BY ?label \n " ;
 		Iterable<Map<String, String>> results = sparqlClient.select(query);
-		System.out.println("nombre de personnes par pièce:");
 		for (Map<String, String> result : results) {
-			System.out.println(result.get("piece") + " : " + result.get("nbPers"));
-		}
-	}
-
-
-	public void getSpecialisationWord(String word){
-
+			listSpecialisation.add(result.get("label"));
+		}		
+		return listSpecialisation;
 	}
 
 	public List<String> getEntiteDesigne(String word){
@@ -42,18 +39,14 @@ public class SparkleRandonnee {
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX owl:  <http://www.w3.org/2002/07/owl#>\n"+
 				"PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n"+
-				"SELECT ?subject ?o  \n WHERE { \n?subject  rdf:type ?o . \n"+
-				"?o rdfs:label \""+ word +"\"@fr \n} \n LIMIT 20" ;
+				"SELECT ?label ?subject ?o  \n WHERE { \n?subject  rdf:type ?o . \n"+
+				"?o rdfs:label \""+ word +"\"@fr .\n"
+						+ "?subject rdfs:label ?label} \n " ;
 
 		Iterable<Map<String, String>> results = sparqlClient.select(query);
-		for (Map<String, String> result : results) {
-			System.out.println("here");
-			listEntite.add(result.get("subject"));
-			System.out.println(result.get("subject"));
+		for (Map<String, String> result : results) {			
+			listEntite.add(result.get("label"));
 		}
-		
-		
-
 		return listEntite;
 	}
 }
