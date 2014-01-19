@@ -19,6 +19,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+//import sparkle.SparkleRandonnee;
 import utils.*;
 import model.ContenirTermeDB;
 import model.ContenirTypesDB;
@@ -39,39 +40,45 @@ public class Launch {
 	public static List<DocumentDB> listDocDB;
 	private static SnowballStemmer stemmer;
 
+	// private static SparkleRandonnee sparql;
+
 	public static void init() {
 		map = new HashMap<>();
 		pattern = new ArrayList<String>();
 		listDocDB = new ArrayList<>();
 		stemmer = (SnowballStemmer) new frenchStemmer();
 		readFileStopList();
+		// sparql = new SparkleRandonnee();
 	}
 
 	public static void main(String[] args) {
 		init();
-		long deb = System.currentTimeMillis();
-		/* STEP 1 - Must have the hibernate config in create mode */
+
+		long deb = System.currentTimeMillis(); // * STEP 1 - Must have the
+		// hibernate config in create mode 
 		parseAllDoc();
 		System.out.println("------------");
 		System.out.println("PARSE DONE");
 		System.out.println("------------");
 		System.out.println(map.size());
+		//addInDBInit();
 		long fin = System.currentTimeMillis();
-		System.out.println("Executed in : " + ((float) (fin - deb) / (60 *
-				  1000)) + " min");
-		 addInDBInit();
-		/*
-		 * long fin = System.currentTimeMillis();
-		 * System.out.println("Executed in : " + ((float) (fin - deb) / (60 *
-		 * 1000)) + " min"); //STEP 2 - Must put the hibernate config in
-		 * validate System.out.println("------------");
-		 * System.out.println("QUERIES"); System.out.println("------------");
-		 * handleUser();
-		 */
+		System.out.println("Executed in : "
+				+ ((float) (fin - deb) / (60 * 1000)) + " min"); // STEP 2 -
+																	// Must put
+		// the hibernate config in validate
+		System.out.println("------------");
+		System.out.println("QUERIES");
+		System.out.println("------------");
+		TestQueries.getComparaisonByRequest();
+
+		handleUser();
+		// TestQueries.getComparaisonByRequest();
 	}
 
 	public static void parseAllDoc() {
-		ParseXML pxml;
+		ParseXMLJDOM pxml;
+		//pxml = new ParseXML();
 		File[] listFile = new File(PATH + "/Collection/Collection/")
 				.listFiles();
 		ArrayList<String> listFichier = new ArrayList<>();
@@ -87,17 +94,10 @@ public class Launch {
 		}
 		for (String str : listFichier) {
 			String numFichier = str.substring(str.indexOf(".xml")-3, str.indexOf(".xml"));
-			/*numFichier = str.replaceAll("[^\\d]{3}", "");
-			System.out.println(str);
-
-			System.out.println(numFichier);
-			numFichier = numFichier.replaceAll("/d", "");
-			System.out.println(numFichier);
-			numFichier = numFichier.replaceAll("l", "");
-			System.out.println(numFichier);*/
 			int numDoc = Integer.parseInt(numFichier);
-			pxml = new ParseXML();
-			pxml.parse(str, numDoc);
+			pxml = new ParseXMLJDOM(str, numDoc);
+			pxml.parse();
+			//pxml.parse(str, numDoc);
 			HashMap<String, List<Termes>> mapTemp = pxml.getMap();
 			listDocDB.add(pxml.getDocDB());
 			// TODO Refactor diz shit with a true lemmatizer, not a substring ..
@@ -120,7 +120,6 @@ public class Launch {
 			}
 
 		}
-
 	}
 
 	public static void readFileStopList() {
@@ -135,15 +134,11 @@ public class Launch {
 			}
 			br.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 	}
 
 	public static void printMap() {
-		for (Map.Entry<String, List<Termes>> entry : map.entrySet()) {
-			System.out
-					.println(entry.getKey());
-		}
 
 	}
 
@@ -151,31 +146,102 @@ public class Launch {
 		do {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
+			ArrayList<String> requestListBis = new ArrayList<>();
+			for (String st : requestTyped.split(" ")) {
+				requestListBis.add(st);
+				// requestListBis.addAll(sparql.getEntiteDesigne(st));
+			}
+			requestTyped = "";
+			for (String st : requestListBis) {
+				requestTyped += st + " ";
+			}
 			ArrayList<String> requestList = parseRequest(requestTyped);
-			ArrayList<List<TfIdfDB>> test = new ArrayList<>();
+			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
-				test.add(getListFile(str));
+				// test.add(getTypesDB(str));
 				System.out.println(str);
 			}
-			System.out.println("Liste des meilleurs resultat probable");
-			getPertinence(10, test);
+			 System.out.println("Liste des meilleurs resultat probable");
+			 getPertinence(10,test);
 		} while (true);
 	}
 
-	public static List<TfIdfDB> getListFile(String word) {
+	public static List<DocumentDB> getListDocument(String word) {
 		Session s = HibernateUtils.getSession();
-		List<TfIdfDB> resultTerme = new ArrayList<>();
-		Query q = s.createQuery("FROM TermesDB WHERE terme = :terme");
-		q.setParameter("terme", word);
-		List<TermesDB> listTerme = q.list();
-		for (TermesDB tdb : listTerme) {
-			Query q1 = s
-					.createQuery("FROM TfIdfDB tidb WHERE tidb.idTerme = :idterme");
-			q1.setParameter("idterme", tdb.getId());
-			resultTerme = q1.list();
+		List<DocumentDB> resultDoc = new ArrayList<>();
+		Query q = s.createQuery("FROM DocumentDB");
+		List<DocumentDB> listDoc = q.list();
+
+		for (DocumentDB ddb : listDoc) {
+			if (ddb.getTitre().contains(word)) {
+				resultDoc.add(ddb);
+			}
 		}
+		return resultDoc;
+	}
+
+	public static List<TypesDB> getTypesDB(String word) {
+		Session s = HibernateUtils.getSession();
+		List<TypesDB> resultTermeType = new ArrayList<>();
+
+		// Get TypeDB from TermesDB table
+		getTypesDBFromTermesDB(s, word, resultTermeType);
+		// Get TypeDB from DocumentDB table
+		getTypesDBFromDocumentDB(s, word, resultTermeType);
 		s.close();
-		return resultTerme;
+		return resultTermeType;
+	}
+
+	private static void getTypesDBFromTermesDB(Session s, String word,
+			List<TypesDB> resultTermeType) {
+		List<TfIdfDB> resultTerme = new ArrayList<>();
+		List<TermesDB> listTerme;
+		Query q;
+
+		q = s.createQuery("FROM TermesDB WHERE terme = :terme").setParameter(
+				"terme", word);
+		listTerme = q.list();
+		//System.out.println("----->>  "+listTerme.size());
+		for (TermesDB tdb : listTerme) {
+			// Get the TfIdf of the word
+			Query q1 = s.createQuery(
+					"FROM TfIdfDB tidb WHERE tidb.idTerme = :idterme")
+					.setParameter("idterme", tdb.getId());
+			resultTerme = q1.list();
+			//System.out.println("-----  "+resultTermeType.size());
+			// Update TfIdf and get the TypeDB
+			for (TfIdfDB t : resultTerme) {
+				if (!resultTermeType.contains(t.getTypes())) {
+					TypesDB temp = t.getTypes();
+					temp.setPertinenceNow(t.getValue() * 10000.0f);
+					resultTermeType.add(temp);
+				}
+			}
+		}
+		
+	}
+
+	private static void getTypesDBFromDocumentDB(Session s, String word,
+			List<TypesDB> resultTermeType) {
+		List<DocumentDB> listDoc;
+
+		listDoc = getListDocument(word);
+		if (listDoc.size() != 0) {
+			for (DocumentDB ddb : listDoc) {
+				Query q1 = s.createQuery("FROM TypesDB WHERE idDoc = :idDoc")
+						.setParameter("idDoc", ddb.getId());
+
+				List<TypesDB> listFromDoc = q1.list();
+				for (TypesDB ttt : listFromDoc) {
+					if (!resultTermeType.contains(ttt)) {
+						ttt.setPertinenceNow(20.0f);
+						resultTermeType.add(ttt);
+					} else {
+						ttt.setPertinenceNow(ttt.getPertinenceNow() + 20.0f);
+					}
+				}
+			}
+		}
 	}
 
 	public static String getRequest() {
@@ -190,13 +256,13 @@ public class Launch {
 	}
 
 	public static ArrayList<String> uniformiserString(String chaine) {
-		String result = chaine.toLowerCase();
-		result = result.trim();
-		result = result.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"|\\\\|…|«|»", "");
-		result = result.replaceAll("-", " ");
-		result = result.replaceAll("  ", " ");
-		result = result.replaceAll("[a-z]+['’]", " ");
 		ArrayList<String> tabResult = new ArrayList<>();
+		String result = chaine.toLowerCase();
+		result = result.trim()
+				.replaceAll("\\.|:|;|,|!|\\?|\\(|\\)|\"|\\\\|…|«|»", "")
+				.replaceAll("-", " ").replaceAll("  ", " ")
+				.replaceAll("[a-z]+['’]", " ");
+		// Format the word
 		for (String str : result.split(" ")) {
 			if (!pattern.contains(stemmWord(str.trim()))
 					&& !stemmWord(str.trim()).equals("")) {
@@ -212,71 +278,127 @@ public class Launch {
 		ArrayList<TypesDB> listXPath = new ArrayList<>();
 		ArrayList<TfIdfDB> listTfIdf = new ArrayList<>();
 		ArrayList<IndexInverseDB> listAdd = new ArrayList<>();
+
+		// Save all the Documents to the DB
 		for (DocumentDB docdb : listDocDB) {
 			s.save(docdb);
 		}
+
+		// Save all the Termes fetch in the files to the DB and update the infos
+		// related to it
+		// In 'map' the key is the TermeDB and the value is a list of
+		// informations about this 'Terme'.
+		// Informations are add each time we find the 'Terme' in a file.
 		for (Map.Entry<String, List<Termes>> entry : map.entrySet()) {
-			TermesDB terme = new TermesDB();
-			terme.setTerme(entry.getKey());
-			s.save(terme);
+			TermesDB termedb = new TermesDB();
 			ArrayList<ContenirTermeDB> listContenirTerme = new ArrayList<>();
+
+			termedb.setTerme(entry.getKey());
+			s.save(termedb);
+			// Process informations
 			for (Termes termes : entry.getValue()) {
-				boolean exist = false;
-				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName())
-						.getId(), termes.getxPath(), listXPath);
-				if (typedb == null) {
-					typedb = new TypesDB();
-					typedb.setXpath(termes.getxPath());
-					typedb.setNb_mot(1);
-					typedb.setIdDoc(getDocDB(termes.getDocName()).getId());
-					listXPath.add(typedb);
-					s.save(typedb);
-				} else {
-					typedb.incrNbMot();
-					s.merge(typedb);
-				}
+				Boolean toBeProceed;
+				TypesDB typedb = createOrReplaceTypeDBInformations(s, termes,
+						listXPath);
+				// Update DocumentDB informations about this 'Terme'
 				getDocDB(termes.getDocName()).incrNb_mot();
 				s.merge(getDocDB(termes.getDocName()));
-				ContenirTermeDB cterme = getContenirTermeDB(typedb.getId(),
-						listContenirTerme);
-				if (cterme == null) {
-					cterme = new ContenirTermeDB();
-					cterme.setIdTerme(terme.getId());
-					cterme.setIdTypes(typedb.getId());
-					cterme.setFrequence(getFreqTerme(entry.getValue(),
-							termes.getDocName(), termes.getxPath(),
-							entry.getKey()));
-					s.save(cterme);
-					listContenirTerme.add(cterme);
-					exist = true;
-				}
-				IndexInverseDB iidb = getIndexInverseDB(typedb.getId(),
-						terme.getId(), listAdd);
-				if (iidb == null) {
-					iidb = new IndexInverseDB();
-					iidb.setIdTerme(terme.getId());
-					iidb.setIdType(typedb.getId());
-					listAdd.add(iidb);
-					s.save(iidb);
-				}
-				if (exist) {
-					TfIdfDB tfidf = new TfIdfDB();
-					tfidf.setIdTerme(terme.getId());
-					tfidf.setIdTypes(typedb.getId());
-					tfidf.setValue((double) cterme.getFrequence());
-					listTfIdf.add(tfidf);
-					s.save(tfidf);
-				}
-
+				// Link the terme and its type and create its inv index and its
+				// tfidf
+				ContenirTermeDB cterme = linkTermesDBTypesDB(s, typedb,
+						listContenirTerme, termedb, termes, entry.getValue(),
+						entry.getKey());
+				toBeProceed = (cterme != null);
+				createInvIndexAndTfIdf(s, toBeProceed, typedb, termedb, cterme,
+						listTfIdf, listAdd);
 			}
 		}
+
+		processTfIdf(s, listTfIdf, listAdd, listXPath);
+		t.commit();
+		s.close();
+	}
+
+	private static TypesDB createOrReplaceTypeDBInformations(Session s,
+			Termes termes, ArrayList<TypesDB> listXPath) {
+		// Search if there are already informations in the DB for the key
+		// 'Terme'
+		TypesDB typedb = getTypeDB(getDocDB(termes.getDocName()).getId(),
+				termes.getxPath(), listXPath);
+		// if no informations, create the TypeDB line which will contains them
+		if (typedb == null) {
+			typedb = new TypesDB();
+			typedb.setXpath(termes.getxPath());
+			typedb.setNb_mot(1);
+			typedb.setIdDoc(getDocDB(termes.getDocName()).getId());
+			listXPath.add(typedb);
+			s.save(typedb);
+		} else {
+			// Complete informations if already exists for this 'Terme'
+			typedb.incrNbMot();
+			s.merge(typedb);
+		}
+		return typedb;
+	}
+
+	private static ContenirTermeDB linkTermesDBTypesDB(Session s,
+			TypesDB typedb, ArrayList<ContenirTermeDB> listContenirTerme,
+			TermesDB termedb, Termes termes, List<Termes> listOfTermes,
+			String terme) {
+		ContenirTermeDB cterme = getContenirTermeDB(typedb.getId(),
+				listContenirTerme);
+		// if no ContenirTermeDB, create it
+		if (cterme == null) {
+			cterme = new ContenirTermeDB();
+			cterme.setIdTerme(termedb.getId());
+			cterme.setIdTypes(typedb.getId());
+			// count the frequency of the terme in the document for its xpath
+			cterme.setFrequence(getFreqTerme(listOfTermes, termes.getDocName(),
+					termes.getxPath(), terme));
+			s.save(cterme);
+			listContenirTerme.add(cterme);
+			// mark to be proceed later
+			
+		} else {
+			cterme = null;
+		}
+		return cterme;
+	}
+
+	private static void createInvIndexAndTfIdf(Session s, boolean toBeProceed,
+			TypesDB typedb, TermesDB terme, ContenirTermeDB cterme,
+			ArrayList<TfIdfDB> listTfIdf, ArrayList<IndexInverseDB> listAdd) {
+		IndexInverseDB iidb = getIndexInverseDB(typedb.getId(), terme.getId(),
+				listAdd);
+
+		if (iidb == null) {
+			iidb = new IndexInverseDB();
+			iidb.setIdTerme(terme.getId());
+			iidb.setIdType(typedb.getId());
+			listAdd.add(iidb);
+			s.save(iidb);
+		}
+		if (toBeProceed) {
+			TfIdfDB tfidf = new TfIdfDB();
+			tfidf.setIdTerme(terme.getId());
+			tfidf.setIdTypes(typedb.getId());
+			tfidf.setValue((double) cterme.getFrequence());
+			listTfIdf.add(tfidf);
+			s.save(tfidf);
+		}
+	}
+
+	private static void processTfIdf(Session s, ArrayList<TfIdfDB> listTfIdf,
+			ArrayList<IndexInverseDB> listAdd, ArrayList<TypesDB> listXPath) {
 		for (TfIdfDB tfidf : listTfIdf) {
 			int nbOccur = 0;
+
 			for (IndexInverseDB iidb : listAdd) {
 				if (iidb.getIdTerme() == tfidf.getIdTerme()) {
 					nbOccur++;
 				}
 			}
+
 			int nbMot = 0;
 			for (TypesDB tbd : listXPath) {
 				if (tbd.getId() == tfidf.getIdTypes()) {
@@ -289,9 +411,6 @@ public class Launch {
 					* Math.log((double) listXPath.size() / (double) nbOccur));
 			s.merge(tfidf);
 		}
-		t.commit();
-		System.out.println(listXPath.size());
-		s.close();
 	}
 
 	public static DocumentDB getDocDB(int num) {
@@ -338,6 +457,7 @@ public class Launch {
 		int count = 0;
 		ArrayList<Termes> dedouble = new ArrayList<>();
 		for (Termes t : termes) {
+			// check if the terme is in the same xpath in the same document
 			if ((t.getDocName() == numDoc) && (xpath.equals(t.getxPath()))) {
 				count++;
 			} else {
@@ -347,68 +467,80 @@ public class Launch {
 		return count;
 	}
 
-	public static Map<String, List<Termes>> dedouble() {
-		Map<String, List<Termes>> newMap = new HashMap<>();
-		for (Map.Entry<String, List<Termes>> entry : map.entrySet()) {
-			ArrayList<Termes> dedouble = new ArrayList<>();
-			for (Termes t : entry.getValue()) {
-
-			}
-		}
-		return newMap;
-	}
-
 	public static String stripAccents(String input) {
 		return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll(
 				"\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	public static void getPertinence(int nbRow, ArrayList<List<TfIdfDB>> list) {
-		ArrayList<TfIdfDB> listPertinence = new ArrayList<>();
-		for (List<TfIdfDB> al : list) {
-			for (TfIdfDB t : al) {
+	public static ArrayList<String> getPertinence(int nbRow,
+			ArrayList<List<TypesDB>> list) {
+		ArrayList<TypesDB> listPertinence = new ArrayList<>();
+		for (List<TypesDB> al : list) {
+			for (TypesDB t : al) {
 				boolean exist = false;
 				int pos = 0;
 				for (int i = 0; i < listPertinence.size(); i++) {
-					if (listPertinence.get(i).getIdTypes() == t.getIdTypes()) {
+					if (listPertinence.get(i).getId() == t.getId()) {
 						exist = true;
 						pos = i;
 						break;
 					}
 				}
+				//System.out.println("******    "+exist+"  ----    "+listPertinence.size());
 				if (!exist) {
-					TfIdfDB temp = new TfIdfDB();
-					temp.setIdTerme(t.getIdTerme());
-					temp.setIdTypes(t.getIdTypes());
-					temp.setValue(t.getValue());
+					TypesDB temp = new TypesDB();
+					temp.setId(t.getId());
+					temp.setPertinenceNow(t.getPertinenceNow());
+					temp.setXpath(t.getXpath());
+					temp.setDocuments(t.getDocuments());
 					listPertinence.add(temp);
 				} else {
-					TfIdfDB temp = listPertinence.get(pos);
-					System.out.println(temp.getValue());
-					temp.setValue(temp.getValue() + t.getValue());
-					System.out.println(listPertinence.get(pos).getValue());
+					TypesDB temp = listPertinence.get(pos);
+					temp.setPertinenceNow((temp.getPertinenceNow() + t
+							.getPertinenceNow()) * 30.0f);
 				}
 			}
 		}
-		tribulles(listPertinence);
-		System.out.println(listPertinence.size());
-		Session s = HibernateUtils.getSession();
-		for (int i = 0; i < nbRow; i++) {
-			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
-			q.setParameter("idType", listPertinence.get(i).getIdTypes());
-			System.out.println(((TypesDB) q.uniqueResult()).getDocuments()
-					.getNum_doc()
-					+ "\t"
-					+ ((TypesDB) q.uniqueResult()).getXpath());
-		}
 
+		return fillListResult(listPertinence, nbRow);
 	}
 
-	public static void tribulles(ArrayList<TfIdfDB> list) {
+	private static ArrayList<String> fillListResult(
+			ArrayList<TypesDB> listPertinence, int nbRow) {
+		ArrayList<String> listResult = new ArrayList<>();
+		Session s = HibernateUtils.getSession();
+
+		tribulles(listPertinence);
+		for (int i = 0; i < nbRow; i++) {
+			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
+			q.setParameter("idType", listPertinence.get(i).getId());
+			String str = getRealNameFile(((TypesDB) q.uniqueResult())
+					.getDocuments().getNum_doc())
+					+ "\t"
+					+ listPertinence.get(i).getXpath() + "\t1";
+			listResult.add(str);
+			//System.out.println(str);
+		}
+		return listResult;
+	}
+
+	public static String getRealNameFile(int i) {
+		if (i < 10) {
+			return "Collection/d00" + i + ".xml";
+		} else if (i >= 10 && i < 100) {
+			return "Collection/d0" + i + ".xml";
+		} else if (i > 100) {
+			return "Collection/d" + i + ".xml";
+		}
+		return null;
+	}
+
+	public static void tribulles(ArrayList<TypesDB> list) {
 		for (int i = 0; i <= (list.size() - 2); i++)
 			for (int j = (list.size() - 1); i < j; j--)
-				if (list.get(j).getValue() > list.get(j - 1).getValue()) {
-					TfIdfDB x = list.get(j - 1);
+				if (list.get(j).getPertinenceNow() > list.get(j - 1)
+						.getPertinenceNow()) {
+					TypesDB x = list.get(j - 1);
 					list.set(j - 1, list.get(j));
 					list.set(j, x);
 				}

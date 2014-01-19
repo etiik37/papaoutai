@@ -61,7 +61,7 @@ public class ParseXMLJDOM {
 		DocumentDB docdb = new DocumentDB();
 		Element prez = racine.getChild("PRESENTATION");
 		docdb.setNum_doc(docName);
-		// ------------------>docdb.setTitre(prez.getChild("TITRE").getText());
+		docdb.setTitre(prez.getChild("TITRE").getText());
 		docdb.setAuteur(prez.getChildText("AUTEUR"));
 		docdb.setDatePublication(prez.getChildText("DATE"));
 		List descrParaph = prez.getChildren("DESCRIPTION");
@@ -76,7 +76,7 @@ public class ParseXMLJDOM {
 
 	private void insertTerme(List l, String xpath, String type) {
 		Iterator i = l.iterator();
-		int nbElem = 1;
+		int nbElem = 0;
 		while (i.hasNext()) {
 
 			nbElem++;
@@ -112,11 +112,11 @@ public class ParseXMLJDOM {
 			Element courant = (Element) i.next();
 
 			insertTerme(courant.getChildren("P"),
-					"/BALADE[1]/RECIT[1]/SECTION[" + sectionNum + "]", "P");
+					"/BALADE[1]/RECIT[1]/SEC[" + sectionNum + "]", "P");
 			insertTerme(courant.getChildren("PHOTO"),
-					"/BALADE[1]/RECIT[1]/SECTION[" + sectionNum + "]", "PHOTO");
+					"/BALADE[1]/RECIT[1]/SEC[" + sectionNum + "]", "PHOTO");
 			insertTerme(courant.getChildren("SOUS-TITRE"),
-					"/BALADE[1]/RECIT[1]/SECTION[" + sectionNum + "]",
+					"/BALADE[1]/RECIT[1]/SEC[" + sectionNum + "]",
 					"SOUS-TITRE");
 			sectionNum++;
 
