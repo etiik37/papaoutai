@@ -39,7 +39,7 @@ public class Launch {
 	public static List<DocumentDB> listDocDB;
 	private static SnowballStemmer stemmer;
 	private static SparkleRandonnee sparql;
-	
+
 	public static void init() {
 		map = new HashMap<>();
 		pattern = new ArrayList<String>();
@@ -51,24 +51,19 @@ public class Launch {
 
 	public static void main(String[] args) {
 		init();
-		/*long deb = System.currentTimeMillis();
-		//* STEP 1 - Must have the hibernate config in create mode
-		parseAllDoc();
-		System.out.println("------------");
-		System.out.println("PARSE DONE");
-		System.out.println("------------");
-		addInDBInit(); 
-		long fin = System.currentTimeMillis();
-		System.out.println("Executed in : "
-				+ ((float) (fin - deb) / (60 * 1000)) + " min");
-		//STEP 2 - Must put the hibernate config in validate
-		/*System.out.println("------------");
-		System.out.println("QUERIES");
-		System.out.println("------------");
-		for (String str : TestQueries.getRequest()){
-			System.out.println(str);
-		}*/
-		//handleUser();
+		/*
+		 * long deb = System.currentTimeMillis(); //* STEP 1 - Must have the
+		 * hibernate config in create mode parseAllDoc();
+		 * System.out.println("------------"); System.out.println("PARSE DONE");
+		 * System.out.println("------------"); addInDBInit(); long fin =
+		 * System.currentTimeMillis(); System.out.println("Executed in : " +
+		 * ((float) (fin - deb) / (60 * 1000)) + " min"); //STEP 2 - Must put
+		 * the hibernate config in validate
+		 * /*System.out.println("------------"); System.out.println("QUERIES");
+		 * System.out.println("------------"); for (String str :
+		 * TestQueries.getRequest()){ System.out.println(str); }
+		 */
+		// handleUser();
 		TestQueries.getComparaisonByRequest();
 	}
 
@@ -141,41 +136,42 @@ public class Launch {
 			System.out.println("Veuillez entrer votre recherche :)");
 			String requestTyped = getRequest();
 			ArrayList<String> requestListBis = new ArrayList<>();
-			for (String st : requestTyped.split(" ")){
+			for (String st : requestTyped.split(" ")) {
 				requestListBis.add(st);
 				requestListBis.addAll(sparql.getEntiteDesigne(st));
 			}
-			requestTyped = "" ;
-			for (String st : requestListBis){
-				requestTyped+=st+" ";
+			requestTyped = "";
+			for (String st : requestListBis) {
+				requestTyped += st + " ";
 			}
 			ArrayList<String> requestList = parseRequest(requestTyped);
 			ArrayList<List<TypesDB>> test = new ArrayList<>();
 			for (String str : requestList) {
-				test.add(getListFile(str,1));
+				test.add(getListFile(str, 1));
 				System.out.println(str);
 			}
 			System.out.println("Liste des meilleurs resultat probable");
-			List<String> list = getPertinence(10,test);
-			for (String str : list){
+			List<String> list = getPertinence(10, test);
+			for (String str : list) {
 				System.out.println(str);
 			}
 		} while (true);
 	}
-	public static List<DocumentDB> getListDocument(String word){
+
+	public static List<DocumentDB> getListDocument(String word) {
 		Session s = HibernateUtils.getSession();
 		List<DocumentDB> resultDoc = new ArrayList<>();
 		Query q = s.createQuery("FROM DocumentDB");
 		List<DocumentDB> listDoc = q.list();
-		for (DocumentDB ddb : listDoc){
-			if (ddb.getTitre().contains(word)){
+		for (DocumentDB ddb : listDoc) {
+			if (ddb.getTitre().contains(word)) {
 				resultDoc.add(ddb);
 			}
 		}
-		return resultDoc ;
+		return resultDoc;
 	}
 
-	public static List<TypesDB> getListFile(String word,int listFrom) {
+	public static List<TypesDB> getListFile(String word, int listFrom) {
 		Session s = HibernateUtils.getSession();
 		List<TfIdfDB> resultTerme = new ArrayList<>();
 		List<TypesDB> resultTermeType = new ArrayList<>();
@@ -189,42 +185,43 @@ public class Launch {
 			resultTerme = q1.list();
 		}
 		List<DocumentDB> listDoc = new ArrayList<>();
-		//if (listFrom == 1)
-			listDoc =getListDocument(word);
-		for (TfIdfDB t : resultTerme){
-			if (!resultTermeType.contains(t.getTypes())){
+		listDoc = getListDocument(word);
+		for (TfIdfDB t : resultTerme) {
+			if (!resultTermeType.contains(t.getTypes())) {
 				TypesDB temp = t.getTypes();
-				if (listFrom == 1)
-					temp.setPertinenceNow(t.getValue()*1000f);
-				if (listFrom == 2)
-					temp.setPertinenceNow(t.getValue()*800f);
-				if (listFrom == 3)
-					temp.setPertinenceNow(t.getValue()*1000f);
+				if (listFrom == 1) {
+					temp.setPertinenceNow(t.getValue() * 1000f);
+				}
+				if (listFrom == 2) {
+					temp.setPertinenceNow(t.getValue()* 800f);
+				}
+				if (listFrom == 3) {
+					temp.setPertinenceNow(t.getValue() * 1000f);
+				}
 				resultTermeType.add(temp);
-			} 
+			}
 		}
-		if (listDoc.size() != 0){
-			for (DocumentDB ddb : listDoc){
-				Query q1 = s
-						.createQuery("FROM TypesDB WHERE idDoc = :idDoc");
+		if (listDoc.size() != 0) {
+			for (DocumentDB ddb : listDoc) {
+				Query q1 = s.createQuery("FROM TypesDB WHERE idDoc = :idDoc");
 				q1.setParameter("idDoc", ddb.getId());
 				List<TypesDB> listFromDoc = q1.list();
-				for (TypesDB ttt : listFromDoc){
-					if (!resultTermeType.contains(ttt)){
+				for (TypesDB ttt : listFromDoc) {
+					if (!resultTermeType.contains(ttt)) {
 						if (listFrom == 1)
 							ttt.setPertinenceNow(50f);
 						if (listFrom == 2)
-							ttt.setPertinenceNow(20f);
+							ttt.setPertinenceNow(30f);
 						if (listFrom == 3)
-							ttt.setPertinenceNow(50f);
+							ttt.setPertinenceNow(30f);
 						resultTermeType.add(ttt);
 					} else {
 						if (listFrom == 1)
-							ttt.setPertinenceNow(ttt.getPertinenceNow()+40f);
+							ttt.setPertinenceNow(ttt.getPertinenceNow() + 50f);
 						if (listFrom == 2)
-							ttt.setPertinenceNow(ttt.getPertinenceNow()+20f);
+							ttt.setPertinenceNow(ttt.getPertinenceNow() + 30f);
 						if (listFrom == 3)
-							ttt.setPertinenceNow(ttt.getPertinenceNow()+40f);
+							ttt.setPertinenceNow(ttt.getPertinenceNow() + 30f);
 					}
 				}
 			}
@@ -253,7 +250,8 @@ public class Launch {
 		result = result.replaceAll("[a-z]+['’]", " ");
 		ArrayList<String> tabResult = new ArrayList<>();
 		for (String str : result.split(" ")) {
-			if (!pattern.contains(stemmWord(str.trim())) && !stemmWord(str.trim()).equals("")) {
+			if (!pattern.contains(stemmWord(str.trim()))
+					&& !stemmWord(str.trim()).equals("")) {
 				tabResult.add(stripAccents(stemmWord(str.trim())));
 			}
 		}
@@ -275,9 +273,10 @@ public class Launch {
 			s.save(terme);
 			ArrayList<ContenirTermeDB> listContenirTerme = new ArrayList<>();
 			for (Termes termes : entry.getValue()) {
-				boolean exist = false ;
-				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName()).getId(),termes.getxPath(),listXPath);
-				if (typedb == null){
+				boolean exist = false;
+				TypesDB typedb = getTypeDB(getDocDB(termes.getDocName())
+						.getId(), termes.getxPath(), listXPath);
+				if (typedb == null) {
 					typedb = new TypesDB();
 					typedb.setXpath(termes.getxPath());
 					typedb.setNb_mot(1);
@@ -290,52 +289,56 @@ public class Launch {
 				}
 				getDocDB(termes.getDocName()).incrNb_mot();
 				s.merge(getDocDB(termes.getDocName()));
-				ContenirTermeDB cterme = getContenirTermeDB(typedb.getId(), listContenirTerme);
-				if (cterme==null){
+				ContenirTermeDB cterme = getContenirTermeDB(typedb.getId(),
+						listContenirTerme);
+				if (cterme == null) {
 					cterme = new ContenirTermeDB();
 					cterme.setIdTerme(terme.getId());
 					cterme.setIdTypes(typedb.getId());
 					cterme.setFrequence(getFreqTerme(entry.getValue(),
-							termes.getDocName(), termes.getxPath(), entry.getKey()));
+							termes.getDocName(), termes.getxPath(),
+							entry.getKey()));
 					s.save(cterme);
 					listContenirTerme.add(cterme);
-					exist = true ;
-				} 	
-				IndexInverseDB iidb = getIndexInverseDB(typedb.getId(),terme.getId(),listAdd);
-				if (iidb == null){
+					exist = true;
+				}
+				IndexInverseDB iidb = getIndexInverseDB(typedb.getId(),
+						terme.getId(), listAdd);
+				if (iidb == null) {
 					iidb = new IndexInverseDB();
 					iidb.setIdTerme(terme.getId());
 					iidb.setIdType(typedb.getId());
 					listAdd.add(iidb);
 					s.save(iidb);
 				}
-				if (exist){
+				if (exist) {
 					TfIdfDB tfidf = new TfIdfDB();
 					tfidf.setIdTerme(terme.getId());
 					tfidf.setIdTypes(typedb.getId());
-					tfidf.setValue((double)cterme.getFrequence());
+					tfidf.setValue((double) cterme.getFrequence());
 					listTfIdf.add(tfidf);
 					s.save(tfidf);
 				}
 
 			}
 		}
-		for (TfIdfDB tfidf : listTfIdf){
-			int nbOccur = 0 ;
-			for (IndexInverseDB iidb : listAdd){
-				if (iidb.getIdTerme() == tfidf.getIdTerme()){
+		for (TfIdfDB tfidf : listTfIdf) {
+			int nbOccur = 0;
+			for (IndexInverseDB iidb : listAdd) {
+				if (iidb.getIdTerme() == tfidf.getIdTerme()) {
 					nbOccur++;
 				}
 			}
-			int nbMot =0 ;
-			for (TypesDB tbd : listXPath){
-				if (tbd.getId() == tfidf.getIdTypes()){
+			int nbMot = 0;
+			for (TypesDB tbd : listXPath) {
+				if (tbd.getId() == tfidf.getIdTypes()) {
 					nbMot = tbd.getNb_mot();
 					break;
 				}
 
 			}
-			tfidf.setValue((tfidf.getValue()/(double)nbMot)*Math.log((double)listXPath.size()/(double)nbOccur));
+			tfidf.setValue((tfidf.getValue() / (double) nbMot)
+					* Math.log((double) listXPath.size() / (double) nbOccur));
 			s.merge(tfidf);
 		}
 		t.commit();
@@ -350,27 +353,31 @@ public class Launch {
 		return null;
 	}
 
-	public static TypesDB getTypeDB(int numDoc,String xPath,List<TypesDB> listTypes) {
+	public static TypesDB getTypeDB(int numDoc, String xPath,
+			List<TypesDB> listTypes) {
 		for (TypesDB typedb : listTypes) {
-			if ((typedb.getIdDoc() == numDoc) && typedb.getXpath().equals(xPath)){
+			if ((typedb.getIdDoc() == numDoc)
+					&& typedb.getXpath().equals(xPath)) {
 				return typedb;
 			}
 		}
 		return null;
 	}
 
-	public static ContenirTermeDB getContenirTermeDB(int idType,List<ContenirTermeDB> listCtdb) {
+	public static ContenirTermeDB getContenirTermeDB(int idType,
+			List<ContenirTermeDB> listCtdb) {
 		for (ContenirTermeDB ctdb : listCtdb) {
-			if (ctdb.getIdTypes() == idType){
+			if (ctdb.getIdTypes() == idType) {
 				return ctdb;
 			}
 		}
 		return null;
 	}
 
-	public static IndexInverseDB getIndexInverseDB(int idType,int idTerme,List<IndexInverseDB> listIidb) {
+	public static IndexInverseDB getIndexInverseDB(int idType, int idTerme,
+			List<IndexInverseDB> listIidb) {
 		for (IndexInverseDB iidb : listIidb) {
-			if (iidb.getIdType() == idType && iidb.getIdTerme()==idTerme){
+			if (iidb.getIdType() == idType && iidb.getIdTerme() == idTerme) {
 				return iidb;
 			}
 		}
@@ -396,20 +403,21 @@ public class Launch {
 				"\\p{InCombiningDiacriticalMarks}+", "");
 	}
 
-	public static ArrayList<String> getPertinence(int nbRow, ArrayList<List<TypesDB>> list){
+	public static ArrayList<String> getPertinence(int nbRow,
+			ArrayList<List<TypesDB>> list) {
 		ArrayList<TypesDB> listPertinence = new ArrayList<>();
-		for (List<TypesDB> al : list){
-			for (TypesDB t : al){
-				boolean exist = false ;
-				int pos =0 ;
-				for (int i = 0;i<listPertinence.size();i++){
-					if (listPertinence.get(i).getId() == t.getId()){
-						exist = true ;
-						pos = i ;
-						break ;
+		for (List<TypesDB> al : list) {
+			for (TypesDB t : al) {
+				boolean exist = false;
+				int pos = 0;
+				for (int i = 0; i < listPertinence.size(); i++) {
+					if (listPertinence.get(i).getId() == t.getId()) {
+						exist = true;
+						pos = i;
+						break;
 					}
 				}
-				if (!exist){
+				if (!exist) {
 					TypesDB temp = new TypesDB();
 					temp.setId(t.getId());
 					temp.setPertinenceNow(t.getPertinenceNow());
@@ -418,48 +426,51 @@ public class Launch {
 					listPertinence.add(temp);
 				} else {
 					TypesDB temp = listPertinence.get(pos);
-					temp.setPertinenceNow((temp.getPertinenceNow()+t.getPertinenceNow())*10f);					
+					temp.setPertinenceNow((temp.getPertinenceNow() + t
+							.getPertinenceNow()) * 50f);
 				}
 			}
 		}
 		tribulles(listPertinence);
 		Session s = HibernateUtils.getSession();
 		ArrayList<String> listResult = new ArrayList<>();
-		for (int i=0;i<nbRow;i++){
+		for (int i = 0; i < nbRow; i++) {
 			Query q = s.createQuery("FROM TypesDB WHERE id = :idType");
 			q.setParameter("idType", listPertinence.get(i).getId());
-			listResult.add(getRealNameFile(((TypesDB)q.uniqueResult()).getDocuments().getNum_doc())+"\t"+listPertinence.get(i).getXpath()+ "\t1");
+			listResult.add(getRealNameFile(((TypesDB) q.uniqueResult())
+					.getDocuments().getNum_doc())
+					+ "\t"
+					+ listPertinence.get(i).getXpath() + "\t1");
 		}
 		return listResult;
 	}
 
-	public static String getRealNameFile(int i){
-		if (i<10){
-			return "Collection/d00"+i+".xml";
-		} else if (i >=10 && i<100){
-			return "Collection/d0"+i+".xml";
-		} else if (i> 100){
-			return "Collection/d"+i+".xml";
+	public static String getRealNameFile(int i) {
+		if (i < 10) {
+			return "Collection/d00" + i + ".xml";
+		} else if (i >= 10 && i < 100) {
+			return "Collection/d0" + i + ".xml";
+		} else if (i > 100) {
+			return "Collection/d" + i + ".xml";
 		}
-		return null ;
+		return null;
 	}
 
-	public static void tribulles(ArrayList<TypesDB> list)
-	{
-		for (int i=0 ;i<=(list.size()-2);i++)
-			for (int j=(list.size()-1);i < j;j--)
-				if (list.get(j).getPertinenceNow() > list.get(j-1).getPertinenceNow())
-				{
-					TypesDB x=list.get(j-1);
-					list.set(j-1,list.get(j));
+	public static void tribulles(ArrayList<TypesDB> list) {
+		for (int i = 0; i <= (list.size() - 2); i++)
+			for (int j = (list.size() - 1); i < j; j--)
+				if (list.get(j).getPertinenceNow() > list.get(j - 1)
+						.getPertinenceNow()) {
+					TypesDB x = list.get(j - 1);
+					list.set(j - 1, list.get(j));
 					list.set(j, x);
 				}
 	}
 
-	public static String stemmWord(String word){
+	public static String stemmWord(String word) {
 		stemmer.setCurrent(word);
 		stemmer.stem();
 		String stemmed = stemmer.getCurrent();
-		return stemmed ;
+		return stemmed;
 	}
 }
