@@ -73,14 +73,14 @@ public class TestQueries {
                 ArrayList<String> listQrel = readFileQrel(numRequest);
                 int nbOk = 0;
                 for (String str : listResultToCompare){
-                		System.out.println(str);
+                		//System.out.println(str);
                         if (listQrel.contains(str)){
                                 nbOk++;
                         }
                 }
-                /*System.out.println("------- On "+ nbRow +" --------  "+nbOk+"  --   "+listResultToCompare.size());
+                System.out.println("------- On "+ nbRow);
                 System.out.println("Percentage : "+(float)nbOk/(float)nbRow);
-                System.out.println("----------------------------");*/
+                System.out.println("----------------------------");
                 return (float)nbOk/(float)nbRow ;
         }
         
